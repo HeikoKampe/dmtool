@@ -1,6 +1,7 @@
 <google-map center='map.center' zoom="map.zoom" options="map.options" draggable="true" id="gmap">
-  <!--<markers models="map.stations" coords="'self'"></markers>-->
-  <markers models="map.data" coords="'self'" options="redMarker"></markers>
+  <markers models="map.rawData" coords="'self'" options="redMarker"></markers>
+  <markers models="map.scheduleData" coords="'self'" options="blueMarker"></markers>
+  <markers models="map.countData" coords="'self'" options="pinkMarker"></markers>
   <!--<markers models="map.matched" coords="'self'" options="blueMarker"></markers>-->
   <!--<markers models="map.stations" coords="'self'" options="greenMarker" click="'onClicked'">-->
   </markers>
@@ -10,34 +11,100 @@
 </google-map>
 
 <div class="map-panel">
-  <p><strong>Raw Data query</strong></p>
-  <form data-ng-submit="submit()">
+  
+  <p><strong style="color:red;">Raw Data query</strong></p>
+  <form data-ng-submit="submitRaw()">
     <table>
       <tr>
         <td>vehicleCodes</td>
-        <td><input type="text" data-ng-model="queryParams.vehicleCodes" value=""/></td>
+        <td><input type="text" data-ng-model="queryParamsRaw.vehicleCodes" value=""/></td>
       </tr>
       <tr>
         <td>dateFrom</td>
         <td>
-          <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+          <input type="text" data-ng-model="queryParamsRaw.dateFrom" value=""/>
         </td>
       </tr>
       <tr>
         <td>dateTo</td>
         <td>
-          <input type="text" data-ng-model="queryParams.dateTo" value=""/>
+          <input type="text" data-ng-model="queryParamsRaw.dateTo" value=""/>
         </td>
       </tr>
       <tr>
         <td>isStop</td>
         <td>
-          <input type="radio" data-ng-model="queryParams.isStop" data-ng-value="true"> true
-          <input type="radio" data-ng-model="queryParams.isStop" data-ng-value="false"> false
+          <input type="radio" data-ng-model="queryParamsRaw.isStop" data-ng-value="true"> true
+          <input type="radio" data-ng-model="queryParamsRaw.isStop" data-ng-value="false"> false
         </td>
       </tr>
     </table>
     <p><button type="submit">submit</button></p>
   </form>
+
+  <hr/>
+
+  <p><strong style="color:blue;">Schedule Data query</strong></p>
+  <form data-ng-submit="submitSchedule()">
+    <table>
+      <tr>
+        <td>vehicleCodes</td>
+        <td><input type="text" data-ng-model="queryParamsSchedule.vehicleCodes" value=""/></td>
+      </tr>
+      <tr>
+        <td>dateFrom</td>
+        <td>
+          <input type="text" data-ng-model="queryParamsSchedule.dateFrom" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>dateTo</td>
+        <td>
+          <input type="text" data-ng-model="queryParamsSchedule.dateTo" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>isStop</td>
+        <td>
+          <input type="radio" data-ng-model="queryParamsSchedule.isStop" data-ng-value="true"> true
+          <input type="radio" data-ng-model="queryParamsSchedule.isStop" data-ng-value="false"> false
+        </td>
+      </tr>
+    </table>
+    <p><button type="submit">submit</button></p>
+  </form>
+  
+  <hr/>
+
+  <p><strong style="color:#ff00ff;">Count Data query</strong></p>
+  <form data-ng-submit="submitCount()">
+    <table>
+      <tr>
+        <td>vehicleCodes</td>
+        <td><input type="text" data-ng-model="queryParamsCount.vehicleCodes" value=""/></td>
+      </tr>
+      <tr>
+        <td>dateFrom</td>
+        <td>
+          <input type="text" data-ng-model="queryParamsCount.dateFrom" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>dateTo</td>
+        <td>
+          <input type="text" data-ng-model="queryParamsCount.dateTo" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>isStop</td>
+        <td>
+          <input type="radio" data-ng-model="queryParamsCount.isStop" data-ng-value="true"> true
+          <input type="radio" data-ng-model="queryParamsCount.isStop" data-ng-value="false"> false
+        </td>
+      </tr>
+    </table>
+    <p><button type="submit">submit</button></p>
+  </form>
+  
 </div>
 
