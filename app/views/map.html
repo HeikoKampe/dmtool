@@ -8,3 +8,36 @@
   <!--<polyline path="map.lines['117']" ></polyline>-->
 
 </google-map>
+
+<div class="map-panel">
+  <p><strong>Raw Data query</strong></p>
+  <form data-ng-submit="submit()">
+    <table>
+      <tr>
+        <td>vehicleCodes</td>
+        <td><input type="text" data-ng-model="queryParams.vehicleCodes" value=""/></td>
+      </tr>
+      <tr>
+        <td>dateFrom</td>
+        <td>
+          <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>dateTo</td>
+        <td>
+          <input type="text" data-ng-model="queryParams.dateTo" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>isStop</td>
+        <td>
+          <input type="radio" data-ng-model="queryParams.isStop" data-ng-value="true"> true
+          <input type="radio" data-ng-model="queryParams.isStop" data-ng-value="false"> false
+        </td>
+      </tr>
+    </table>
+    <p><button type="submit">submit</button></p>
+  </form>
+</div>
+
