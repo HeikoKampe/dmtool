@@ -68,10 +68,10 @@ angular.module('dmtoolApp')
       countData: []
     };
 
-    $scope.redMarker = { icon: '../images/red-dot.png' };
-    $scope.blueMarker = { icon: '../images/blue-dot.png' };
-    $scope.greenMarker = { icon: '../images/green-dot.png' };
-    $scope.pinkMarker = { icon: '../images/pink-dot.png' };
+    $scope.redMarker = { icon: 'images/red-dot.png' };
+    $scope.blueMarker = { icon: 'images/blue-dot.png' };
+    $scope.greenMarker = { icon: 'images/green-dot.png' };
+    $scope.pinkMarker = { icon: 'images/pink-dot.png' };
 
     $scope.submitRaw = function () {
       getRawData();
@@ -88,5 +88,7 @@ angular.module('dmtoolApp')
     getRawData();
     getScheduleData();
     getCountData();
+
+
 
   });
