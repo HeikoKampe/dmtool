@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('dmtoolApp')
-  .controller('MapCtrl', function ($scope, apiService) {
+  .controller('MapCtrl', function ($scope, apiService, mapConf) {
 
     function getRawData() {
       console.log("$scope.queryParamsRaw: ", $scope.queryParamsRaw);
       apiService.getRawData('vehicletrips', $scope.queryParamsRaw).then(function (res) {
         console.log("res.data", res.data);
-        $scope.map.rawData = res.data;
+        $scope.rawData = res.data;
       });
     }
 
@@ -15,7 +15,7 @@ angular.module('dmtoolApp')
       console.log("$scope.queryParamsSchedule: ", $scope.queryParamsSchedule);
       apiService.getScheduleData('vehicletrips', $scope.queryParamsSchedule).then(function (res) {
         console.log("res.data", res.data);
-        $scope.map.scheduleData = res.data;
+        $scope.scheduleData = res.data;
       });
     }
 
@@ -23,7 +23,7 @@ angular.module('dmtoolApp')
       console.log("$scope.queryParamsCount: ", $scope.queryParamsCount);
       apiService.getScheduleData('vehicletrips', $scope.queryParamsCount).then(function (res) {
         console.log("res.data", res.data);
-        $scope.map.countData = res.data;
+        $scope.countData = res.data;
       });
     }
 
@@ -48,30 +48,11 @@ angular.module('dmtoolApp')
       isStop: true
     };
 
-    $scope.map = {
-      center: {
-        latitude: 51.00996573333334,
-        longitude: 13.783468888333335
-      },
-      zoom: 12,
-      options: {
-        scaleControl: true,
-        zoomControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        panControlOptions: {
-          position: google.maps.ControlPosition.TOP_RIGHT
-        }
-      },
-      rawData: [],
-      scheduleData: [],
-      countData: []
-    };
+    $scope.map = mapConf;
 
-    $scope.redMarker = { icon: 'images/red-dot.png' };
-    $scope.blueMarker = { icon: 'images/blue-dot.png' };
-    $scope.greenMarker = { icon: 'images/green-dot.png' };
-    $scope.pinkMarker = { icon: 'images/pink-dot.png' };
+    $scope.rawData = [];
+    $scope.scheduleData = [];
+    $scope.countData = [];
 
     $scope.submitRaw = function () {
       getRawData();
