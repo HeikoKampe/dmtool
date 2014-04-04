@@ -2,5 +2,45 @@
 
 <p><a href="#map">map view</a></p>
 
-<h3>API test request:</h3>
-<p>Result: {{ data }}</p>
+<h2>Matching Overview</h2>
+
+<form data-ng-submit="submitRaw()" class="query-form">
+    <table style="width:auto;">
+      <tr>
+        <td>dateFrom</td>
+        <td>
+          <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td>dateTo</td>
+        <td>
+          <input type="text" data-ng-model="queryParams.dateTo" value=""/>
+        </td>
+      </tr>
+
+    </table>
+    <p><button type="submit">submit</button></p>
+  </form>
+
+<table class="data-table">
+  <tr>
+    <th>vehicleCode</th>
+    <th>rawStartDateAsString</th>
+    <th>rawStops</th>
+    <th>matchedStops</th>
+    <th>notMatchedStop</th>
+    <th>matchingRate</th>
+    <th></th>
+  </tr>
+  <tr data-ng-repeat="row in matchingResultData">
+    <td>{{row.vehicleCode}}</td>
+    <td>{{row.rawStartDateAsString}}</td>
+    <td>{{row.rawStops}}</td>
+    <td>{{row.matchedStops}}</td>
+    <td>{{row.notMatchedStops}}</td>
+    <td>{{row.matchingRate}}</td>
+    <td><a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show sequence-map-view</a></td>
+  </tr>
+</table>
+

@@ -3,6 +3,9 @@ body {
   font-size:12px;
 }
 
+a {text-decoration:none;}
+a:hover {text-decoration: underline;}
+
 .angular-google-map-container { position: absolute; top:0; bottom:0; left:0; right:0; }
 
 .map-panel {
@@ -17,4 +20,35 @@ body {
 
 table {
   width:100%;
+}
+
+.data-table {
+  width:auto;
+  border-collapse: collapse;
+}
+
+.data-table td,
+.data-table th {
+  padding:4px 6px;
+  border-bottom:1px solid #ccc;
+  border-right:1px solid #ccc;
+}
+
+.marker-label {
+  font-size:14px;
+}
+
+.matched {
+  color:blue;
+}
+
+.unmatched {
+  color:red;
+}
+
+form.query-form {
+  display:inline-block;
+  margin-bottom: 20px;
+  padding:20px;
+  background:#eee;
 }
