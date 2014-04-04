@@ -1,0 +1,32 @@
+<google-map center='mapConf.center' zoom="mapConf.zoom" options="mapConf.options" draggable="true" id="gmap">
+  <div data-ng-repeat="seq in sequences" ng-switch on="seq.properties.visible">
+    <div ng-switch-when="true">
+      <markers
+          models="seq.data"
+          coords="'self'"
+          options=""
+          labelContent="'cntSequence'"
+          labelAnchor="10 0"
+          labelClass="marker-label">
+          </markers>
+      <polyline path="seq.data" stroke="mapConf.lines[seq.properties.status]"></polyline>
+    </div>
+  </div>
+</google-map>
+
+
+<div class="map-panel">
+  <h3>Found sequences (<span class="matched">matched</span> / <span class="unmatched">unmatched</span>)</h3>
+  <div data-ng-repeat="seq in sequences" data-ng-switch data-on="seq.properties.visible" data-ng-class="seq.properties.status">
+    <input
+        type="checkbox"
+        data-ng-model="seq.properties.visible"
+        data-ng-checked="false"
+        data-ng-true-value="true"
+        data-ng-false-value="false"
+        data-ng-class="blue"
+        />
+    {{$index + 1}} sequence ({{seq.data.length}})
+  </div>
+</div>
+

@@ -15,6 +15,10 @@ angular.module('dmtoolApp', [
         templateUrl: 'views/map.html',
         controller: 'MapCtrl'
       })
+      .when('/map2/:vehicleId/:startTime', {
+        templateUrl: 'views/map2.html',
+        controller: 'Map2Ctrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
