@@ -1,8 +1,9 @@
 @ngGmapModule "directives.api.models.child", ->
     class @WindowChildModel extends oo.BaseObject
         @include directives.api.utils.GmapUtil
-        constructor: (scope, opts, isIconVisibleOnClick, mapCtrl, markerCtrl, $http, $templateCache, $compile,@element, needToManualDestroy = false)->
+        constructor: (scope, opts, isIconVisibleOnClick, mapCtrl, markerCtrl, $http, $templateCache, $compile, @element, needToManualDestroy = false)->
             @scope = scope
+            @googleMapsHandles = []
             @opts = opts
             @mapCtrl = mapCtrl
             @markerCtrl = markerCtrl
@@ -22,32 +23,33 @@
             @needToManualDestroy = needToManualDestroy
             @$log.info(@)
 
-        createGWin:(createOpts=false) =>
-            if !@gWin? and createOpts
-                @opts = if @markerCtrl? then @createWindowOptions(@markerCtrl, @scope, @element.html(), {}) else {}
+
+        createGWin:() =>
+            if !@gWin? and @markerCtrl?
+                defaults = if @opts? then @opts else {}
+                html = if @element? and _.isFunction(@element.html) then @element.html() else @element
+                @opts = if @markerCtrl? then @createWindowOptions(@markerCtrl, @scope, html, defaults) else {}
 
             if @opts? and @gWin == undefined
-                @gWin = new google.maps.InfoWindow(@opts)
+                if @opts.boxClass and (window.InfoBox && typeof window.InfoBox == 'function')
+                    @gWin = new window.InfoBox(@opts)
+                else
+                    @gWin = new google.maps.InfoWindow(@opts)
 
                 # Set visibility of marker back to what it was before opening the window
-                google.maps.event.addListener @gWin, 'closeclick', =>
+                @googleMapsHandles.push google.maps.event.addListener @gWin, 'closeclick', =>
                     if @markerCtrl?
                         @markerCtrl.setVisible(@initialMarkerVisibility)
+                    @gWin.isOpen(false)
+
                     @scope.closeClick() if @scope.closeClick?
 
         watchShow: () =>
-            @scope.$watch('show', (newValue, oldValue) =>
-                if (newValue != oldValue)
-                    if (newValue)
-                        @showWindow()
-                    else
-                        @hideWindow()
+            @scope.$watch 'show', (newValue, oldValue) =>
+                if (newValue)
+                    @showWindow()
                 else
-                    if @gWin?
-                        if (newValue and !@gWin.getMap())
-                            # If we're initially showing the marker and it's not yet visible, show it.
-                            @showWindow()
-            , true)
+                    @hideWindow()
 
         watchCoords: ()=>
             scope = if @markerCtrl? then @scope.$parent else @scope
@@ -65,19 +67,20 @@
         handleClick: ()=>
             # Show the window and hide the marker on click
             if @markerCtrl?
-                google.maps.event.addListener @markerCtrl, 'click', =>
-                    if !@gWin? and !@opts?
-                        @createGWin(true)
-                    else
-                        @createGWin() unless @gWin?
+                @googleMapsHandles.push google.maps.event.addListener @markerCtrl, 'click', =>
+                    @createGWin() unless @gWin?
                     pos = @markerCtrl.getPosition()
                     if @gWin?
                         @gWin.setPosition(pos)
-                        @gWin.open(@mapCtrl)
+                        @showWindow()
                     @initialMarkerVisibility = @markerCtrl.getVisible()
                     @markerCtrl.setVisible(@isIconVisibleOnClick)
 
         showWindow: () =>
+            show = () =>
+                if @gWin
+                    if (@scope.show || !@scope.show?) and !@gWin.isOpen() #only show if we have no show defined yet or if show is really true
+                        @gWin.open(@mapCtrl)
             if @scope.templateUrl
                 if @gWin
                     @$http.get(@scope.templateUrl, { cache: @$templateCache }).then((content) =>
@@ -85,21 +88,24 @@
                         if angular.isDefined(@scope.templateParameter)
                             templateScope.parameter = @scope.templateParameter
                         compiled = @$compile(content.data)(templateScope)
-                        @gWin.setContent(compiled.get(0))
-                        @gWin.open(@mapCtrl)
+                        @gWin.setContent(compiled[0])
+                        show()
                     )
             else
-                @gWin.open(@mapCtrl) if @gWin?
+                show()
 
         getLatestPosition:() =>
             @gWin.setPosition @markerCtrl.getPosition() if @gWin? and @markerCtrl?
 
         hideWindow: () =>
-            @gWin.close() if @gWin?
+            @gWin.close() if @gWin? and @gWin.isOpen()
 
         destroy: ()=>
-            @hideWindow(@gWin)
-            if(@scope? and @needToManualDestroy)
+            @hideWindow()
+            _.each @googleMapsHandles, (h) ->
+                google.maps.event.removeListener h
+            @googleMapsHandles.length = 0
+            if @scope? and @needToManualDestroy
                 @scope.$destroy()
             delete @gWin
             self = undefined

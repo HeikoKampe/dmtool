@@ -30,13 +30,12 @@
         #watch this scope(Parent to all WindowModels), these updates reflect expression / Key changes
         #thus they need to be pushed to all the children models so that they are bound to the correct objects / keys
         watch: (scope, name, nameKey) =>
-            scope.$watch(name, (newValue, oldValue) =>
+            scope.$watch name, (newValue, oldValue) =>
                 if (newValue != oldValue)
                     @[nameKey] = if typeof newValue == 'function' then newValue() else newValue
-                    for model in @windows
-                        do(model) =>
-                            model.scope[name] = if @[nameKey] == 'self' then model else model[@[nameKey]]
-            , true)
+                    _.each @windows, (model) =>
+                        model.scope[name] = if @[nameKey] == 'self' then model else model[@[nameKey]]
+            , true
 
         watchModels: (scope) =>
             scope.$watch 'models', (newValue, oldValue) =>
@@ -138,7 +137,7 @@
             parsedContent = @interpolateContent(@linked.element.html(), model)
             opts = @createWindowOptions(gMarker, childScope, parsedContent, @DEFAULTS)
             @windows.push new directives.api.models.child.WindowChildModel(childScope, opts, @isIconVisibleOnClick,
-                    gMap, gMarker, @$http, @$templateCache, @$compile, true)
+                    gMap, gMarker, @$http, @$templateCache, @$compile, undefined ,true)
 
         setChildScope: (childScope, model) =>
             for name in @scopePropNames
@@ -152,7 +151,7 @@
         interpolateContent: (content, model) =>
             if @contentKeys == undefined or @contentKeys.length == 0
                 return
-            exp = @$interpolate(content)
+            exp = @$interpolate content
             interpModel = {}
             interpModel[key] = model[key] for key in @contentKeys
-            exp(interpModel)
+            exp interpModel
