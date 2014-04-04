@@ -21,8 +21,16 @@ angular.module('dmtoolApp')
       red: { icon: 'images/red-dot.png' },
       blue: { icon: 'images/blue-dot.png' },
       green: { icon: 'images/green-dot.png' },
-      pink: { icon: 'images/pink-dot.png' }
-
+      pink: { icon: 'images/pink-dot.png' },
+      visible: false
+    },
+    lines: {
+      matched: {
+        color: '#0000ff'
+      },
+      unmatched: {
+        color: '#ff0000'
+      }
     }
 
   });
