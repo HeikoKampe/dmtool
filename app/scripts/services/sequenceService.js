@@ -35,8 +35,8 @@ angular.module('dmtoolApp')
       sequences = [];
 
       for (var i = 0; i < data.length; i++) {
-        data[i].longitude = convertCoordinate(data[i].longitude);
-        data[i].latitude = convertCoordinate(data[i].latitude);
+//        data[i].longitude = convertCoordinate(data[i].longitude);
+//        data[i].latitude = convertCoordinate(data[i].latitude);
         if (typeof splitKeyValue !== "undefined" && data[i][splitKey] !== splitKeyValue) {
           addSequence(sequenceData, sequenceProperties);
           sequenceData = [];
