@@ -8,7 +8,73 @@
           labelContent="'cntSequence'"
           labelAnchor="10 0"
           labelClass="marker-label">
-          </markers>
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+
+          <table data-ng-non-bindable id="blah">
+            <tr>
+              <td>id</td>
+              <td>{{id}}</td>
+            </tr>
+            <tr>
+              <td>rawStartDate</td>
+              <td>{{seq.data}}</td>
+            </tr>
+            <tr>
+              <td>vehicleCode</td>
+              <td>{{vehicleCode}}</td>
+            </tr>
+            <tr>
+              <td>rawId</td>
+              <td>{{rawId}}</td>
+            </tr>
+            <tr>
+              <td>rawStopId</td>
+              <td>{{rawStopId}}</td>
+            </tr>
+            <tr>
+              <td>arrival</td>
+              <td>{{arrival}}</td>
+            </tr>
+            <tr>
+              <td>departure</td>
+              <td>{{departure}}</td>
+            </tr>
+            <tr>
+              <td>latitude</td>
+              <td>{{ latitude }}</td>
+            </tr>
+            <tr>
+              <td>longitude</td>
+              <td>{{longitude}}</td>
+            </tr>
+            <tr>
+              <td>distance</td>
+              <td>{{distance}}</td>
+            </tr>
+            <tr>
+              <td>status</td>
+              <td>{{status}}</td>
+            </tr>
+            <tr>
+              <td>hasCntStop</td>
+              <td>{{hasCntStop}}</td>
+            </tr>
+            <tr>
+              <td>cntStopKey</td>
+              <td>{{cntStopKey}}</td>
+            </tr>
+            <tr>
+              <td>cntTripKey</td>
+              <td>{{cntTripKey}}</td>
+            </tr>
+            <tr>
+              <td>cntSequence</td>
+              <td>{{cntSequence}}</td>
+            </tr>
+          </table>
+
+        </windows>
+      </markers>
       <polyline path="seq.data" stroke="mapConf.lines[seq.properties.status]"></polyline>
     </div>
   </div>
@@ -17,7 +83,9 @@
 
 <div class="map-panel">
   <h3>Found sequences (<span class="matched">matched</span> / <span class="unmatched">unmatched</span>)</h3>
-  <div data-ng-repeat="seq in sequences" data-ng-switch data-on="seq.properties.visible" data-ng-class="seq.properties.status">
+
+  <div data-ng-repeat="seq in sequences" data-ng-switch data-on="seq.properties.visible"
+       data-ng-class="seq.properties.status">
     <input
         type="checkbox"
         data-ng-model="seq.properties.visible"
