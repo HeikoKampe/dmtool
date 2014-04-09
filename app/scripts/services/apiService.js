@@ -23,7 +23,7 @@ angular.module('dmtoolApp')
     }
 
     function getCountData(resource, paramsObj) {
-      return $http.get(apiBaseUrl + 'schedule/' + resource, { params: paramsObj });
+      return $http.get(apiBaseUrl + 'count/' + resource, { params: paramsObj });
     }
 
     // Public API here

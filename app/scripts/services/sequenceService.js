@@ -5,25 +5,14 @@ angular.module('dmtoolApp')
 
     var sequences;
 
-    function convertCoordinate(coordinate) {
-      return (coordinate / 60).toFixed(10)
-    }
-
-    function getSequenceProperties (sequenceData) {
+    function setSequenceProperties (firstEntry) {
       var
         properties = {
         visible: false,
-        status: (sequenceData.hasCntStop === 'Y') ? 'matched' : 'unmatched'
+        matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
+        departureTime: new Date(firstEntry.departure).toLocaleTimeString()
       };
       return properties;
-    }
-
-    function addSequence(sequenceData, sequenceProperties) {
-      var sequenceObj = {
-        properties: sequenceProperties,
-        data: sequenceData
-      };
-      sequences.push(sequenceObj);
     }
 
     function createSequences(data, splitKey) {
@@ -35,20 +24,17 @@ angular.module('dmtoolApp')
       sequences = [];
 
       for (var i = 0; i < data.length; i++) {
-//        data[i].longitude = convertCoordinate(data[i].longitude);
-//        data[i].latitude = convertCoordinate(data[i].latitude);
         if (typeof splitKeyValue !== "undefined" && data[i][splitKey] !== splitKeyValue) {
-          addSequence(sequenceData, sequenceProperties);
+          sequences.push( { properties: sequenceProperties, data: sequenceData} );
           sequenceData = [];
-          sequenceProperties = {};
+          sequenceProperties = setSequenceProperties(data[i]);
         }
         if (data[i].latitude > 0 && data[i].longitude > 0) {
-          sequenceProperties = getSequenceProperties(data[i]);
+          sequenceProperties = setSequenceProperties(data[i]);
           sequenceData.push(data[i]);
         }
         splitKeyValue = data[i][splitKey];
       }
-
       return sequences;
     }
 

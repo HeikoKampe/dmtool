@@ -30,6 +30,9 @@ angular.module('dmtoolApp')
       },
       unmatched: {
         color: '#ff0000'
+      },
+      scheduled: {
+        color: '#008000'
       }
     }
 

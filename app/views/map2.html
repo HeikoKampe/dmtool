@@ -1,5 +1,5 @@
 <google-map center='mapConf.center' zoom="mapConf.zoom" options="mapConf.options" draggable="true" id="gmap">
-  <div data-ng-repeat="seq in sequences" ng-switch on="seq.properties.visible">
+  <div data-ng-repeat="seq in rawStopsSequences" ng-switch on="seq.properties.visible">
     <div ng-switch-when="true">
       <markers
           models="seq.data"
@@ -10,19 +10,7 @@
           labelClass="marker-label">
         <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
-          <table data-ng-non-bindable id="blah">
-            <tr>
-              <td>id</td>
-              <td>{{id}}</td>
-            </tr>
-            <tr>
-              <td>rawStartDate</td>
-              <td>{{seq.data}}</td>
-            </tr>
-            <tr>
-              <td>vehicleCode</td>
-              <td>{{vehicleCode}}</td>
-            </tr>
+          <table data-ng-non-bindable>
             <tr>
               <td>rawId</td>
               <td>{{rawId}}</td>
@@ -75,26 +63,113 @@
 
         </windows>
       </markers>
-      <polyline path="seq.data" stroke="mapConf.lines[seq.properties.status]"></polyline>
+      <polyline path="seq.data" stroke="mapConf.lines[seq.properties.matchingStatus]"></polyline>
     </div>
   </div>
+
+
+  <div data-ng-repeat="seq in plannedStopsSequences" ng-switch on="seq.properties.visible">
+    <div ng-switch-when="true">
+      <markers
+          models="seq.data"
+          coords="'self'"
+          options=""
+          labelContent="'sequence'"
+          labelAnchor="10 0"
+          labelClass="marker-label">
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+
+          <table data-ng-non-bindable>
+            <tr>
+              <td>blockLabel</td>
+              <td>{{blockLabel}}</td>
+            </tr>
+            <tr>
+              <td>pointLabel</td>
+              <td>{{pointLabel}}</td>
+            </tr>
+            <tr>
+              <td>blockKey</td>
+              <td>{{blockKey}}</td>
+            </tr>
+            <tr>
+              <td>tripKey</td>
+              <td>{{tripKey}}</td>
+            </tr>
+            <tr>
+              <td>tripTypId</td>
+              <td>{{tripTypId}}</td>
+            </tr>
+            <tr>
+              <td>sequence</td>
+              <td>{{sequence}}</td>
+            </tr>
+            <tr>
+              <td>departure</td>
+              <td>{{departure}}</td>
+            </tr>
+            <tr>
+              <td>latitude</td>
+              <td>{{ latitude }}</td>
+            </tr>
+            <tr>
+              <td>longitude</td>
+              <td>{{longitude}}</td>
+            </tr>
+            <tr>
+              <td>distance</td>
+              <td>{{distance}}</td>
+            </tr>
+            <tr>
+              <td>numberStops</td>
+              <td>{{numberStops}}</td>
+            </tr>
+
+          </table>
+
+        </windows>
+      </markers>
+      <polyline path="seq.data" stroke="mapConf.lines.scheduled"></polyline>
+    </div>
+  </div>
+
+  <!--<markers models="plannedStops" coords="'self'"></markers>-->
+
 </google-map>
 
 
-<div class="map-panel">
-  <h3>Found sequences (<span class="matched">matched</span> / <span class="unmatched">unmatched</span>)</h3>
+<div class="map-panel-wrapper">
 
-  <div data-ng-repeat="seq in sequences" data-ng-switch data-on="seq.properties.visible"
-       data-ng-class="seq.properties.status">
-    <input
-        type="checkbox"
-        data-ng-model="seq.properties.visible"
-        data-ng-checked="false"
-        data-ng-true-value="true"
-        data-ng-false-value="false"
-        data-ng-class="blue"
-        />
-    {{$index + 1}} sequence ({{seq.data.length}})
+  <div class="map-panel">
+    <h3>Found sequences (<span class="matched">matched</span> / <span class="unmatched">unmatched</span>)</h3>
+
+    <div data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
+         data-ng-class="seq.properties.matchingStatus">
+      <input
+          type="checkbox"
+          data-ng-model="seq.properties.visible"
+          data-ng-checked="false"
+          data-ng-true-value="true"
+          data-ng-false-value="false"
+          />
+      {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}})
+    </div>
   </div>
-</div>
 
+  <div class="map-panel">
+    <h3>Planned Stop Sequences</h3>
+
+    <div data-ng-repeat="seq in plannedStopsSequences" data-ng-switch data-on="seq.properties.visible"
+         class="scheduled">
+      <input
+          type="checkbox"
+          data-ng-model="seq.properties.visible"
+          data-ng-checked="false"
+          data-ng-true-value="true"
+          data-ng-false-value="false"
+          />
+      {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}})
+    </div>
+  </div>
+
+</div>

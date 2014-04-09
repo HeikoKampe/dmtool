@@ -1,54 +1,64 @@
 body {
   font-family: sans-serif;
-  font-size:12px;
+  font-size: 12px;
 }
 
-a {text-decoration:none;}
-a:hover {text-decoration: underline;}
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-.angular-google-map-container { position: absolute; top:0; bottom:0; left:0; right:0; }
+.angular-google-map-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
+
+.map-panel-wrapper {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 300px;
+}
 
 .map-panel {
-  position: absolute;
-  top:10px;
-  left:10px;
-  width:300px;
-  padding:10px;
-  background:#fff;
-  opacity:0.9;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding: 10px;
+  background: #fff;
+  opacity: 0.9;
+  margin-bottom: 10px;
 }
 
 table {
-  width:100%;
+  width: 100%;
 }
 
 .data-table {
-  width:auto;
+  width: auto;
   border-collapse: collapse;
 }
 
 .data-table td,
 .data-table th {
-  padding:4px 6px;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
+  padding: 4px 6px;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
 .marker-label {
-  font-size:14px;
+  font-size: 14px;
 }
 
 .matched {
-  color:blue;
+  color: blue;
 }
 
 .unmatched {
-  color:red;
+  color: red;
+}
+
+.scheduled {
+  color: green;
 }
 
 form.query-form {
-  display:inline-block;
+  display: inline-block;
   margin-bottom: 20px;
-  padding:20px;
-  background:#eee;
+  padding: 20px;
+  background: #eee;
 }
