@@ -140,8 +140,10 @@
 
 <div class="map-panel-wrapper">
 
-  <div class="map-panel">
-    <h3>Found sequences (<span class="matched">matched</span> / <span class="unmatched">unmatched</span>)</h3>
+  <div class="map-panel shadow">
+    <h4>Found sequences</h4>
+
+    <p>Date: {{dateTime}}</p>
 
     <div data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
          data-ng-class="seq.properties.matchingStatus">
@@ -154,10 +156,11 @@
           />
       {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}})
     </div>
+    <p><span class="matched">matched</span> / <span class="unmatched">unmatched</span></p>
   </div>
 
-  <div class="map-panel">
-    <h3>Planned Stop Sequences</h3>
+  <div class="map-panel shadow">
+    <h4>Scheduled Sequences</h4>
 
     <div data-ng-repeat="seq in plannedStopsSequences" data-ng-switch data-on="seq.properties.visible"
          class="scheduled">

@@ -27,124 +27,124 @@
 
 
 <h3>Stop Statistics</h3>
-
-<table class="data-table">
-  <tr>
-    <th>vehicleCode</th>
-    <th>rawStartDateAsString</th>
-    <th>rawStops</th>
-    <th>matchedStops</th>
-    <th>notMatchedStop</th>
-    <th>matchingRate</th>
-    <th></th>
-  </tr>
-  <tr data-ng-repeat="row in stopstatisticResultData">
-    <td>{{row.vehicleCode}}</td>
-    <td>{{row.rawStartDateAsString}}</td>
-    <td>{{row.rawStops}}</td>
-    <td>{{row.matchedStops}}</td>
-    <td>{{row.notMatchedStops}}</td>
-    <td>{{row.matchingRate}}</td>
-    <td><a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show sequence-map-view</a></td>
-  </tr>
-</table>
+<div class="table-wrapper">
+  <table class="data-table">
+    <tr>
+      <th>vehicleCode</th>
+      <th>rawStartDateAsString</th>
+      <th>rawStops</th>
+      <th>matchedStops</th>
+      <th>notMatchedStop</th>
+      <th>matchingRate</th>
+      <th></th>
+    </tr>
+    <tr data-ng-repeat="row in stopstatisticResultData">
+      <td>{{row.vehicleCode}}</td>
+      <td>{{row.rawStartDateAsString}}</td>
+      <td>{{row.rawStops}}</td>
+      <td>{{row.matchedStops}}</td>
+      <td>{{row.notMatchedStops}}</td>
+      <td>{{row.matchingRate}}</td>
+      <td><a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show sequence-map-view</a></td>
+    </tr>
+  </table>
+</div>
 
 <h3>Matching Results</h3>
 
-<table class="data-table">
-  <tr>
-    <th>medianCostAverage</th>
-    <th>medianCostMax</th>
-    <th>qualityLevelAverage</th>
-    <th>qualityLevelMax</th>
-    <th>numberTrips</th>
-  </tr>
-  <tr data-ng-repeat="row in matchingResultData">
-    <td>{{row.medianCostAverage}}</td>
-    <td>{{row.medianCostMax}}</td>
-    <td>{{row.qualityLevelAverage}}</td>
-    <td>{{row.qualityLevelMax}}</td>
-    <td>{{row.numberTrips}}</td>
-  </tr>
-</table>
+<div class="table-wrapper">
+  <table class="data-table">
+    <tr>
+      <th>medianCostAverage</th>
+      <th>medianCostMax</th>
+      <th>qualityLevelAverage</th>
+      <th>qualityLevelMax</th>
+      <th>numberTrips</th>
+    </tr>
+    <tr data-ng-repeat="row in matchingResultData">
+      <td>{{row.medianCostAverage}}</td>
+      <td>{{row.medianCostMax}}</td>
+      <td>{{row.qualityLevelAverage}}</td>
+      <td>{{row.qualityLevelMax}}</td>
+      <td>{{row.numberTrips}}</td>
+    </tr>
+  </table>
+</div>
 
-<br/>
 
 <h3>Matching Results Blocks</h3>
-
-<table class="data-table">
-  <tr>
-    <th>blockKey</th>
-    <th>blockLabel</th>
-    <th>medianCostAverage</th>
-    <th>medianCostMax</th>
-    <th>qualityLevelAverage</th>
-    <th>qualityLevelMax</th>
-    <th>numberTrips</th>
-  </tr>
-  <tr data-ng-repeat="row in matchingResultDataBlocks">
-    <td>{{row.blockKey}}</td>
-    <td>{{row.blockLabel}}</td>
-    <td>{{row.medianCostAverage}}</td>
-    <td>{{row.medianCostMax}}</td>
-    <td>{{row.qualityLevelAverage}}</td>
-    <td>{{row.qualityLevelMax}}</td>
-    <td>{{row.numberTrips}}</td>
-  </tr>
-</table>
-
-<br/>
+<div class="table-wrapper">
+  <table class="data-table">
+    <tr>
+      <th>blockKey</th>
+      <th>blockLabel</th>
+      <th>medianCostAverage</th>
+      <th>medianCostMax</th>
+      <th>qualityLevelAverage</th>
+      <th>qualityLevelMax</th>
+      <th>numberTrips</th>
+    </tr>
+    <tr data-ng-repeat="row in matchingResultDataBlocks">
+      <td>{{row.blockKey}}</td>
+      <td>{{row.blockLabel}}</td>
+      <td>{{row.medianCostAverage}}</td>
+      <td>{{row.medianCostMax}}</td>
+      <td>{{row.qualityLevelAverage}}</td>
+      <td>{{row.qualityLevelMax}}</td>
+      <td>{{row.numberTrips}}</td>
+    </tr>
+  </table>
+</div>
 
 <h3>Matching Results Lines</h3>
-
-<table class="data-table">
-  <tr>
-    <th>lineKey</th>
-    <th>lineLabel</th>
-    <th>medianCostAverage</th>
-    <th>medianCostMax</th>
-    <th>qualityLevelAverage</th>
-    <th>qualityLevelMax</th>
-    <th>numberTrips</th>
-  </tr>
-  <tr data-ng-repeat="row in matchingResultDataLines">
-    <td>{{row.lineKey}}</td>
-    <td>{{row.lineLabel}}</td>
-    <td>{{row.medianCostAverage}}</td>
-    <td>{{row.medianCostMax}}</td>
-    <td>{{row.qualityLevelAverage}}</td>
-    <td>{{row.qualityLevelMax}}</td>
-    <td>{{row.numberTrips}}</td>
-  </tr>
-</table>
-
-<br/>
+<div class="table-wrapper">
+  <table class="data-table">
+    <tr>
+      <th>lineKey</th>
+      <th>lineLabel</th>
+      <th>medianCostAverage</th>
+      <th>medianCostMax</th>
+      <th>qualityLevelAverage</th>
+      <th>qualityLevelMax</th>
+      <th>numberTrips</th>
+    </tr>
+    <tr data-ng-repeat="row in matchingResultDataLines">
+      <td>{{row.lineKey}}</td>
+      <td>{{row.lineLabel}}</td>
+      <td>{{row.medianCostAverage}}</td>
+      <td>{{row.medianCostMax}}</td>
+      <td>{{row.qualityLevelAverage}}</td>
+      <td>{{row.qualityLevelMax}}</td>
+      <td>{{row.numberTrips}}</td>
+    </tr>
+  </table>
+</div>
 
 <h3>Matching Results Vehicles</h3>
-
-<table class="data-table">
-  <tr>
-    <th>vehicleKey</th>
-    <th>vehicleCode</th>
-    <th>vehicleLabel</th>
-    <th>medianCostAverage</th>
-    <th>medianCostMax</th>
-    <th>qualityLevelAverage</th>
-    <th>qualityLevelMax</th>
-    <th>numberTrips</th>
-  </tr>
-  <tr data-ng-repeat="row in matchingResultDataVehicles">
-    <td>{{row.vehicleKey}}</td>
-    <td>{{row.vehicleCode}}</td>
-    <td>{{row.vehicleLabel}}</td>
-    <td>{{row.medianCostAverage}}</td>
-    <td>{{row.medianCostMax}}</td>
-    <td>{{row.qualityLevelAverage}}</td>
-    <td>{{row.qualityLevelMax}}</td>
-    <td>{{row.numberTrips}}</td>
-  </tr>
-</table>
-
+<div class="table-wrapper">
+  <table class="data-table">
+    <tr>
+      <th>vehicleKey</th>
+      <th>vehicleCode</th>
+      <th>vehicleLabel</th>
+      <th>medianCostAverage</th>
+      <th>medianCostMax</th>
+      <th>qualityLevelAverage</th>
+      <th>qualityLevelMax</th>
+      <th>numberTrips</th>
+    </tr>
+    <tr data-ng-repeat="row in matchingResultDataVehicles">
+      <td>{{row.vehicleKey}}</td>
+      <td>{{row.vehicleCode}}</td>
+      <td>{{row.vehicleLabel}}</td>
+      <td>{{row.medianCostAverage}}</td>
+      <td>{{row.medianCostMax}}</td>
+      <td>{{row.qualityLevelAverage}}</td>
+      <td>{{row.qualityLevelMax}}</td>
+      <td>{{row.numberTrips}}</td>
+    </tr>
+  </table>
+</div>
 <br/>
 <br/>
 

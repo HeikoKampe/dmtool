@@ -6,13 +6,15 @@ body {
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+h1, h2, h3, h4 { margin-top:0; }
+
 .angular-google-map-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
 
 .map-panel-wrapper {
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 300px;
+  width: 250px;
 }
 
 .map-panel {
@@ -22,10 +24,18 @@ a:hover { text-decoration: underline; }
   background: #fff;
   opacity: 0.9;
   margin-bottom: 10px;
+  border-radius:3px;
 }
 
-table {
-  width: 100%;
+.data-table {
+  min-width:900px;
+}
+
+.table-wrapper {
+  display:inline-block;
+  max-height:300px;
+  overflow-y: auto;
+  margin-bottom:40px;
 }
 
 .data-table {
@@ -61,4 +71,10 @@ form.query-form {
   margin-bottom: 20px;
   padding: 20px;
   background: #eee;
+}
+
+.shadow {
+  -moz-box-shadow:    2px 2px 5px 2px #aaa;
+  -webkit-box-shadow: 2px 2px 5px 2px #aaa;
+  box-shadow:         2px 2px 5px 2px #aaa;
 }

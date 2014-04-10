@@ -18,11 +18,16 @@ angular.module('dmtoolApp')
       }
     }
 
+    function setDateTime (timeString) {
+      $scope.dateTime = new Date(parseInt(timeString)).toLocaleString();
+    }
+
     function getRawData() {
       console.log($routeParams);
       apiService.getRawData('stopstatistics/tripstarttime/' + $routeParams.vehicleId + '/' + $routeParams.startTime).then(function (res) {
         console.log("res.stopstatisticsData", res.data);
         setMapCenter(res.data);
+        setDateTime($routeParams.startTime);
         $scope.rawStopsSequences = sequenceService.createSequences(res.data, 'cntTripKey');
       });
     }
