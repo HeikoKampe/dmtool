@@ -4,16 +4,17 @@ angular.module('dmtoolApp')
   .factory('sequenceService', function () {
 
     var sequences;
-
-    function setSequenceProperties (firstEntry) {
+   
+   function setSequenceProperties (firstEntry) {
       var
         properties = {
         visible: false,
         matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
-        departureTime: new Date(firstEntry.departure).toLocaleTimeString()
+        departureTime: (firstEntry.tripLabelShort) ? firstEntry.tripLabelShort : new Date(firstEntry.departure).toLocaleTimeString()
       };
       return properties;
     }
+
 
     function createSequences(data, splitKey) {
       var
