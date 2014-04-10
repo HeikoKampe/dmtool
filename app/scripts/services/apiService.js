@@ -11,7 +11,7 @@ angular.module('dmtoolApp')
 
 
     // switch between different base urls here
-    apiBaseUrl = API_BASE_URL_REMOTE;
+    apiBaseUrl = API_BASE_URL_LOCAL;
 
 
     function getRawData(resource, paramsObj) {
@@ -27,7 +27,7 @@ angular.module('dmtoolApp')
     }
 
     function getMatchedData(resource, paramsObj) {
-      return $http.get(apiBaseUrl + 'matched/' + resource, { params: paramsObj });
+      return $http.get(apiBaseUrl + 'match/' + resource, { params: paramsObj });
     }
 
     // Public API here
