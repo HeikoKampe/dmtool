@@ -11,7 +11,7 @@ angular.module('dmtoolApp')
 
 
     // switch between different base urls here
-    apiBaseUrl = API_BASE_URL_LOCAL;
+    apiBaseUrl = API_BASE_URL_REMOTE;
 
 
     function getRawData(resource, paramsObj) {

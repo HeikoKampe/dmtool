@@ -21,7 +21,7 @@ angular.module('dmtoolApp')
     function getRawData() {
       console.log($routeParams);
       apiService.getRawData('stopstatistics/tripstarttime/' + $routeParams.vehicleId + '/' + $routeParams.startTime).then(function (res) {
-        console.log("res.data", res.data);
+        console.log("res.stopstatisticsData", res.data);
         setMapCenter(res.data);
         $scope.rawStopsSequences = sequenceService.createSequences(res.data, 'cntTripKey');
       });
@@ -30,7 +30,7 @@ angular.module('dmtoolApp')
     function getScheduleData() {
       console.log($routeParams);
       apiService.getScheduleData('stops/' + $routeParams.vehicleId + '/' + $routeParams.startTime).then(function (res) {
-        console.log("res.data", res.data);
+        console.log("res.scheduleData", res.data);
         $scope.plannedStops = res.data;
         $scope.plannedStopsSequences = sequenceService.createSequences(res.data, 'tripKey');
       });
