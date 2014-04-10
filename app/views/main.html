@@ -4,24 +4,29 @@
 
 <h2>Matching Overview</h2>
 
-<form data-ng-submit="submitRaw()" class="query-form">
-    <table style="width:auto;">
-      <tr>
-        <td>dateFrom</td>
-        <td>
-          <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
-        </td>
-      </tr>
-      <tr>
-        <td>dateTo</td>
-        <td>
-          <input type="text" data-ng-model="queryParams.dateTo" value=""/>
-        </td>
-      </tr>
+<form data-ng-submit="submit()" class="query-form">
+  <table style="width:auto;">
+    <tr>
+      <td>dateFrom</td>
+      <td>
+        <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td>dateTo</td>
+      <td>
+        <input type="text" data-ng-model="queryParams.dateTo" value=""/>
+      </td>
+    </tr>
 
-    </table>
-    <p><button type="submit">submit</button></p>
-  </form>
+  </table>
+  <p>
+    <button type="submit">submit</button>
+  </p>
+</form>
+
+
+<h3>Stop Statistics</h3>
 
 <table class="data-table">
   <tr>
@@ -33,7 +38,7 @@
     <th>matchingRate</th>
     <th></th>
   </tr>
-  <tr data-ng-repeat="row in matchingResultData">
+  <tr data-ng-repeat="row in stopstatisticResultData">
     <td>{{row.vehicleCode}}</td>
     <td>{{row.rawStartDateAsString}}</td>
     <td>{{row.rawStops}}</td>
@@ -43,4 +48,104 @@
     <td><a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show sequence-map-view</a></td>
   </tr>
 </table>
+
+<h3>Matching Results</h3>
+
+<table class="data-table">
+  <tr>
+    <th>medianCostAverage</th>
+    <th>medianCostMax</th>
+    <th>qualityLevelAverage</th>
+    <th>qualityLevelMax</th>
+    <th>numberTrips</th>
+  </tr>
+  <tr data-ng-repeat="row in matchingResultData">
+    <td>{{row.medianCostAverage}}</td>
+    <td>{{row.medianCostMax}}</td>
+    <td>{{row.qualityLevelAverage}}</td>
+    <td>{{row.qualityLevelMax}}</td>
+    <td>{{row.numberTrips}}</td>
+  </tr>
+</table>
+
+<br/>
+
+<h3>Matching Results Blocks</h3>
+
+<table class="data-table">
+  <tr>
+    <th>blockKey</th>
+    <th>blockLabel</th>
+    <th>medianCostAverage</th>
+    <th>medianCostMax</th>
+    <th>qualityLevelAverage</th>
+    <th>qualityLevelMax</th>
+    <th>numberTrips</th>
+  </tr>
+  <tr data-ng-repeat="row in matchingResultDataBlocks">
+    <td>{{row.blockKey}}</td>
+    <td>{{row.blockLabel}}</td>
+    <td>{{row.medianCostAverage}}</td>
+    <td>{{row.medianCostMax}}</td>
+    <td>{{row.qualityLevelAverage}}</td>
+    <td>{{row.qualityLevelMax}}</td>
+    <td>{{row.numberTrips}}</td>
+  </tr>
+</table>
+
+<br/>
+
+<h3>Matching Results Lines</h3>
+
+<table class="data-table">
+  <tr>
+    <th>lineKey</th>
+    <th>lineLabel</th>
+    <th>medianCostAverage</th>
+    <th>medianCostMax</th>
+    <th>qualityLevelAverage</th>
+    <th>qualityLevelMax</th>
+    <th>numberTrips</th>
+  </tr>
+  <tr data-ng-repeat="row in matchingResultDataLines">
+    <td>{{row.lineKey}}</td>
+    <td>{{row.lineLabel}}</td>
+    <td>{{row.medianCostAverage}}</td>
+    <td>{{row.medianCostMax}}</td>
+    <td>{{row.qualityLevelAverage}}</td>
+    <td>{{row.qualityLevelMax}}</td>
+    <td>{{row.numberTrips}}</td>
+  </tr>
+</table>
+
+<br/>
+
+<h3>Matching Results Vehicles</h3>
+
+<table class="data-table">
+  <tr>
+    <th>vehicleKey</th>
+    <th>vehicleCode</th>
+    <th>vehicleLabel</th>
+    <th>medianCostAverage</th>
+    <th>medianCostMax</th>
+    <th>qualityLevelAverage</th>
+    <th>qualityLevelMax</th>
+    <th>numberTrips</th>
+  </tr>
+  <tr data-ng-repeat="row in matchingResultDataVehicles">
+    <td>{{row.vehicleKey}}</td>
+    <td>{{row.vehicleCode}}</td>
+    <td>{{row.vehicleLabel}}</td>
+    <td>{{row.medianCostAverage}}</td>
+    <td>{{row.medianCostMax}}</td>
+    <td>{{row.qualityLevelAverage}}</td>
+    <td>{{row.qualityLevelMax}}</td>
+    <td>{{row.numberTrips}}</td>
+  </tr>
+</table>
+
+<br/>
+<br/>
+
 

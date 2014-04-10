@@ -26,11 +26,16 @@ angular.module('dmtoolApp')
       return $http.get(apiBaseUrl + 'count/' + resource, { params: paramsObj });
     }
 
+    function getMatchedData(resource, paramsObj) {
+      return $http.get(apiBaseUrl + 'matched/' + resource, { params: paramsObj });
+    }
+
     // Public API here
     return {
       getRawData: getRawData,
       getScheduleData: getScheduleData,
-      getCountData: getCountData
+      getCountData: getCountData,
+      getMatchedData: getMatchedData
     };
 
 
