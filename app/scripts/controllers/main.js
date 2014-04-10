@@ -5,11 +5,11 @@ angular.module('dmtoolApp')
 
     $scope.queryParams = {
       dateFrom: '2012-01-11',
-      dateTo: '2012-02-12'
+      dateTo: '2013-06-12'
     };
 
     $scope.getRawData = function () {
-      apiService.getRawData('stopstatistics/tripstarttime/', $scope.queryParams).then(function (res) {
+      apiService.getRawData('stops/', $scope.queryParams).then(function (res) {
         console.log("res.data", res.data);
         $scope.stopstatisticResultData = res.data;
       });

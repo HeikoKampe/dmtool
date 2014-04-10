@@ -24,7 +24,7 @@ angular.module('dmtoolApp')
 
     function getRawData() {
       console.log($routeParams);
-      apiService.getRawData('stops' + $routeParams.vehicleId + '/' + $routeParams.startTime).then(function (res) {
+      apiService.getRawData('stops/' + $routeParams.vehicleId + '/' + $routeParams.startTime).then(function (res) {
         console.log("res.stopstatisticsData", res.data);
         setMapCenter(res.data);
         setDateTime($routeParams.startTime);
