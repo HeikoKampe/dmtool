@@ -8,6 +8,13 @@ angular.module('dmtoolApp')
     $scope.plannedStops = [];
     $scope.plannedStopsSequences = [];
 
+    $scope.redMarkerOptions = {
+      icon: {
+        anchor: new google.maps.Point(6,6),
+        url: 'images/marker-round-red.png'
+      }
+    };
+
     function setMapCenter(data) {
       for (var i = 0; i < data.length; i++) {
         if (data[i].latitude > 0 && data[i].longitude > 0) {
@@ -18,13 +25,13 @@ angular.module('dmtoolApp')
       }
     }
 
-    function setDateTime (timeString) {
+    function setDateTime(timeString) {
       $scope.dateTime = new Date(parseInt(timeString)).toLocaleString();
     }
 
     function getRawData() {
       console.log($routeParams);
-      apiService.getRawData('stops/' + $routeParams.vehicleId + '/' + $routeParams.startTime).then(function (res) {
+      apiService.getRawData('stops/' + $routeParams.vehicleId + '/' + $routeParams.startTime + '?dateFrom=' + $routeParams.dateFrom + '&dateTo=' + $routeParams.dateTo).then(function (res) {
         console.log("res.stopstatisticsData", res.data);
         setMapCenter(res.data);
         setDateTime($routeParams.startTime);
