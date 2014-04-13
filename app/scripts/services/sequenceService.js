@@ -34,11 +34,10 @@ angular.module('dmtoolApp')
         }
         splitKeyValue = data[i][splitKey];
       }
-      // in case there are zero matched sequences, push one single unmatched sequence into sequences array
-      if (sequences.length === 0) {
-        sequenceProperties = setSequenceProperties(data[0]);
-        sequences.push({ properties: sequenceProperties, data: sequenceData});
-      }
+
+      // push the last found sequence into the sequence array
+      sequences.push({ properties: sequenceProperties, data: sequenceData});
+
       return sequences;
     }
 
