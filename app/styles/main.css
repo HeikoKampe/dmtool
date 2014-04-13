@@ -8,6 +8,13 @@ a:hover { text-decoration: underline; }
 
 h1, h2, h3, h4 { margin-top:0; }
 
+.black { color: #000; }
+.red { color: #ce322e; }
+.green { color: #12920c; }
+.blue { color: #2a80af;}
+.orange { color: #e47614; }
+.pink { color: #c33a77; }
+
 .angular-google-map-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
 
 .map-panel-wrapper {
@@ -52,19 +59,9 @@ h1, h2, h3, h4 { margin-top:0; }
 
 .marker-label {
   font-size: 14px;
+  text-shadow: 1px 1px #ffffff;
 }
 
-.matched {
-  color: blue;
-}
-
-.unmatched {
-  color: red;
-}
-
-.scheduled {
-  color: green;
-}
 
 form.query-form {
   display: inline-block;

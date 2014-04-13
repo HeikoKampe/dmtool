@@ -1,25 +1,17 @@
 'use strict';
 
 angular.module('dmtoolApp')
-  .controller('Map2Ctrl', function ($scope, $routeParams, apiService, mapConf, sequenceService) {
+  .controller('Map2Ctrl', function ($scope, $routeParams, apiService, sequenceService, gMapService) {
 
-    $scope.mapConf = mapConf;
+    $scope.mapConfig = gMapService.getMapConfig();
     $scope.rawStopsSequences = [];
     $scope.plannedStops = [];
     $scope.plannedStopsSequences = [];
 
-    $scope.redMarkerOptions = {
-      icon: {
-        anchor: new google.maps.Point(6,6),
-        url: 'images/marker-round-red.png'
-      }
-    };
-
     function setMapCenter(data) {
       for (var i = 0; i < data.length; i++) {
         if (data[i].latitude > 0 && data[i].longitude > 0) {
-          $scope.mapConf.center.latitude = data[i].latitude;
-          $scope.mapConf.center.longitude = data[i].longitude;
+            gMapService.setMapCenter(data[i].latitude, data[i].longitude);
           break;
         }
       }

@@ -8,7 +8,7 @@ angular.module('dmtoolApp')
         properties = {
           visible: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
-          departureTime: (firstEntry.tripLabelShort) ? firstEntry.tripLabelShort : new Date(firstEntry.departure).toLocaleTimeString()
+          departureTime: firstEntry.departureAsString
         };
       return properties;
     }

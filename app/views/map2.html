@@ -1,12 +1,12 @@
-<google-map center='mapConf.center' zoom="mapConf.zoom" options="mapConf.options" draggable="true" id="gmap">
+<google-map center='mapConfig.center' zoom="mapConfig.zoom" options="mapConfig.options" draggable="true" id="gmap">
   <div data-ng-repeat="seq in rawStopsSequences" ng-switch on="seq.properties.visible">
     <div ng-switch-when="true">
       <markers
           models="seq.data"
           coords="'self'"
-          options="mapConf.markers.red"
+          options="seq.properties.matchingStatus === 'matched' ? mapConfig.roundMarkers.green : mapConfig.roundMarkers.red "
           labelContent="'cntSequence'"
-          labelAnchor="10 0"
+          labelAnchor="4 24"
           labelClass="marker-label">
         <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
@@ -63,7 +63,7 @@
 
         </windows>
       </markers>
-      <polyline path="seq.data" stroke="mapConf.lines[seq.properties.matchingStatus]"></polyline>
+      <polyline path="seq.data" stroke="seq.properties.matchingStatus === 'matched' ? mapConfig.lines.green : mapConfig.lines.red"></polyline>
     </div>
   </div>
 
@@ -73,7 +73,7 @@
       <markers
           models="seq.data"
           coords="'self'"
-          options="mapConf.markers.green"
+          options="mapConfig.roundMarkers.blue"
           labelContent="'sequence'"
           labelAnchor="10 0"
           labelClass="marker-label">
@@ -129,11 +129,9 @@
 
         </windows>
       </markers>
-      <polyline path="seq.data" stroke="mapConf.lines.scheduled"></polyline>
+      <polyline path="seq.data" stroke="mapConfig.lines.blue"></polyline>
     </div>
   </div>
-
-  <!--<markers models="plannedStops" coords="'self'"></markers>-->
 
 </google-map>
 
@@ -146,7 +144,7 @@
     <p>Date: {{dateTime}}</p>
 
     <div data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
-         data-ng-class="seq.properties.matchingStatus">
+         data-ng-class="seq.properties.matchingStatus === 'matched' ? 'green' : 'red' ">
       <input
           type="checkbox"
           data-ng-model="seq.properties.visible"
@@ -156,14 +154,14 @@
           />
       {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}})
     </div>
-    <p><span class="matched">matched</span> / <span class="unmatched">unmatched</span></p>
+    <p><span class="green">matched</span> / <span class="red">unmatched</span></p>
   </div>
 
   <div class="map-panel shadow">
     <h4>Scheduled Sequences</h4>
 
     <div data-ng-repeat="seq in plannedStopsSequences" data-ng-switch data-on="seq.properties.visible"
-         class="scheduled">
+         class="blue">
       <input
           type="checkbox"
           data-ng-model="seq.properties.visible"
