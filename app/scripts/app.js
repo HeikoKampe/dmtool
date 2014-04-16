@@ -15,6 +15,10 @@ angular.module('dmtoolApp', [
         templateUrl: 'views/map2.html',
         controller: 'Map2Ctrl'
       })
+      .when('/map3', {
+        templateUrl: 'views/map3.html',
+        controller: 'Map3Ctrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

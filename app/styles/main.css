@@ -8,6 +8,10 @@ a:hover { text-decoration: underline; }
 
 h1, h2, h3, h4 { margin-top:0; }
 
+input[type="text"] {
+  width:90px;
+}
+
 .black { color: #000; }
 .red { color: #ce322e; }
 .green { color: #12920c; }
@@ -64,9 +68,8 @@ h1, h2, h3, h4 { margin-top:0; }
 
 
 form.query-form {
-  display: inline-block;
   margin-bottom: 20px;
-  padding: 20px;
+  padding: 10px;
   background: #eee;
 }
 

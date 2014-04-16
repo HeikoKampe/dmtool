@@ -1,0 +1,74 @@
+<google-map center='mapConfig.center' zoom="mapConfig.zoom" options="mapConfig.options" draggable="true"
+            events="mapEvents" id="gmap">
+
+  <markers
+      models="stopVariation"
+      coords="'self'"
+      options="mapConfig.roundMarkers.red"
+      labelAnchor="4 24"
+      labelClass="marker-label">
+
+    <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+
+      <table data-ng-non-bindable>
+        <tr>
+          <td>arrivalAsString</td>
+          <td>{{arrivalAsString}}</td>
+        </tr>
+        <tr>
+          <td>departureAsString</td>
+          <td>{{departureAsString}}</td>
+        </tr>
+        <tr>
+          <td>vehicleCode</td>
+          <td>{{vehicleCode}}</td>
+        </tr>
+      </table>
+
+    </windows>
+  </markers>
+  </div>
+
+</google-map>
+
+
+<div class="map-panel-wrapper">
+
+  <div class="map-panel shadow">
+    <h3>Show stops of slected area</h3>
+
+    <form data-ng-submit="submit()" class="query-form">
+      <p>
+        Date<br>
+        <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+        -
+        <input type="text" data-ng-model="queryParams.dateTo" value=""/>
+      </p>
+
+      <p>
+        South-West Bounds (lat1 / lng1)<br/>
+        <input type="text" data-ng-model="queryParams.lat1" value=""/> /
+        <input type="text" data-ng-model="queryParams.lon1" value=""/>
+      </p>
+
+      <p>
+        North-East Bounds (lat2 / lng2)<br/>
+        <input type="text" data-ng-model="queryParams.lat2" value=""/> /
+        <input type="text" data-ng-model="queryParams.lon2" value=""/>
+      </p>
+
+      <p>
+        <button type="submit">submit</button>
+      </p>
+    </form>
+
+    <div class="messages">
+      <p>Number of entries: {{messages.length}}</p>
+      <p>{{messages.loading}}</p>
+      <p class="red">{{messages.lengthWarning}}</p>
+    </div>
+
+  </div>
+
+
+</div>
