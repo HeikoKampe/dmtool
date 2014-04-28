@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dmtoolApp')
+angular.module('mdToolApp')
   .controller('MainCtrl', function ($scope, $http, apiService) {
 
     $scope.queryParams = {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dmtoolApp')
+angular.module('mdToolApp')
   .value('globalConf', {
 
     API_BASE_URL :  'https://demodwm3.dilax.com/davisweb/rest/md/',

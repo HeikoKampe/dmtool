@@ -3,7 +3,7 @@
 describe('Controller: Map3Ctrl', function () {
 
   // load the controller's module
-  beforeEach(module('dmtoolApp'));
+  beforeEach(module('mdToolApp'));
 
   var Map3Ctrl,
     scope;

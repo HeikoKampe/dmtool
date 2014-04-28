@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dmtoolApp')
+angular.module('mdToolApp')
   .factory('gMapService', function () {
 
     var

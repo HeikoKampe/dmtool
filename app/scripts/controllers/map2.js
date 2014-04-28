@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dmtoolApp')
+angular.module('mdToolApp')
   .controller('Map2Ctrl', function ($scope, $routeParams, apiService, sequenceService, gMapService) {
 
     $scope.mapConfig = gMapService.getMapConfig();
