@@ -7,7 +7,12 @@ angular.module('mdToolApp')
       isFirstApiRequest = true;
 
     $scope.mapConfig = gMapService.getMapConfig();
-    $scope.stopVariation = [];
+    $scope.stopVariation = {
+      matched: [],
+      unmatched: []
+    };
+    $scope.showMatchedStopVariation = true;
+    $scope.showUnatchedStopVariation = true;
 
     $scope.queryParams = {
       dateFrom: $routeParams.dateFrom,
@@ -44,10 +49,23 @@ angular.module('mdToolApp')
       return queryString;
     }
 
+    function matchingStatusFilter (data) {
+      $scope.stopVariation = {
+        matched: [],
+        unmatched: []
+      };
+      angular.forEach(data, function(value, key){
+        if (value.hasCntStop=== 'Y') {
+          $scope.stopVariation.matched.push(value);
+        } else {
+          $scope.stopVariation.unmatched.push(value);
+        }
+      });
+    }
+
     function getRawData() {
       $scope.messages.loading = 'getting data ...';
       apiService.getRawData('stops/variation' + buildQueryString($scope.queryParams)).then(function (res) {
-        console.log("res.variations", res.data, res.data.length);
         $scope.messages.length = res.data.length;
         $scope.messages.loading = '';
         $scope.lengthWarning = '';
@@ -56,7 +74,8 @@ angular.module('mdToolApp')
           isFirstApiRequest = false;
         }
         if (res.data.length <= 3000) {
-          $scope.stopVariation = res.data;
+//          $scope.stopVariation = res.data;
+          matchingStatusFilter(res.data);
           $scope.lengthWarning = '';
         } else {
           $scope.messages.lengthWarning = 'Too many results (' + res.data.length + ')!  Please zoom in.';
@@ -91,5 +110,4 @@ angular.module('mdToolApp')
 
     getRawData();
 
-  })
-;
+  });

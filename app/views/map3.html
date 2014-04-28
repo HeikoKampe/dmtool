@@ -1,32 +1,74 @@
 <google-map center='mapConfig.center' zoom="mapConfig.zoom" options="mapConfig.options" draggable="true"
             events="mapEvents" id="gmap">
+  <div ng-switch on="showUnmatchedStopVariation">
+    <div ng-switch-when="true">
+      <markers
+          models="stopVariation.unmatched"
+          coords="'self'"
+          options="mapConfig.roundMarkers.red"
+          labelAnchor="4 24"
+          labelClass="marker-label">
 
-  <markers
-      models="stopVariation"
-      coords="'self'"
-      options="mapConfig.roundMarkers.red"
-      labelAnchor="4 24"
-      labelClass="marker-label">
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
-    <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+          <table data-ng-non-bindable>
+            <tr>
+              <td>arrivalAsString</td>
+              <td>{{arrivalAsString}}</td>
+            </tr>
+            <tr>
+              <td>departureAsString</td>
+              <td>{{departureAsString}}</td>
+            </tr>
+            <tr>
+              <td>vehicleCode</td>
+              <td>{{vehicleCode}}</td>
+            </tr>
+            <tr>
+              <td>hasCntStop</td>
+              <td>{{hasCntStop}}</td>
+            </tr>
+          </table>
 
-      <table data-ng-non-bindable>
-        <tr>
-          <td>arrivalAsString</td>
-          <td>{{arrivalAsString}}</td>
-        </tr>
-        <tr>
-          <td>departureAsString</td>
-          <td>{{departureAsString}}</td>
-        </tr>
-        <tr>
-          <td>vehicleCode</td>
-          <td>{{vehicleCode}}</td>
-        </tr>
-      </table>
+        </windows>
+      </markers>
+    </div>
+  </div>
 
-    </windows>
-  </markers>
+  <div ng-switch on="showMatchedStopVariation">
+    <div ng-switch-when="true">
+
+      <markers
+          models="stopVariation.matched"
+          coords="'self'"
+          options="mapConfig.roundMarkers.green"
+          labelAnchor="4 24"
+          labelClass="marker-label">
+
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+          <table data-ng-non-bindable>
+            <tr>
+              <td>arrivalAsString</td>
+              <td>{{arrivalAsString}}</td>
+            </tr>
+            <tr>
+              <td>departureAsString</td>
+              <td>{{departureAsString}}</td>
+            </tr>
+            <tr>
+              <td>vehicleCode</td>
+              <td>{{vehicleCode}}</td>
+            </tr>
+            <tr>
+              <td>hasCntStop</td>
+              <td>{{hasCntStop}}</td>
+            </tr>
+          </table>
+        </windows>
+
+      </markers>
+
+    </div>
   </div>
 
 </google-map>
@@ -64,8 +106,36 @@
 
     <div class="messages">
       <p>Number of entries: {{messages.length}}</p>
+
       <p>{{messages.loading}}</p>
+
       <p class="red">{{messages.lengthWarning}}</p>
+    </div>
+
+    <div>
+      <p>
+        <label class="green">
+          <input
+              type="checkbox"
+              data-ng-model="showMatchedStopVariation"
+              data-ng-checked="true"
+              data-ng-true-value="true"
+              data-ng-false-value="false"
+              />
+          Show matched stops ({{stopVariation.matched.length}})
+        </label>
+      <br/>
+        <label class="red">
+        <input
+            type="checkbox"
+            data-ng-model="showUnmatchedStopVariation"
+            data-ng-checked="true"
+            data-ng-true-value="true"
+            data-ng-false-value="false"
+            />
+        Show unmatched stops ({{stopVariation.unmatched.length}})
+        </label>
+      </p>
     </div>
 
   </div>
