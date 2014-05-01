@@ -8,7 +8,8 @@ angular.module('mdToolApp')
         properties = {
           visible: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
-          departureTime: firstEntry.departureAsString
+          departureTime: firstEntry.departureAsString,
+          tripKey: firstEntry.tripKey || firstEntry.cntTripKey
         };
       return properties;
     }

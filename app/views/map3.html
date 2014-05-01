@@ -60,8 +60,8 @@
               <td>{{vehicleCode}}</td>
             </tr>
             <tr>
-              <td>hasCntStop</td>
-              <td>{{hasCntStop}}</td>
+              <td>cntTripKey</td>
+              <td>{{cntTripKey}}</td>
             </tr>
           </table>
         </windows>
@@ -77,7 +77,7 @@
 <div class="map-panel-wrapper">
 
   <div class="map-panel shadow">
-    <h3>Show stops of slected area</h3>
+    <h3>Show stops of selected area</h3>
 
     <form data-ng-submit="submit()" class="query-form">
       <p>
@@ -124,16 +124,16 @@
               />
           Show matched stops ({{stopVariation.matched.length}})
         </label>
-      <br/>
+        <br/>
         <label class="red">
-        <input
-            type="checkbox"
-            data-ng-model="showUnmatchedStopVariation"
-            data-ng-checked="true"
-            data-ng-true-value="true"
-            data-ng-false-value="false"
-            />
-        Show unmatched stops ({{stopVariation.unmatched.length}})
+          <input
+              type="checkbox"
+              data-ng-model="showUnmatchedStopVariation"
+              data-ng-checked="true"
+              data-ng-true-value="true"
+              data-ng-false-value="false"
+              />
+          Show unmatched stops ({{stopVariation.unmatched.length}})
         </label>
       </p>
     </div>

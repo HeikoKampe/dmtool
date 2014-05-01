@@ -74,7 +74,6 @@ angular.module('mdToolApp')
           isFirstApiRequest = false;
         }
         if (res.data.length <= 3000) {
-//          $scope.stopVariation = res.data;
           matchingStatusFilter(res.data);
           $scope.lengthWarning = '';
         } else {
