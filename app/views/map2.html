@@ -265,7 +265,7 @@
         <select style="width:100%;"
                 size="5"
                 data-ng-model="selectedBlock"
-                data-ng-options="block.blockKey + ': ' + block.blockLabel for block in blocksOfDay">
+                data-ng-options="block.blockKey + ': ' + block.blockLabel for block in blocksOfDay | filter:{ blockKey: blockFilter.key, blockLabel: blockFilter.label }">
         </select>
       </p>
 
