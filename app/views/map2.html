@@ -1,3 +1,4 @@
+<!-- begin: gMap -->
 <google-map center='mapConfig.center' zoom="mapConfig.zoom" options="mapConfig.options" draggable="true" id="gmap">
 <div data-ng-repeat="seq in rawStopsSequences" ng-switch on="seq.properties.visible">
   <div ng-switch-when="true">
@@ -200,90 +201,148 @@
 </div>
 
 </google-map>
+<!-- end: gMap -->
 
-
+<!-- begin: left panel -->
 <div class="map-panel-wrapper">
 
-  <div class="map-panel shadow">
-    <h4>Found stop sequences</h4>
-
-    <p>Date: {{date}}</p>
-
-    <div data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
-         data-ng-class="seq.properties.matchingStatus === 'matched' ? 'green' : 'red' ">
-      <input
-          type="checkbox"
-          data-ng-model="seq.properties.visible"
-          data-ng-checked="false"
-          data-ng-true-value="true"
-          data-ng-false-value="false"
-          />
-      {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}}) ({{ seq.properties.tripKey }})
-    </div>
-    <p><span class="green">matched</span> / <span class="red">unmatched</span></p>
-  </div>
-
-  <div class="map-panel shadow">
-    <h4>Stop sequences of matching block&nbsp;({{matchedBlockKey}})</h4>
-
-    <div data-ng-repeat="seq in plannedStopsSequencesOfMatchedBlock" data-ng-switch data-on="seq.properties.visible"
-         class="blue">
-      <input
-          type="checkbox"
-          data-ng-model="seq.properties.visible"
-          data-ng-checked="false"
-          data-ng-true-value="true"
-          data-ng-false-value="false"
-          />
-      {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}}) ({{ seq.properties.tripKey }})
-    </div>
-  </div>
-
-  <div class="map-panel shadow">
-    <h4>All Blocks for this day {{isoDate}}</h4>
-
-    <form data-ng-submit="submitBlockForm()">
-      <div class="box">
-        <div class="box__header">Filter by</div>
-        <div class="box__body">
-          <table>
-            <tr>
-              <td>
-                <label>block key</label>
-                <input type="text" data-ng-model="blockFilter.key"/>
-              </td>
-              <td>
-                <label>block label</label>
-                <input type="text" data-ng-model="blockFilter.label"/>
-              </td>
-            </tr>
-          </table>
-        </div>
+  <div class="accordion">
+    <div class="accordion__item">
+      <div class="accordion__header active" data-accordion-header>
+        <h4 class="accordion__title">Found stop sequences</h4>
+        <span class="accordion__header-icon"></span>
       </div>
-
-      <p>
-        <select style="width:100%;"
-                size="5"
-                data-ng-model="selectedBlock"
-                data-ng-options="block.blockKey + ': ' + block.blockLabel for block in blocksOfDay | filter:{ blockKey: blockFilter.key, blockLabel: blockFilter.label }">
-        </select>
-      </p>
-
-      <p>
-        <button>Show stop sequences</button>
-      </p>
-    </form>
-    <div data-ng-repeat="seq in plannedStopsSequencesOfSelectedBlock" data-ng-switch data-on="seq.properties.visible"
-         class="blue">
-      <input
-          type="checkbox"
-          data-ng-model="seq.properties.visible"
-          data-ng-checked="false"
-          data-ng-true-value="true"
-          data-ng-false-value="false"
-          />
-      {{$index + 1}}) {{ seq.properties.departureTime }} ({{seq.data.length}}) ({{ seq.properties.tripKey }})
+      <div class="accordion__body active">
+        <div class="loading-spinner" data-ng-show="spinner[0]"><div class="loading-spinner__spinner"></div></div>
+        <p>Date: <strong>{{date}}</strong>, Vehicle: <strong>{{vehicleId}}</strong></p>
+        <table class="panel-table">
+          <tr>
+            <th>Show</th>
+            <th>Departure</th>
+            <th>Trip key</th>
+            <th>Stops</th>
+          </tr>
+          <tr data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
+              data-ng-class="seq.properties.matchingStatus === 'matched' ? 'green' : 'red' ">
+            <td>
+              <input
+                  type="checkbox"
+                  data-ng-model="seq.properties.visible"
+                  data-ng-checked="false"
+                  data-ng-true-value="true"
+                  data-ng-false-value="false"
+                  />
+            </td>
+            <td>{{ seq.properties.departureTime }}</td>
+            <td>{{ seq.properties.tripKey }}</td>
+            <td>{{seq.data.length}}</td>
+          </tr>
+        </table>
+        <p><span class="green">matched</span> / <span class="red">unmatched</span></p>
+      </div>
     </div>
-  </div>
 
+    <div class="accordion__item">
+      <div class="accordion__header active" data-accordion-header>
+        <h4 class="accordion__title">Stop sequences of matching block&nbsp;({{matchedBlockLabel}})</h4>
+        <span class="accordion__header-icon"></span>
+      </div>
+      <div class="accordion__body active">
+        <div class="loading-spinner" data-ng-show="spinner[1]"><div class="loading-spinner__spinner"></div></div>
+        <table class="panel-table">
+          <tr>
+            <th>Show</th>
+            <th>Departure</th>
+            <th>Trip label</th>
+            <th>Stops</th>
+          </tr>
+          <tr data-ng-repeat="seq in plannedStopsSequencesOfMatchedBlock" data-ng-switch
+              data-on="seq.properties.visible"
+              class="blue">
+            <td>
+              <input
+                  type="checkbox"
+                  data-ng-model="seq.properties.visible"
+                  data-ng-checked="false"
+                  data-ng-true-value="true"
+                  data-ng-false-value="false"
+                  />
+            </td>
+            <td>{{ seq.properties.departureTime }}</td>
+            <td>{{ seq.properties.tripLabel }}</td>
+            <td>{{seq.data.length}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="accordion__item">
+      <div class="accordion__header active" data-accordion-header>
+        <h4 class="accordion__title">All Blocks for this day {{isoDate}}</h4>
+        <span class="accordion__header-icon"></span>
+      </div>
+      <div class="accordion__body active">
+        <div class="loading-spinner" data-ng-show="spinner[2]"><div class="loading-spinner__spinner"></div></div>
+        <form data-ng-submit="submitBlockForm()">
+          <div class="box">
+            <div class="box__header">Filter by</div>
+            <div class="box__body">
+              <table>
+                <tr>
+                  <td>
+                    <label>block key</label>
+                    <input type="text" data-ng-model="blockFilter.key"/>
+                  </td>
+                  <td>
+                    <label>block label</label>
+                    <input type="text" data-ng-model="blockFilter.label"/>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            <select style="width:100%;"
+                    size="5"
+                    data-ng-model="selectedBlock"
+                    data-ng-options="block.blockKey + ': ' + block.blockLabel for block in blocksOfDay | filter:{ blockKey: blockFilter.key, blockLabel: blockFilter.label }">
+            </select>
+          </p>
+
+          <p>
+            <button>Show stop sequences</button>
+          </p>
+        </form>
+
+        <table class="panel-table">
+          <tr>
+            <th>Show</th>
+            <th>Departure</th>
+            <th>Trip label</th>
+            <th>Stops</th>
+          </tr>
+          <tr data-ng-repeat="seq in plannedStopsSequencesOfSelectedBlock" data-ng-switch
+              data-on="seq.properties.visible"
+              class="blue">
+            <td>
+              <input
+                  type="checkbox"
+                  data-ng-model="seq.properties.visible"
+                  data-ng-checked="false"
+                  data-ng-true-value="true"
+                  data-ng-false-value="false"
+                  />
+            </td>
+            <td>{{ seq.properties.departureTime }}</td>
+            <td>{{ seq.properties.tripLabel }}</td>
+            <td>{{seq.data.length}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
 </div>
+<!-- end: left panel -->

@@ -9,7 +9,8 @@ angular.module('mdToolApp')
           visible: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
           departureTime: firstEntry.departureAsString,
-          tripKey: firstEntry.tripKey || firstEntry.cntTripKey
+          tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
+          tripLabel: firstEntry.tripLabel || ''
         };
       return properties;
     }
