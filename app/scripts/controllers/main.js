@@ -8,17 +8,12 @@ angular.module('mdToolApp')
       dateTo: '2013-06-12'
     };
 
-    $scope.getRawData = function () {
-      apiService.getRawData('stops/', $scope.queryParams).then(function (res) {
-        console.log("res.data", res.data);
-        $scope.stopstatisticResultData = res.data;
-      });
-    };
+    $scope.selectedTable = 'vehicles';
 
-    $scope.getMatchedData = function () {
-      apiService.getMatchedData('', $scope.queryParams).then(function (res) {
+    $scope.getMatchedDataLines = function () {
+      apiService.getMatchedData('lines', $scope.queryParams).then(function (res) {
         console.log("res.data matched", res.data);
-        $scope.matchingResultData = res.data;
+        $scope.matchingResultDataLines = res.data;
       });
     };
 
@@ -29,32 +24,39 @@ angular.module('mdToolApp')
       });
     };
 
-    $scope.getMatchedDataLines = function () {
-      apiService.getMatchedData('lines', $scope.queryParams).then(function (res) {
-        console.log("res.data matched", res.data);
-        $scope.matchingResultDataLines = res.data;
+    $scope.getRawData = function () {
+      apiService.getRawData('stops/', $scope.queryParams).then(function (res) {
+        console.log("res.data", res.data);
+        $scope.stopstatisticResultData = res.data;
       });
     };
 
-    $scope.getMatchedDataVehicles = function () {
-      apiService.getMatchedData('vehicles', $scope.queryParams).then(function (res) {
-        console.log("res.data matched", res.data);
-        $scope.matchingResultDataVehicles = res.data;
-      });
-    };
+//    $scope.getMatchedData = function () {
+//      apiService.getMatchedData('', $scope.queryParams).then(function (res) {
+//        console.log("res.data matched", res.data);
+//        $scope.matchingResultData = res.data;
+//      });
+//    };
+//
+//    $scope.getMatchedDataVehicles = function () {
+//      apiService.getMatchedData('vehicles', $scope.queryParams).then(function (res) {
+//        console.log("res.data matched", res.data);
+//        $scope.matchingResultDataVehicles = res.data;
+//      });
+//    };
 
     $scope.submit = function () {
-      $scope.getRawData();
-      $scope.getMatchedData();
-      $scope.getMatchedDataBlocks();
       $scope.getMatchedDataLines();
-      $scope.getMatchedDataVehicles();
+      $scope.getMatchedDataBlocks();
+      $scope.getRawData();
+//      $scope.getMatchedData();
+//      $scope.getMatchedDataVehicles();
     };
 
-    $scope.getRawData();
-    $scope.getMatchedData();
-    $scope.getMatchedDataBlocks();
     $scope.getMatchedDataLines();
-    $scope.getMatchedDataVehicles();
+    $scope.getMatchedDataBlocks();
+    $scope.getRawData();
+//    $scope.getMatchedData();
+//    $scope.getMatchedDataVehicles();
 
   });

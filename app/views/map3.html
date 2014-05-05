@@ -76,69 +76,78 @@
 
 <div class="map-panel-wrapper">
 
-  <div class="map-panel shadow">
-    <h3>Show stops of selected area</h3>
+  <div class="accordion">
+    <div class="accordion__item">
+      <div class="accordion__header active" data-accordion-header>
+        <h4 class="accordion__title">Show stops of selected area</h4>
+        <span class="accordion__header-icon"></span>
+      </div>
+      <div class="accordion__body active">
 
-    <form data-ng-submit="submit()" class="query-form">
-      <p>
-        Date<br>
-        <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
-        -
-        <input type="text" data-ng-model="queryParams.dateTo" value=""/>
-      </p>
+        <form data-ng-submit="submit()" class="query-form">
+          <p>
+            Date<br>
+            <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+            -
+            <input type="text" data-ng-model="queryParams.dateTo" value=""/>
+          </p>
 
-      <p>
-        South-West Bounds (lat1 / lng1)<br/>
-        <input type="text" data-ng-model="queryParams.lat1" value=""/> /
-        <input type="text" data-ng-model="queryParams.lon1" value=""/>
-      </p>
+          <p>
+            South-West Bounds (lat1 / lng1)<br/>
+            <input type="text" data-ng-model="queryParams.lat1" value=""/> /
+            <input type="text" data-ng-model="queryParams.lon1" value=""/>
+          </p>
 
-      <p>
-        North-East Bounds (lat2 / lng2)<br/>
-        <input type="text" data-ng-model="queryParams.lat2" value=""/> /
-        <input type="text" data-ng-model="queryParams.lon2" value=""/>
-      </p>
+          <p>
+            North-East Bounds (lat2 / lng2)<br/>
+            <input type="text" data-ng-model="queryParams.lat2" value=""/> /
+            <input type="text" data-ng-model="queryParams.lon2" value=""/>
+          </p>
 
-      <p>
-        <button type="submit">submit</button>
-      </p>
-    </form>
+          <p>
+            <button type="submit">submit</button>
+          </p>
+        </form>
 
-    <div class="messages">
-      <p>Number of entries: {{messages.length}}</p>
+        <div class="wrapper">
+          <div class="loading-spinner" data-ng-show="spinner[0]"><div class="loading-spinner__spinner"></div></div>
+          <div class="messages">
+            <p>Number of entries: {{messages.length}}</p>
 
-      <p>{{messages.loading}}</p>
+            <p>{{messages.loading}}</p>
 
-      <p class="red">{{messages.lengthWarning}}</p>
+            <p class="red">{{messages.lengthWarning}}</p>
+          </div>
+
+          <div>
+            <p>
+              <label class="green">
+                <input
+                    type="checkbox"
+                    data-ng-model="showMatchedStopVariation"
+                    data-ng-checked="true"
+                    data-ng-true-value="true"
+                    data-ng-false-value="false"
+                    />
+                Show matched stops ({{stopVariation.matched.length}})
+              </label>
+              <br/>
+              <label class="red">
+                <input
+                    type="checkbox"
+                    data-ng-model="showUnmatchedStopVariation"
+                    data-ng-checked="true"
+                    data-ng-true-value="true"
+                    data-ng-false-value="false"
+                    />
+                Show unmatched stops ({{stopVariation.unmatched.length}})
+              </label>
+            </p>
+          </div>
+        </div>
+
+      </div>
     </div>
-
-    <div>
-      <p>
-        <label class="green">
-          <input
-              type="checkbox"
-              data-ng-model="showMatchedStopVariation"
-              data-ng-checked="true"
-              data-ng-true-value="true"
-              data-ng-false-value="false"
-              />
-          Show matched stops ({{stopVariation.matched.length}})
-        </label>
-        <br/>
-        <label class="red">
-          <input
-              type="checkbox"
-              data-ng-model="showUnmatchedStopVariation"
-              data-ng-checked="true"
-              data-ng-true-value="true"
-              data-ng-false-value="false"
-              />
-          Show unmatched stops ({{stopVariation.unmatched.length}})
-        </label>
-      </p>
-    </div>
-
   </div>
-
 
 </div>
