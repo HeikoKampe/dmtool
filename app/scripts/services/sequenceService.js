@@ -3,12 +3,19 @@
 angular.module('mdToolApp')
   .factory('sequenceService', function () {
 
+    function formatDateString (dateString) {
+      var
+        subStrings = dateString.split(" ");
+      // return the last part of the string devided by a space
+      return subStrings[subStrings.length - 1];
+    }
+
     function setSequenceProperties(firstEntry) {
       var
         properties = {
           visible: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
-          departureTime: firstEntry.departureAsString,
+          departureTime: formatDateString(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
           tripLabel: firstEntry.tripLabel || ''
         };
@@ -33,7 +40,10 @@ angular.module('mdToolApp')
         if (data[i].latitude > 0 && data[i].longitude > 0) {
           sequenceProperties = setSequenceProperties(data[i]);
           sequenceData.push(data[i]);
+        } else {
+          console.log("Invalid coordinates found in sequence");
         }
+
         splitKeyValue = data[i][splitKey];
       }
 

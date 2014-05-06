@@ -36,6 +36,10 @@ input[type="text"] {
   opacity: 0.9;
 }
 
+.map-panel-header {
+  padding:4px;
+}
+
 .data-table {
   min-width: 900px;
 }
@@ -169,4 +173,8 @@ form.query-form {
   bottom:0;
   width:100%;
   background:url(../images/spinner.gif) no-repeat center;
+}
+
+.full-width {
+  width:100%;
 }

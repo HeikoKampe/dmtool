@@ -1,210 +1,203 @@
 <!-- begin: gMap -->
 <google-map center='mapConfig.center' zoom="mapConfig.zoom" options="mapConfig.options" draggable="true" id="gmap">
-<div data-ng-repeat="seq in rawStopsSequences" ng-switch on="seq.properties.visible">
-  <div ng-switch-when="true">
-    <markers
-        models="seq.data"
-        coords="'self'"
-        options="seq.properties.matchingStatus === 'matched' ? mapConfig.roundMarkers.green : mapConfig.roundMarkers.red "
-        labelContent="'cntSequence'"
-        labelAnchor="4 24"
-        labelClass="marker-label">
-      <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+  <div data-ng-repeat="seq in rawStopsSequences" ng-switch on="seq.properties.visible">
+    <div ng-switch-when="true">
+      <markers
+          models="seq.data"
+          coords="'self'"
+          options="seq.properties.matchingStatus === 'matched' ? mapConfig.roundMarkers.green : mapConfig.roundMarkers.red "
+          labelContent="'cntSequence'"
+          labelAnchor="4 24"
+          labelClass="marker-label">
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
-        <table data-ng-non-bindable>
-          <tr>
-            <td>rawId</td>
-            <td>{{rawId}}</td>
-          </tr>
-          <tr>
-            <td>rawStopId</td>
-            <td>{{rawStopId}}</td>
-          </tr>
-          <tr>
-            <td>arrival</td>
-            <td>{{arrival}}</td>
-          </tr>
-          <tr>
-            <td>departure</td>
-            <td>{{departure}}</td>
-          </tr>
-          <tr>
-            <td>latitude</td>
-            <td>{{ latitude }}</td>
-          </tr>
-          <tr>
-            <td>longitude</td>
-            <td>{{longitude}}</td>
-          </tr>
-          <tr>
-            <td>distance</td>
-            <td>{{distance}}</td>
-          </tr>
-          <tr>
-            <td>status</td>
-            <td>{{status}}</td>
-          </tr>
-          <tr>
-            <td>hasCntStop</td>
-            <td>{{hasCntStop}}</td>
-          </tr>
-          <tr>
-            <td>cntStopKey</td>
-            <td>{{cntStopKey}}</td>
-          </tr>
-          <tr>
-            <td>cntTripKey</td>
-            <td>{{cntTripKey}}</td>
-          </tr>
-          <tr>
-            <td>cntSequence</td>
-            <td>{{cntSequence}}</td>
-          </tr>
-        </table>
+          <table data-ng-non-bindable>
+            <tr>
+              <td>arrival</td>
+              <td>{{arrivalAsString}}</td>
+            </tr>
+            <tr>
+              <td>departure</td>
+              <td>{{departureAsString}}</td>
+            </tr>
+            <tr>
+              <td>latitude</td>
+              <td>{{ latitude | number:8 }}</td>
+            </tr>
+            <tr>
+              <td>longitude</td>
+              <td>{{longitude | number:8 }}</td>
+            </tr>
+            <tr>
+              <td>distance</td>
+              <td>{{distance}}</td>
+            </tr>
+            <tr>
+              <td>cntStopKey</td>
+              <td>{{cntStopKey}}</td>
+            </tr>
+            <tr>
+              <td>cntTripKey</td>
+              <td>{{cntTripKey}}</td>
+            </tr>
+            <tr>
+              <td>cntSequence</td>
+              <td>{{cntSequence}}</td>
+            </tr>
+            <tr>
+              <td>rawId</td>
+              <td>{{rawId}}</td>
+            </tr>
+            <tr>
+              <td>rawStopId</td>
+              <td>{{rawStopId}}</td>
+            </tr>
+          </table>
 
-      </windows>
-    </markers>
-    <polyline path="seq.data"
-              stroke="seq.properties.matchingStatus === 'matched' ? mapConfig.lines.green : mapConfig.lines.red"></polyline>
+        </windows>
+      </markers>
+      <polyline path="seq.data"
+                stroke="seq.properties.matchingStatus === 'matched' ? mapConfig.lines.green : mapConfig.lines.red"></polyline>
+    </div>
   </div>
-</div>
 
 
-<div data-ng-repeat="seq in plannedStopsSequencesOfMatchedBlock" ng-switch on="seq.properties.visible">
-  <div ng-switch-when="true">
-    <markers
-        models="seq.data"
-        coords="'self'"
-        options="mapConfig.roundMarkers.blue"
-        labelContent="'sequence'"
-        labelAnchor="10 0"
-        labelClass="marker-label">
-      <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+  <div data-ng-repeat="seq in plannedStopsSequencesOfMatchedBlock" ng-switch on="seq.properties.visible">
+    <div ng-switch-when="true">
+      <markers
+          models="seq.data"
+          coords="'self'"
+          options="mapConfig.roundMarkers.blue"
+          labelContent="'sequence'"
+          labelAnchor="10 0"
+          labelClass="marker-label">
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
-        <table data-ng-non-bindable>
-          <tr>
-            <td>blockLabel</td>
-            <td>{{blockLabel}}</td>
-          </tr>
-          <tr>
-            <td>pointLabel</td>
-            <td>{{pointLabel}}</td>
-          </tr>
-          <tr>
-            <td>blockKey</td>
-            <td>{{blockKey}}</td>
-          </tr>
-          <tr>
-            <td>tripKey</td>
-            <td>{{tripKey}}</td>
-          </tr>
-          <tr>
-            <td>tripTypId</td>
-            <td>{{tripTypId}}</td>
-          </tr>
-          <tr>
-            <td>sequence</td>
-            <td>{{sequence}}</td>
-          </tr>
-          <tr>
-            <td>departure</td>
-            <td>{{departure}}</td>
-          </tr>
-          <tr>
-            <td>latitude</td>
-            <td>{{ latitude }}</td>
-          </tr>
-          <tr>
-            <td>longitude</td>
-            <td>{{longitude}}</td>
-          </tr>
-          <tr>
-            <td>distance</td>
-            <td>{{distance}}</td>
-          </tr>
-          <tr>
-            <td>numberStops</td>
-            <td>{{numberStops}}</td>
-          </tr>
+          <table data-ng-non-bindable>
+            <tr>
+              <td>blockLabel</td>
+              <td>{{blockLabel}}</td>
+            </tr>
+            <tr>
+              <td>pointLabel</td>
+              <td>{{pointLabel}}</td>
+            </tr>
+            <tr>
+              <td>blockKey</td>
+              <td>{{blockKey}}</td>
+            </tr>
+            <tr>
+              <td>tripKey</td>
+              <td>{{tripKey}}</td>
+            </tr>
+            <tr>
+              <td>tripTypId</td>
+              <td>{{tripTypId}}</td>
+            </tr>
+            <tr>
+              <td>sequence</td>
+              <td>{{sequence}}</td>
+            </tr>
+            <tr>
+              <td>departure</td>
+              <td>{{departureAsString}}</td>
+            </tr>
+            <tr>
+              <td>latitude</td>
+              <td>{{ latitude }}</td>
+            </tr>
+            <tr>
+              <td>longitude</td>
+              <td>{{longitude}}</td>
+            </tr>
+            <tr>
+              <td>distance</td>
+              <td>{{distance}}</td>
+            </tr>
+            <tr>
+              <td>numberStops</td>
+              <td>{{numberStops}}</td>
+            </tr>
 
-        </table>
+          </table>
 
-      </windows>
-    </markers>
-    <polyline path="seq.data" stroke="mapConfig.lines.blue"></polyline>
+        </windows>
+      </markers>
+      <polyline path="seq.data" stroke="mapConfig.lines.blue"></polyline>
+    </div>
   </div>
-</div>
 
-<div data-ng-repeat="seq in plannedStopsSequencesOfSelectedBlock" ng-switch on="seq.properties.visible">
-  <div ng-switch-when="true">
-    <markers
-        models="seq.data"
-        coords="'self'"
-        options="mapConfig.roundMarkers.blue"
-        labelContent="'sequence'"
-        labelAnchor="10 0"
-        labelClass="marker-label">
-      <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+  <div data-ng-repeat="seq in plannedStopsSequencesOfSelectedBlock" ng-switch on="seq.properties.visible">
+    <div ng-switch-when="true">
+      <markers
+          models="seq.data"
+          coords="'self'"
+          options="mapConfig.roundMarkers.blue"
+          labelContent="'sequence'"
+          labelAnchor="10 0"
+          labelClass="marker-label">
+        <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
-        <table data-ng-non-bindable>
-          <tr>
-            <td>blockLabel</td>
-            <td>{{blockLabel}}</td>
-          </tr>
-          <tr>
-            <td>pointLabel</td>
-            <td>{{pointLabel}}</td>
-          </tr>
-          <tr>
-            <td>blockKey</td>
-            <td>{{blockKey}}</td>
-          </tr>
-          <tr>
-            <td>tripKey</td>
-            <td>{{tripKey}}</td>
-          </tr>
-          <tr>
-            <td>tripTypId</td>
-            <td>{{tripTypId}}</td>
-          </tr>
-          <tr>
-            <td>sequence</td>
-            <td>{{sequence}}</td>
-          </tr>
-          <tr>
-            <td>departure</td>
-            <td>{{departure}}</td>
-          </tr>
-          <tr>
-            <td>latitude</td>
-            <td>{{ latitude }}</td>
-          </tr>
-          <tr>
-            <td>longitude</td>
-            <td>{{longitude}}</td>
-          </tr>
-          <tr>
-            <td>distance</td>
-            <td>{{distance}}</td>
-          </tr>
-          <tr>
-            <td>numberStops</td>
-            <td>{{numberStops}}</td>
-          </tr>
+          <table data-ng-non-bindable>
+            <tr>
+              <td>blockLabel</td>
+              <td>{{blockLabel}}</td>
+            </tr>
+            <tr>
+              <td>pointLabel</td>
+              <td>{{pointLabel}}</td>
+            </tr>
+            <tr>
+              <td>blockKey</td>
+              <td>{{blockKey}}</td>
+            </tr>
+            <tr>
+              <td>tripKey</td>
+              <td>{{tripKey}}</td>
+            </tr>
+            <tr>
+              <td>tripTypId</td>
+              <td>{{tripTypId}}</td>
+            </tr>
+            <tr>
+              <td>sequence</td>
+              <td>{{sequence}}</td>
+            </tr>
+            <tr>
+              <td>departure</td>
+              <td>{{departureAsString}}</td>
+            </tr>
+            <tr>
+              <td>latitude</td>
+              <td>{{ latitude | number:8 }}</td>
+            </tr>
+            <tr>
+              <td>longitude</td>
+              <td>{{longitude | number:8 }}</td>
+            </tr>
+            <tr>
+              <td>distance</td>
+              <td>{{distance}}</td>
+            </tr>
+            <tr>
+              <td>numberStops</td>
+              <td>{{numberStops}}</td>
+            </tr>
 
-        </table>
+          </table>
 
-      </windows>
-    </markers>
-    <polyline path="seq.data" stroke="mapConfig.lines.blue"></polyline>
+        </windows>
+      </markers>
+      <polyline path="seq.data" stroke="mapConfig.lines.blue"></polyline>
+    </div>
   </div>
-</div>
 
 </google-map>
 <!-- end: gMap -->
 
 <!-- begin: left panel -->
 <div class="map-panel-wrapper">
+  <h4 class="map-panel-header">Stop sequences for vehicle {{vehicleId}} at {{date}}</h4>
 
   <div class="accordion">
     <div class="accordion__item">
@@ -213,9 +206,11 @@
         <span class="accordion__header-icon"></span>
       </div>
       <div class="accordion__body active">
-        <div class="loading-spinner" data-ng-show="spinner[0]"><div class="loading-spinner__spinner"></div></div>
-        <p>Date: <strong>{{date}}</strong>, Vehicle: <strong>{{vehicleId}}</strong></p>
-        <table class="panel-table">
+        <div class="loading-spinner" data-ng-show="spinner[0]">
+          <div class="loading-spinner__spinner"></div>
+        </div>
+        <!--<p>Date: <strong>{{date}}</strong>, Vehicle: <strong>{{vehicleId}}</strong></p>-->
+        <table class="panel-table"  data-ng-show="rawStopsSequences">
           <tr>
             <th>Show</th>
             <th>Departure</th>
@@ -248,8 +243,10 @@
         <span class="accordion__header-icon"></span>
       </div>
       <div class="accordion__body active">
-        <div class="loading-spinner" data-ng-show="spinner[1]"><div class="loading-spinner__spinner"></div></div>
-        <table class="panel-table">
+        <div class="loading-spinner" data-ng-show="spinner[1]">
+          <div class="loading-spinner__spinner"></div>
+        </div>
+        <table class="panel-table" data-ng-show="plannedStopsSequencesOfMatchedBlock">
           <tr>
             <th>Show</th>
             <th>Departure</th>
@@ -278,35 +275,26 @@
 
     <div class="accordion__item">
       <div class="accordion__header" data-accordion-header>
-        <h4 class="accordion__title">All Blocks for this day {{isoDate}}</h4>
+        <h4 class="accordion__title">All Blocks for this day ({{isoDate}})</h4>
         <span class="accordion__header-icon"></span>
       </div>
       <div class="accordion__body">
-        <div class="loading-spinner" data-ng-show="spinner[2]"><div class="loading-spinner__spinner"></div></div>
+        <div class="loading-spinner" data-ng-show="spinner[2]">
+          <div class="loading-spinner__spinner"></div>
+        </div>
         <form data-ng-submit="submitBlockForm()">
           <div class="box">
-            <div class="box__header">Filter by</div>
+            <div class="box__header">Filter available blocks</div>
             <div class="box__body">
-              <table>
-                <tr>
-                  <td>
-                    <label>block key</label>
-                    <input type="text" data-ng-model="blockFilter.key"/>
-                  </td>
-                  <td>
-                    <label>block label</label>
-                    <input type="text" data-ng-model="blockFilter.label"/>
-                  </td>
-                </tr>
-              </table>
+              <input type="text" data-ng-model="blockFilter.label"/>
             </div>
           </div>
 
           <p>
-            <select style="width:100%;"
+            <select class="full-width"
                     size="5"
                     data-ng-model="selectedBlock"
-                    data-ng-options="block.blockKey + ': ' + block.blockLabel for block in blocksOfDay | filter:{ blockKey: blockFilter.key, blockLabel: blockFilter.label }">
+                    data-ng-options="block.blockLabel for block in blocksOfDay | filter:{ blockLabel: blockFilter.label }">
             </select>
           </p>
 
@@ -315,7 +303,7 @@
           </p>
         </form>
 
-        <table class="panel-table">
+        <table class="panel-table" data-ng-show="plannedStopsSequencesOfSelectedBlock">
           <tr>
             <th>Show</th>
             <th>Departure</th>

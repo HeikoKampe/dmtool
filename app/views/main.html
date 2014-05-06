@@ -1,17 +1,15 @@
-<h1>mdTool Prototyp</h1>
-
-<h2>Matching Overview</h2>
+<h1>Matching Diagnostics</h1>
 
 <form data-ng-submit="submit()" class="query-form">
   <table style="width:auto;">
     <tr>
-      <td>dateFrom</td>
+      <td>Date from</td>
       <td>
         <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
       </td>
     </tr>
     <tr>
-      <td>dateTo</td>
+      <td>Date to</td>
       <td>
         <input type="text" data-ng-model="queryParams.dateTo" value=""/>
       </td>
@@ -23,7 +21,7 @@
   </p>
 </form>
 
-<p>Group by
+<p>Results by
   <select name="" data-ng-model="selectedTable" id="test">
     <option value="lines">Lines</option>
     <option value="vehicles">Vehicles</option>
@@ -37,21 +35,15 @@
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
-        <th>lineKey</th>
-        <th>lineLabel</th>
-        <th>medianCostAverage</th>
-        <th>medianCostMax</th>
-        <th>qualityLevelAverage</th>
-        <th>qualityLevelMax</th>
-        <th>numberTrips</th>
+        <th>Line</th>
+        <th>Deviation (average)</th>
+        <th>Deviation (max)</th>
+        <th>Number of trips</th>
       </tr>
       <tr data-ng-repeat="row in matchingResultDataLines">
-        <td>{{row.lineKey}}</td>
         <td>{{row.lineLabel}}</td>
         <td>{{row.medianCostAverage}}</td>
         <td>{{row.medianCostMax}}</td>
-        <td>{{row.qualityLevelAverage}}</td>
-        <td>{{row.qualityLevelMax}}</td>
         <td>{{row.numberTrips}}</td>
       </tr>
     </table>
@@ -64,21 +56,15 @@
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
-        <th>blockKey</th>
-        <th>blockLabel</th>
-        <th>medianCostAverage</th>
-        <th>medianCostMax</th>
-        <th>qualityLevelAverage</th>
-        <th>qualityLevelMax</th>
-        <th>numberTrips</th>
+        <th>Block</th>
+        <th>Devitation (average)</th>
+        <th>Deviation (max)</th>
+        <th>Number of trips</th>
       </tr>
       <tr data-ng-repeat="row in matchingResultDataBlocks">
-        <td>{{row.blockKey}}</td>
         <td>{{row.blockLabel}}</td>
         <td>{{row.medianCostAverage}}</td>
         <td>{{row.medianCostMax}}</td>
-        <td>{{row.qualityLevelAverage}}</td>
-        <td>{{row.qualityLevelMax}}</td>
         <td>{{row.numberTrips}}</td>
       </tr>
     </table>
@@ -91,24 +77,26 @@
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
-        <th>vehicleCode</th>
-        <th>rawStartDateAsString</th>
-        <th>rawStops</th>
-        <th>matchedStops</th>
-        <th>notMatchedStop</th>
-        <th>matchingRate</th>
+        <th>Vehicle code</th>
+        <th>Vehicle label</th>
+        <th>Date</th>
+        <th>Number of stops</th>
+        <th>Matched stops</th>
+        <th>Unmatched stops</th>
+        <th>Matching rate (%)</th>
         <th>analysis</th>
       </tr>
       <tr data-ng-repeat="row in stopstatisticResultData">
         <td>{{row.vehicleCode}}</td>
+        <td>VEHICLE LABEL</td>
         <td>{{row.rawStartDateAsString}}</td>
         <td>{{row.rawStops}}</td>
         <td>{{row.matchedStops}}</td>
         <td>{{row.notMatchedStops}}</td>
-        <td>{{row.matchingRate * 100 | number:0}}</td>
+        <td>{{row.matchingRate * 100 | number:2}}</td>
         <td>
-          <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">trip sequences</a> /
-          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">stop cluster</a>
+          <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">Stop sequences</a> /
+          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">Stop cluster</a>
         </td>
       </tr>
     </table>

@@ -31,32 +31,15 @@ angular.module('mdToolApp')
       });
     };
 
-//    $scope.getMatchedData = function () {
-//      apiService.getMatchedData('', $scope.queryParams).then(function (res) {
-//        console.log("res.data matched", res.data);
-//        $scope.matchingResultData = res.data;
-//      });
-//    };
-//
-//    $scope.getMatchedDataVehicles = function () {
-//      apiService.getMatchedData('vehicles', $scope.queryParams).then(function (res) {
-//        console.log("res.data matched", res.data);
-//        $scope.matchingResultDataVehicles = res.data;
-//      });
-//    };
-
     $scope.submit = function () {
       $scope.getMatchedDataLines();
       $scope.getMatchedDataBlocks();
       $scope.getRawData();
-//      $scope.getMatchedData();
-//      $scope.getMatchedDataVehicles();
     };
 
     $scope.getMatchedDataLines();
     $scope.getMatchedDataBlocks();
     $scope.getRawData();
-//    $scope.getMatchedData();
-//    $scope.getMatchedDataVehicles();
+
 
   });

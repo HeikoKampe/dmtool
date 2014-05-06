@@ -75,6 +75,7 @@
 
 
 <div class="map-panel-wrapper">
+  <h3>Stopping Point whatever</h3>
 
   <div class="accordion">
     <div class="accordion__item">
@@ -85,32 +86,30 @@
       <div class="accordion__body active">
 
         <form data-ng-submit="submit()" class="query-form">
-          <p>
-            Date<br>
-            <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
-            -
-            <input type="text" data-ng-model="queryParams.dateTo" value=""/>
-          </p>
-
-          <p>
-            South-West Bounds (lat1 / lng1)<br/>
-            <input type="text" data-ng-model="queryParams.lat1" value=""/> /
-            <input type="text" data-ng-model="queryParams.lon1" value=""/>
-          </p>
-
-          <p>
-            North-East Bounds (lat2 / lng2)<br/>
-            <input type="text" data-ng-model="queryParams.lat2" value=""/> /
-            <input type="text" data-ng-model="queryParams.lon2" value=""/>
-          </p>
-
+          <div class="box">
+            <div class="box__header">Date</div>
+            <div class="box__body">
+              <table class="full-width">
+                <tr>
+                  <td>From</td>
+                  <td>To</td>
+                </tr>
+                <tr>
+                  <td><input type="text" data-ng-model="queryParams.dateFrom" value=""/></td>
+                  <td><input type="text" data-ng-model="queryParams.dateTo" value=""/></td>
+                </tr>
+              </table>
+            </div>
+          </div>
           <p>
             <button type="submit">submit</button>
           </p>
         </form>
 
         <div class="wrapper">
-          <div class="loading-spinner" data-ng-show="spinner[0]"><div class="loading-spinner__spinner"></div></div>
+          <div class="loading-spinner" data-ng-show="spinner[0]">
+            <div class="loading-spinner__spinner"></div>
+          </div>
           <div class="messages">
             <p>Number of entries: {{messages.length}}</p>
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map2Ctrl', function ($scope, $routeParams, apiService, sequenceService, gMapService, eventService) {
+  .controller('Map2Ctrl', function ($scope, $routeParams, apiService, sequenceService, gMapService) {
 
     $scope.mapConfig = gMapService.getMapConfig();
     $scope.rawStopsSequences = [];
