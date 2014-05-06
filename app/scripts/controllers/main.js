@@ -4,8 +4,8 @@ angular.module('mdToolApp')
   .controller('MainCtrl', function ($scope, $http, apiService) {
 
     $scope.queryParams = {
-      dateFrom: '2012-01-11',
-      dateTo: '2013-06-12'
+      dateFrom: '2014-01-01',
+      dateTo: '2014-01-02'
     };
 
     $scope.selectedTable = 'vehicles';
