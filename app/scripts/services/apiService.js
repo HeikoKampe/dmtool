@@ -6,15 +6,13 @@ angular.module('mdToolApp')
     var apiBaseUrl;
 
     function setApiBaseUrl () {
-      var
-        host = $window.location.host,
-        path = $window.location.pathname;
+      var path = $window.location.pathname;
 
-      // if app runs on specific port number use a fixed base path to reach the remote rest api
+      // hack: if app runs on port 9000, use a fixed base path to reach remote api
       if ($window.location.port === "9000") {
         apiBaseUrl =  'https://demodwm3.dilax.com/davisweb/rest/md/';
       } else {
-        apiBaseUrl = 'http://' + host + '/' +  path.split('/')[1] + '/rest/md/';
+        apiBaseUrl = '/' +  path.split('/')[1] + '/rest/md/';
       }
     }
 
