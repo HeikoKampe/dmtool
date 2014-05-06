@@ -14,7 +14,7 @@ angular.module('mdToolApp')
       if ($window.location.port === "9000") {
         apiBaseUrl =  'https://demodwm3.dilax.com/davisweb/rest/md/';
       } else {
-        apiBaseUrl = host + '/' +  path.split('/')[1] + '/rest/md/';
+        apiBaseUrl = 'http://' + host + '/' +  path.split('/')[1] + '/rest/md/';
       }
     }
 
