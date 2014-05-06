@@ -3,7 +3,7 @@
 angular.module('mdToolApp')
   .factory('sequenceService', function () {
 
-    function formatDateString (dateString) {
+    function formatDateString(dateString) {
       var
         subStrings = dateString.split(" ");
       // return the last part of the string devided by a space
@@ -53,8 +53,45 @@ angular.module('mdToolApp')
       return sequences;
     }
 
+    function setLinePointSequenceProperties(firstEntry) {
+      var
+        properties = {
+          visible: false,
+          lineKey: firstEntry.lineKey,
+          lineLabel: firstEntry.lineLabel,
+          lineLabelShort: firstEntry.lineLabelShort
+
+        };
+      return properties;
+    }
+
+    function createLinePointSequences(data, splitKey) {
+      var
+        sequences = [],
+        sequenceData = [],
+        sequenceProperties = {},
+        splitKeyValue;
+
+      for (var i = 0; i < data.length; i++) {
+        // sequence split condition
+        if (typeof splitKeyValue !== "undefined" && data[i][splitKey] !== splitKeyValue) {
+          sequences.push({ properties: sequenceProperties, data: sequenceData});
+          sequenceData = [];
+          sequenceProperties = setLinePointSequenceProperties(data[i]);
+        }
+        sequenceProperties = setLinePointSequenceProperties(data[i]);
+        sequenceData.push(data[i]);
+        splitKeyValue = data[i][splitKey];
+      }
+      // push the last found sequence into the sequence array
+      sequences.push({ properties: sequenceProperties, data: sequenceData});
+
+      return sequences;
+    }
+
     return {
-      createSequences: createSequences
+      createSequences: createSequences,
+      createLinePointSequences: createLinePointSequences
     }
 
   });

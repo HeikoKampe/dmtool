@@ -11,8 +11,9 @@ angular.module('mdToolApp')
       matched: [],
       unmatched: []
     };
+    $scope.linePoints = [];
     $scope.showMatchedStopVariation = true;
-    $scope.showUnatchedStopVariation = true;
+    $scope.showUnmatchedStopVariation = true;
 
     $scope.queryParams = {
       dateFrom: $routeParams.dateFrom,
@@ -31,7 +32,7 @@ angular.module('mdToolApp')
 
     $scope.spinner = [false];
 
-    function toggleSpinner (spinnerId) {
+    function toggleSpinner(spinnerId) {
       $scope.spinner[spinnerId] = !$scope.spinner[spinnerId];
     }
 
@@ -54,13 +55,13 @@ angular.module('mdToolApp')
       return queryString;
     }
 
-    function matchingStatusFilter (data) {
+    function matchingStatusFilter(data) {
       $scope.stopVariation = {
         matched: [],
         unmatched: []
       };
-      angular.forEach(data, function(value, key){
-        if (value.hasCntStop=== 'Y') {
+      angular.forEach(data, function (value, key) {
+        if (value.hasCntStop === 'Y') {
           $scope.stopVariation.matched.push(value);
         } else {
           $scope.stopVariation.unmatched.push(value);
@@ -113,6 +114,15 @@ angular.module('mdToolApp')
       getRawData();
     };
 
+
+    function getLinePoints() {
+      apiService.getScheduleData('linepoints').then(function (res) {
+        $scope.linePointsSequences = sequenceService.createLinePointSequences(res.data, 'lineKey');
+        console.log("$scope.linePointsSeq", $scope.linePointsSequences);
+      });
+    }
+
     getRawData();
+    getLinePoints();
 
   });

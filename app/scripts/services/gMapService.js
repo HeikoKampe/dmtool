@@ -62,6 +62,21 @@ angular.module('mdToolApp')
           }
         },
 
+        pinMarkers: {
+          black: {
+            icon: {
+              anchor: new google.maps.Point(16, 32),
+              url: 'images/marker-pin-black.png'
+            }
+          },
+          blue: {
+            icon: {
+              anchor: new google.maps.Point(16, 32),
+              url: 'images/marker-pin-blue.png'
+            }
+          }
+        },
+
         lines: {
           black: {
             color: '#000'
@@ -90,7 +105,7 @@ angular.module('mdToolApp')
       return mapConfig;
     }
 
-    function setMapCenter (lat, lng) {
+    function setMapCenter(lat, lng) {
       mapConfig.center.latitude = lat;
       mapConfig.center.longitude = lng;
     }
