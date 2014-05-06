@@ -1,18 +1,22 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .factory('apiService', function ($http) {
+  .factory('apiService', function ($http, $window) {
 
-    var
-      API_BASE_URL_REMOTE =  'https://demodwm3.dilax.com/davisweb/rest/md/',
-      API_BASE_URL_LOCAL =  'http://localhost:8080/dwm-suite/rest/md/',
+    var apiBaseUrl;
 
-      apiBaseUrl;
+    function setApiBaseUrl () {
+      var
+        host = $window.location.host,
+        path = $window.location.pathname;
 
-
-    // switch between different base urls here
-    apiBaseUrl = API_BASE_URL_REMOTE;
-
+      // if app runs on specific port number use a fixed base path to reach the remote rest api
+      if ($window.location.port === "9000") {
+        apiBaseUrl =  'https://demodwm3.dilax.com/davisweb/rest/md/';
+      } else {
+        apiBaseUrl = host + '/' +  path.split('/')[1] + '/rest/md/';
+      }
+    }
 
     function getRawData(resource, paramsObj) {
       return $http.get(apiBaseUrl + 'raw/' + resource, { params: paramsObj });
@@ -30,6 +34,8 @@ angular.module('mdToolApp')
       return $http.get(apiBaseUrl + 'match/' + resource, { params: paramsObj });
     }
 
+    setApiBaseUrl();
+
     // Public API here
     return {
       getRawData: getRawData,
@@ -37,6 +43,5 @@ angular.module('mdToolApp')
       getCountData: getCountData,
       getMatchedData: getMatchedData
     };
-
 
 });
