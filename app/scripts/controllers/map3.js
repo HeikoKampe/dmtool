@@ -1,27 +1,34 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map3Ctrl', function ($scope, $routeParams, apiService, sequenceService, gMapService) {
+  .controller('Map3Ctrl', function ($scope, $routeParams, $q, apiService, sequenceService, gMapService, messagesService) {
 
     var
-      isFirstApiRequest = true;
+      mapInstance,
+      updateTrigger = true;
 
     $scope.mapConfig = gMapService.getMapConfig();
     $scope.stopVariation = {
       matched: [],
       unmatched: []
     };
-    $scope.linePoints = [];
+
+    $scope.linePointsSequences = [];
+
+    $scope.maxNumberOfStops = 5000;
+
+    $scope.showMap = false;
     $scope.showMatchedStopVariation = true;
     $scope.showUnmatchedStopVariation = true;
+    $scope.spinner = [false];
 
     $scope.queryParams = {
       dateFrom: $routeParams.dateFrom,
       dateTo: $routeParams.dateTo,
-      lat1: $routeParams.lat1 || 51.03680215,
-      lon1: $routeParams.lon1 || 13.729993571666668,
-      lat2: $routeParams.lat2 || 51.04680215,
-      lon2: $routeParams.lon2 || 13.739993571666668
+      lat1: 0,
+      lon1: 0,
+      lat2: 0,
+      lon2: 0
     };
 
     $scope.messages = {
@@ -30,18 +37,55 @@ angular.module('mdToolApp')
       nStops: ''
     };
 
-    $scope.spinner = [false];
+
+    function showMap() {
+      $scope.showMap = true;
+    }
 
     function toggleSpinner(spinnerId) {
       $scope.spinner[spinnerId] = !$scope.spinner[spinnerId];
     }
 
-    function setMapCenter(data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].latitude > 0 && data[i].longitude > 0) {
-          gMapService.setMapCenter(data[i].latitude, data[i].longitude);
+    function getLineByKey(lineCollection, lineKey) {
+      var line, i;
+      for (i = 0; i < lineCollection.length; i++) {
+        if (lineCollection[i].properties.lineKey == lineKey) {
+          line = lineCollection[i];
           break;
         }
+      }
+      return line;
+    }
+
+    // get the point in the middle of a line (half the way through)
+    function getHalfWayThroughPointOfLine(linePointsSequence) {
+      var halfWayThroughPoint;
+
+      halfWayThroughPoint = linePointsSequence[Math.floor(linePointsSequence.length / 2)];
+
+      return {
+        lat: halfWayThroughPoint.latitude,
+        lng: halfWayThroughPoint.longitude
+      }
+    }
+
+    function setMapCenter(linePointsSequence) {
+      var centerPoint = getHalfWayThroughPointOfLine(linePointsSequence);
+
+      gMapService.setMapCenter(centerPoint.lat, centerPoint.lng);
+    }
+
+    function initialLineSelection(linePointsSequences) {
+      var selectedLine;
+
+      if ($routeParams.lineKey) {
+        selectedLine = getLineByKey(linePointsSequences, $routeParams.lineKey);
+        setMapCenter(selectedLine.data);
+        selectedLine.properties.visible = true;
+      } else {
+        // if there was no line selected take the first one
+        setMapCenter(linePointsSequences[0].data);
+        linePointsSequences[0].properties.visible = true;
       }
     }
 
@@ -56,10 +100,6 @@ angular.module('mdToolApp')
     }
 
     function matchingStatusFilter(data) {
-      $scope.stopVariation = {
-        matched: [],
-        unmatched: []
-      };
       angular.forEach(data, function (value, key) {
         if (value.hasCntStop === 'Y') {
           $scope.stopVariation.matched.push(value);
@@ -69,22 +109,22 @@ angular.module('mdToolApp')
       });
     }
 
-    function getRawData() {
+    function getStopsOfBoundingBox() {
+      $scope.stopVariation = {
+        matched: [],
+        unmatched: []
+      };
       toggleSpinner(0);
       apiService.getRawData('stops/scattering' + buildQueryString($scope.queryParams)).then(function (res) {
         toggleSpinner(0);
-        $scope.messages.length = res.data.length;
+        $scope.messages.numberOfStops = res.data.length;
         $scope.messages.loading = '';
-        $scope.lengthWarning = '';
-        if (isFirstApiRequest) {
-          setMapCenter(res.data);
-          isFirstApiRequest = false;
-        }
-        if (res.data.length <= 3000) {
+        $scope.messages.lengthWarning = '';
+        if (res.data.length < $scope.maxNumberOfStops) {
           matchingStatusFilter(res.data);
-          $scope.lengthWarning = '';
+          $scope.messages.lengthWarning = '';
         } else {
-          $scope.messages.lengthWarning = 'Too many results (' + res.data.length + ')!  Please zoom in.';
+          $scope.messages.lengthWarning = messagesService.messages.tooManyResults;
         }
       });
     }
@@ -107,22 +147,46 @@ angular.module('mdToolApp')
       },
       zoom_changed: function (map) {
         updateBounds(map);
+      },
+      tilesloaded: function (map) {
+        $scope.$apply(function () {
+          mapInstance = map;
+          console.log('MAP LOADED');
+          updateBounds(map);
+          if (updateTrigger) {
+            getStopsOfBoundingBox();
+            updateTrigger = false;
+          }
+        });
       }
     };
 
-    $scope.submit = function () {
-      getRawData();
-    };
+    function updateAfterZoom () {
+      if (gMapService.getMapZoomLevel() < 14) {
+        updateTrigger = true;
+        gMapService.setMapZoomLevel(14);
+      } else {
+        getStopsOfBoundingBox();
+      }
+    }
 
+    $scope.submit = function () {
+//      getStopsOfBoundingBox();
+      updateAfterZoom();
+    };
 
     function getLinePoints() {
       apiService.getScheduleData('linepoints').then(function (res) {
         $scope.linePointsSequences = sequenceService.createLinePointSequences(res.data, 'lineKey');
+        initialLineSelection($scope.linePointsSequences);
         console.log("$scope.linePointsSeq", $scope.linePointsSequences);
+        showMap();
       });
     }
 
-    getRawData();
+    gMapService.setMapZoomLevel(14);
     getLinePoints();
 
-  });
+  }
+)
+;

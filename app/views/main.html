@@ -21,17 +21,15 @@
   </p>
 </form>
 
-<p>Results by
+<h2>Matching results for
   <select name="" data-ng-model="selectedTable" id="test">
     <option value="lines">Lines</option>
     <option value="vehicles">Vehicles</option>
     <option value="blocks">Blocks</option>
   </select>
-</p>
+</h2>
 
 <div data-ng-show="selectedTable === 'lines'">
-  <h3>Lines Matching Results</h3>
-
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
@@ -39,20 +37,22 @@
         <th>Deviation (average)</th>
         <th>Deviation (max)</th>
         <th>Number of trips</th>
+        <th></th>
       </tr>
       <tr data-ng-repeat="row in matchingResultDataLines">
         <td>{{row.lineLabel}}</td>
         <td>{{row.medianCostAverage}}</td>
         <td>{{row.medianCostMax}}</td>
         <td>{{row.numberTrips}}</td>
+        <td>
+          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">Stop cluster</a>
+        </td>
       </tr>
     </table>
   </div>
 </div>
 
 <div data-ng-show="selectedTable === 'blocks'">
-  <h3>Blocks Matching Results</h3>
-
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
@@ -72,8 +72,6 @@
 </div>
 
 <div data-ng-show="selectedTable === 'vehicles'">
-  <h3>Vehicles Matching Results</h3>
-
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
@@ -84,19 +82,22 @@
         <th>Matched stops</th>
         <th>Unmatched stops</th>
         <th>Matching rate (%)</th>
-        <th>analysis</th>
+        <th></th>
+        <th></th>
       </tr>
       <tr data-ng-repeat="row in stopstatisticResultData">
         <td>{{row.vehicleCode}}</td>
-        <td>VEHICLE LABEL</td>
+        <td>{{row.vehicleLabel}}</td>
         <td>{{row.rawStartDateAsString}}</td>
         <td>{{row.rawStops}}</td>
         <td>{{row.matchedStops}}</td>
         <td>{{row.notMatchedStops}}</td>
         <td>{{row.matchingRate * 100 | number:2}}</td>
         <td>
-          <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">Stop sequences</a> /
-          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">Stop cluster</a>
+          <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
+        </td>
+        <td>
+          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">show stop cluster</a>
         </td>
       </tr>
     </table>

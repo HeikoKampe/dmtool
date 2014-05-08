@@ -110,11 +110,21 @@ angular.module('mdToolApp')
       mapConfig.center.longitude = lng;
     }
 
+    function getMapZoomLevel() {
+      return mapConfig.zoom;
+    }
+
+    function setMapZoomLevel (zoomLevel) {
+      mapConfig.zoom = zoomLevel;
+    }
+
 
     // Public API here
     return {
       getMapConfig: getMapConfig,
-      setMapCenter: setMapCenter
+      getMapZoomLevel: getMapZoomLevel,
+      setMapCenter: setMapCenter,
+      setMapZoomLevel: setMapZoomLevel
     };
 
 
