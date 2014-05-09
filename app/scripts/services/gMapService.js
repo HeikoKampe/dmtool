@@ -70,6 +70,7 @@ angular.module('mdToolApp')
             }
           },
           blue: {
+            draggable: true,
             icon: {
               anchor: new google.maps.Point(16, 32),
               url: 'images/marker-pin-blue.png'
@@ -85,7 +86,7 @@ angular.module('mdToolApp')
             color: '#ce322e'
           },
           green: {
-            color: '#98ba5c'
+            color: '#169413'
           },
           blue: {
             color: '#2a80af'

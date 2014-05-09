@@ -24,6 +24,11 @@ angular.module('mdToolApp')
       return $http.get(apiBaseUrl + 'schedule/' + resource, { params: paramsObj });
     }
 
+    function putScheduleData(resource, paramsObj, data) {
+      console.log("putScheduleData: ",resource, paramsObj, data );
+//      return $http.put(apiBaseUrl + 'schedule/' + resource, { params: paramsObj }, data);
+    }
+
     function getCountData(resource, paramsObj) {
       return $http.get(apiBaseUrl + 'count/' + resource, { params: paramsObj });
     }
@@ -38,6 +43,7 @@ angular.module('mdToolApp')
     return {
       getRawData: getRawData,
       getScheduleData: getScheduleData,
+      putScheduleData: putScheduleData,
       getCountData: getCountData,
       getMatchedData: getMatchedData
     };

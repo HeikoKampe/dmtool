@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('mdToolApp', [
-  'ngResource',
   'ngRoute',
   'google-maps'
 ])

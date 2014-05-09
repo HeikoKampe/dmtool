@@ -101,7 +101,7 @@ angular.module('mdToolApp')
 
     function matchingStatusFilter(data) {
       angular.forEach(data, function (value, key) {
-        if (value.hasCntStop === 'Y') {
+        if (value && value.hasCntStop === 'Y') {
           $scope.stopVariation.matched.push(value);
         } else {
           $scope.stopVariation.unmatched.push(value);
@@ -117,6 +117,7 @@ angular.module('mdToolApp')
       toggleSpinner(0);
       apiService.getRawData('stops/scattering' + buildQueryString($scope.queryParams)).then(function (res) {
         toggleSpinner(0);
+        console.log(res.data);
         $scope.messages.numberOfStops = res.data.length;
         $scope.messages.loading = '';
         $scope.messages.lengthWarning = '';
@@ -161,7 +162,22 @@ angular.module('mdToolApp')
       }
     };
 
-    function updateAfterZoom () {
+    $scope.pointMarkersEvents = {
+      dragend: function (gMarker, eventName, model) {
+        console.log("dragend");
+        if (model.$id) {
+          model = model.coords;//use scope portion then
+        }
+        alert("Model: event:" + eventName + " " + JSON.stringify(model));
+      },
+      click: function (gMarker, eventName, model) {
+        console.log("clicked");
+        gMarker.showWindow = true;
+        $scope.$apply();
+      }
+    };
+
+    function updateAfterZoom() {
       if (gMapService.getMapZoomLevel() < 14) {
         updateTrigger = true;
         gMapService.setMapZoomLevel(14);
@@ -175,6 +191,13 @@ angular.module('mdToolApp')
       updateAfterZoom();
     };
 
+    $scope.saveNewLinePointPosition = function (test) {
+      console.log(test);
+//      apiService.putScheduleData('netpoints/update', '', {test: 'test'}).then(function () {
+//
+//      });
+    };
+
     function getLinePoints() {
       apiService.getScheduleData('linepoints').then(function (res) {
         $scope.linePointsSequences = sequenceService.createLinePointSequences(res.data, 'lineKey');
@@ -186,6 +209,8 @@ angular.module('mdToolApp')
 
     gMapService.setMapZoomLevel(14);
     getLinePoints();
+
+
 
   }
 )

@@ -84,20 +84,30 @@
           <markers
               models="seq.data"
               coords="'self'"
-              options="mapConfig.pinMarkers.blue">
+              options="mapConfig.pinMarkers.blue"
+              >
 
             <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
 
               <table data-ng-non-bindable>
                 <tr>
-                  <td>latitude</td>
-                  <td>{{ latitude | number:8 }}</td>
+                  <td>Line:</td>
+                  <td>{{ lineLabel }}</td>
                 </tr>
                 <tr>
-                  <td>longitude</td>
-                  <td>{{longitude | number:8 }}</td>
+                  <td>Point:</td>
+                  <td>{{ pointLabel }}</td>
+                </tr>
+                <tr>
+                  <td>Lat:</td>
+                  <td><input type="text" value="{{latitude}}" /></td>
+                </tr>
+                <tr>
+                  <td>Lng:</td>
+                  <td><input type="text" value="{{latitude}}" /></td>
                 </tr>
               </table>
+              <p><button>update Coordinates</button></p>
 
             </windows>
           </markers>
@@ -189,6 +199,7 @@
         <span class="accordion__header-icon"></span>
       </div>
       <div class="accordion__body active line-panel">
+
         <table class="panel-table" data-ng-show="linePointsSequences">
           <tr>
             <th>Show</th>
