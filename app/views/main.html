@@ -1,105 +1,94 @@
 <h1>Matching Diagnostics</h1>
 
-<form data-ng-submit="submit()" class="query-form">
-  <table style="width:auto;">
-    <tr>
-      <td>Date from</td>
-      <td>
-        <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
-      </td>
-    </tr>
-    <tr>
-      <td>Date to</td>
-      <td>
-        <input type="text" data-ng-model="queryParams.dateTo" value=""/>
-      </td>
-    </tr>
-
-  </table>
-  <p>
+<div class="page-wrapper">
+  <form data-ng-submit="submit()" class="query-form">
+    <h4>Please select a date:</h4>
+    from: <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
+    to: <input type="text" data-ng-model="queryParams.dateTo" value=""/>
     <button type="submit">submit</button>
-  </p>
-</form>
+    </form>
 
-<h2>Matching results for
-  <select name="" data-ng-model="selectedTable" id="test">
-    <option value="lines">Lines</option>
-    <option value="vehicles">Vehicles</option>
-    <option value="blocks">Blocks</option>
-  </select>
-</h2>
+<span class="float--right" style="font-size:14px; text-decoration:underline;">
+  <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">Show stop cluster</a>
+</span>
 
-<div data-ng-show="selectedTable === 'lines'">
-  <div class="table-wrapper">
-    <table class="data-table">
-      <tr>
-        <th>Line</th>
-        <th>Deviation (average)</th>
-        <th>Deviation (max)</th>
-        <th>Number of trips</th>
-        <th></th>
-      </tr>
-      <tr data-ng-repeat="row in matchingResultDataLines">
-        <td>{{row.lineLabel}}</td>
-        <td>{{row.medianCostAverage}}</td>
-        <td>{{row.medianCostMax}}</td>
-        <td>{{row.numberTrips}}</td>
-        <td>
-          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">Stop cluster</a>
-        </td>
-      </tr>
-    </table>
+  <h2>Matching results for
+    <select name="" data-ng-model="selectedTable" id="test">
+      <option value="lines">Lines</option>
+      <option value="vehicles">Vehicles</option>
+      <option value="blocks">Blocks</option>
+    </select>
+  </h2>
+<br/>
+  <div data-ng-show="selectedTable === 'lines'">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <tr>
+          <th>Line</th>
+          <th>Deviation (average)</th>
+          <th>Deviation (max)</th>
+          <th>Number of trips</th>
+          <th></th>
+        </tr>
+        <tr data-ng-repeat="row in matchingResultDataLines">
+          <td>{{row.lineLabel}}</td>
+          <td>{{row.medianCostAverage}}</td>
+          <td>{{row.medianCostMax}}</td>
+          <td>{{row.numberTrips}}</td>
+          <td>
+            <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">Stop
+              cluster</a>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
 
-<div data-ng-show="selectedTable === 'blocks'">
-  <div class="table-wrapper">
-    <table class="data-table">
-      <tr>
-        <th>Block</th>
-        <th>Devitation (average)</th>
-        <th>Deviation (max)</th>
-        <th>Number of trips</th>
-      </tr>
-      <tr data-ng-repeat="row in matchingResultDataBlocks">
-        <td>{{row.blockLabel}}</td>
-        <td>{{row.medianCostAverage}}</td>
-        <td>{{row.medianCostMax}}</td>
-        <td>{{row.numberTrips}}</td>
-      </tr>
-    </table>
+  <div data-ng-show="selectedTable === 'blocks'">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <tr>
+          <th>Block</th>
+          <th>Devitation (average)</th>
+          <th>Deviation (max)</th>
+          <th>Number of trips</th>
+        </tr>
+        <tr data-ng-repeat="row in matchingResultDataBlocks">
+          <td>{{row.blockLabel}}</td>
+          <td>{{row.medianCostAverage}}</td>
+          <td>{{row.medianCostMax}}</td>
+          <td>{{row.numberTrips}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
 
-<div data-ng-show="selectedTable === 'vehicles'">
-  <div class="table-wrapper">
-    <table class="data-table">
-      <tr>
-        <th>Vehicle code</th>
-        <th>Vehicle label</th>
-        <th>Date</th>
-        <th>Number of stops</th>
-        <th>Matched stops</th>
-        <th>Unmatched stops</th>
-        <th>Matching rate (%)</th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr data-ng-repeat="row in stopstatisticResultData">
-        <td>{{row.vehicleCode}}</td>
-        <td>{{row.vehicleLabel}}</td>
-        <td>{{row.rawStartDateAsString}}</td>
-        <td>{{row.rawStops}}</td>
-        <td>{{row.matchedStops}}</td>
-        <td>{{row.notMatchedStops}}</td>
-        <td>{{row.matchingRate * 100 | number:2}}</td>
-        <td>
-          <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
-        </td>
-        <td>
-          <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">show stop cluster</a>
-        </td>
-      </tr>
-    </table>
+  <div data-ng-show="selectedTable === 'vehicles'">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <tr>
+          <th>Vehicle code</th>
+          <th>Vehicle label</th>
+          <th>Date</th>
+          <th>Number of stops</th>
+          <th>Matched stops</th>
+          <th>Unmatched stops</th>
+          <th>Matching rate (%)</th>
+          <th></th>
+        </tr>
+        <tr data-ng-repeat="row in stopstatisticResultData">
+          <td>{{row.vehicleCode}}</td>
+          <td>{{row.vehicleLabel}}</td>
+          <td>{{row.rawStartDateAsString}}</td>
+          <td>{{row.rawStops}}</td>
+          <td>{{row.matchedStops}}</td>
+          <td>{{row.notMatchedStops}}</td>
+          <td>{{row.matchingRate * 100 | number:2}}</td>
+          <td>
+            <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
