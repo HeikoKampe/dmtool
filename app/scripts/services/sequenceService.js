@@ -17,7 +17,7 @@ angular.module('mdToolApp')
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
           departureTime: formatDateString(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
-          tripLabel: firstEntry.tripLabel || ''
+          tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel
         };
       return properties;
     }

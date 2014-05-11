@@ -67,14 +67,16 @@ angular.module('mdToolApp')
             icon: {
               anchor: new google.maps.Point(16, 32),
               url: 'images/marker-pin-black.png'
-            }
+            },
+            zIndex: 10000
           },
           blue: {
             draggable: true,
             icon: {
               anchor: new google.maps.Point(16, 32),
               url: 'images/marker-pin-blue.png'
-            }
+            },
+            zIndex: 10000
           }
         },
 

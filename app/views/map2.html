@@ -214,7 +214,7 @@
           <tr>
             <th>Show</th>
             <th>Departure</th>
-            <th>Trip key</th>
+            <th>Trip Label</th>
             <th>Stops</th>
           </tr>
           <tr data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
@@ -229,7 +229,7 @@
                   />
             </td>
             <td>{{ seq.properties.departureTime }}</td>
-            <td>{{ seq.properties.tripKey }}</td>
+            <td>{{ seq.properties.tripLabel }}</td>
             <td>{{seq.data.length}}</td>
           </tr>
         </table>

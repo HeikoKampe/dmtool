@@ -8,9 +8,9 @@ a:hover { text-decoration: underline; }
 
 h1, h2, h3, h4 { margin-top: 0; }
 
-input[type="text"] {
-  width: 80px;
-}
+/*input[type="text"] {*/
+  /*width: 80px;*/
+/*}*/
 
 .float--left { float: left; }
 .float--right { float: right; }
@@ -64,6 +64,7 @@ input[type="text"] {
   padding: 4px 6px;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
+  text-align: center;
 }
 
 .panel-table {
@@ -191,4 +192,20 @@ form.query-form {
 .line-panel {
   max-height:50vh;
   overflow:auto;
+}
+
+.overlay-table {
+  width:200px;
+}
+
+.coordinate {
+  width:130px!important;
+}
+
+.matching-indicator {
+  float:right;
+  display:inline-block;
+  height:6px;
+  width:30px;
+  background: url(../images/matching_indicator.png) no-repeat;
 }

@@ -88,27 +88,27 @@
               >
 
             <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
-
-              <table data-ng-non-bindable>
-                <tr>
-                  <td>Line:</td>
-                  <td>{{ lineLabel }}</td>
-                </tr>
-                <tr>
-                  <td>Point:</td>
-                  <td>{{ pointLabel }}</td>
-                </tr>
-                <tr>
-                  <td>Lat:</td>
-                  <td><input type="text" value="{{latitude}}" /></td>
-                </tr>
-                <tr>
-                  <td>Lng:</td>
-                  <td><input type="text" value="{{latitude}}" /></td>
-                </tr>
-              </table>
-              <p><button>update&nbsp;Coordinates</button></p>
-
+              <div data-selector="point-container" data-ng-non-bindable>
+                <table class="overlay-table">
+                  <tr>
+                    <td>Line:</td>
+                    <td>{{ lineLabel }}</td>
+                  </tr>
+                  <tr>
+                    <td>Point:</td>
+                    <td data-selector="point-label">{{ pointLabel }}</td>
+                  </tr>
+                  <tr>
+                    <td>Lat:</td>
+                    <td><input data-selector="lat" type="text" value="{{ latitude}}" class="coordinate" /></td>
+                  </tr>
+                  <tr>
+                    <td>Lng:</td>
+                    <td><input data-selector="lng" type="text" value="{{longitude}}" class="coordinate" /></td>
+                  </tr>
+                </table>
+                <p><button data-selector="update-point-btn">update&nbsp;coordinates</button></p>
+              </div>
             </windows>
           </markers>
         </div>
@@ -120,7 +120,7 @@
 
 
 <div class="map-panel-wrapper">
-  <h3>Stopping Point whatever</h3>
+  <h3>Stop Cluster View</h3>
 
   <div class="accordion">
     <div class="accordion__item">
@@ -184,7 +184,9 @@
                 </label>
               </p>
 
-              <p><button type="submit">Update stops</button></p>
+              <p>
+                <button type="submit">Update stops</button>
+              </p>
             </div>
           </div>
 
@@ -199,7 +201,6 @@
         <span class="accordion__header-icon"></span>
       </div>
       <div class="accordion__body active line-panel">
-
         <table class="panel-table" data-ng-show="linePointsSequences">
           <tr>
             <th>Show</th>

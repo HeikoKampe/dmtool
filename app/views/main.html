@@ -6,7 +6,7 @@
     from: <input type="text" data-ng-model="queryParams.dateFrom" value=""/>
     to: <input type="text" data-ng-model="queryParams.dateTo" value=""/>
     <button type="submit">submit</button>
-    </form>
+  </form>
 
 <span class="float--right" style="font-size:14px; text-decoration:underline;">
   <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">Show stop cluster</a>
@@ -19,7 +19,8 @@
       <option value="blocks">Blocks</option>
     </select>
   </h2>
-<br/>
+  <br/>
+
   <div data-ng-show="selectedTable === 'lines'">
     <div class="table-wrapper">
       <table class="data-table">
@@ -36,8 +37,37 @@
           <td>{{row.medianCostMax}}</td>
           <td>{{row.numberTrips}}</td>
           <td>
-            <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">Stop
+            <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">show stop
               cluster</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div data-ng-show="selectedTable === 'vehicles'">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <tr>
+          <th>Vehicle</th>
+          <th>Date</th>
+          <th>Number of stops</th>
+          <th>Matched stops</th>
+          <th>Unmatched stops</th>
+          <th>Matching rate (%)</th>
+          <th></th>
+        </tr>
+        <tr data-ng-repeat="row in stopstatisticResultData">
+          <td>{{row.vehicleLabel}}</td>
+          <td>{{row.rawStartDateAsString}}</td>
+          <td>{{row.rawStops}}</td>
+          <td>{{row.matchedStops}}</td>
+          <td>{{row.notMatchedStops}}</td>
+          <td>{{row.matchingRate * 100 | number:2}}
+            <span class="matching-indicator" style="background-position:-{{row.matchingRate * 60 | number:0}}px 0"></span>
+          </td>
+          <td>
+            <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
           </td>
         </tr>
       </table>
@@ -63,32 +93,5 @@
     </div>
   </div>
 
-  <div data-ng-show="selectedTable === 'vehicles'">
-    <div class="table-wrapper">
-      <table class="data-table">
-        <tr>
-          <th>Vehicle code</th>
-          <th>Vehicle label</th>
-          <th>Date</th>
-          <th>Number of stops</th>
-          <th>Matched stops</th>
-          <th>Unmatched stops</th>
-          <th>Matching rate (%)</th>
-          <th></th>
-        </tr>
-        <tr data-ng-repeat="row in stopstatisticResultData">
-          <td>{{row.vehicleCode}}</td>
-          <td>{{row.vehicleLabel}}</td>
-          <td>{{row.rawStartDateAsString}}</td>
-          <td>{{row.rawStops}}</td>
-          <td>{{row.matchedStops}}</td>
-          <td>{{row.notMatchedStops}}</td>
-          <td>{{row.matchingRate * 100 | number:2}}</td>
-          <td>
-            <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
+
 </div>
