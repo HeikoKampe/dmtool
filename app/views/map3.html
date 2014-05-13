@@ -64,6 +64,14 @@
                   <td>{{departureAsString}}</td>
                 </tr>
                 <tr>
+                  <td>latitude</td>
+                  <td>{{latitude}}</td>
+                </tr>
+                <tr>
+                  <td>longitude</td>
+                  <td>{{longitude}}</td>
+                </tr>
+                <tr>
                   <td>vehicleCode</td>
                   <td>{{vehicleCode}}</td>
                 </tr>
@@ -100,14 +108,16 @@
                   </tr>
                   <tr>
                     <td>Lat:</td>
-                    <td><input data-selector="lat" type="text" value="{{ latitude}}" class="coordinate" /></td>
+                    <td><input data-selector="lat" type="text" value="{{ latitude}}" class="coordinate"/></td>
                   </tr>
                   <tr>
                     <td>Lng:</td>
-                    <td><input data-selector="lng" type="text" value="{{longitude}}" class="coordinate" /></td>
+                    <td><input data-selector="lng" type="text" value="{{longitude}}" class="coordinate"/></td>
                   </tr>
                 </table>
-                <p><button data-selector="update-point-btn">update&nbsp;coordinates</button></p>
+                <p>
+                  <button data-selector="update-point-btn">update&nbsp;coordinates</button>
+                </p>
               </div>
             </windows>
           </markers>
