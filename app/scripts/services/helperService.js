@@ -28,10 +28,19 @@ angular.module('mdToolApp')
     }
 
 
+    function getTimeFromDateString(dateString) {
+      var
+        subStrings = dateString.split(" ");
+      // return the last part of the string devided by a space
+      return subStrings[subStrings.length - 1];
+    }
+
+
     // Public API here
     return {
       getLineByKey: getLineByKey,
-      getHalfWayThroughPointOfLine: getHalfWayThroughPointOfLine
+      getHalfWayThroughPointOfLine: getHalfWayThroughPointOfLine,
+      getTimeFromDateString: getTimeFromDateString
     };
 
 });

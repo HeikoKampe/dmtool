@@ -1,71 +1,32 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .factory('sequenceService', function () {
+  .factory('sequenceService', function (helperService) {
 
-    function formatDateString(dateString) {
-      var
-        subStrings = dateString.split(" ");
-      // return the last part of the string devided by a space
-      return subStrings[subStrings.length - 1];
-    }
-
-    function setSequenceProperties(firstEntry) {
+    function getStopSequenceProperties(firstEntry) {
       var
         properties = {
           visible: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
-          departureTime: formatDateString(firstEntry.departureAsString),
+          departureTime: helperService.getTimeFromDateString(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
           tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel
         };
       return properties;
     }
 
-    function createSequences(data, splitKey) {
-      var
-        sequences = [],
-        sequenceData = [],
-        sequenceProperties = {},
-        splitKeyValue;
-
-      for (var i = 0; i < data.length; i++) {
-        // sequence split condition
-        if (typeof splitKeyValue !== "undefined" && data[i][splitKey] !== splitKeyValue) {
-          sequences.push({ properties: sequenceProperties, data: sequenceData});
-          sequenceData = [];
-          sequenceProperties = setSequenceProperties(data[i]);
-        }
-        // add only stops with valid coordinates to the sequence
-        if (data[i].latitude > 0 && data[i].longitude > 0) {
-          sequenceProperties = setSequenceProperties(data[i]);
-          sequenceData.push(data[i]);
-        } else {
-          console.log("Invalid coordinates found in sequence");
-        }
-
-        splitKeyValue = data[i][splitKey];
-      }
-
-      // push the last found sequence into the sequence array
-      sequences.push({ properties: sequenceProperties, data: sequenceData});
-
-      return sequences;
-    }
-
-    function setLinePointSequenceProperties(firstEntry) {
+    function getLinePointSequenceProperties(firstEntry) {
       var
         properties = {
           visible: false,
           lineKey: firstEntry.lineKey,
           lineLabel: firstEntry.lineLabel,
           lineLabelShort: firstEntry.lineLabelShort
-
         };
       return properties;
     }
 
-    function createLinePointSequences(data, splitKey) {
+    function createSequences(data, splitKey, getPropertiesFunction) {
       var
         sequences = [],
         sequenceData = [],
@@ -73,24 +34,46 @@ angular.module('mdToolApp')
         splitKeyValue;
 
       for (var i = 0; i < data.length; i++) {
-        // sequence split condition
-        if (typeof splitKeyValue !== "undefined" && data[i][splitKey] !== splitKeyValue) {
+
+        // skip round if coordinates are invalid
+        if (data[i].latitude < 1 && data[i].longitude < 1) {
+          console.log("error: invalid coordinates");
+          continue;
+        }
+
+        // if first round (with valid coordinates)
+        if (!splitKeyValue) {
+          sequenceProperties = getPropertiesFunction(data[i]);
+        }
+
+        // if first entry of a new sequence
+        if (splitKeyValue && data[i][splitKey] !== splitKeyValue) {
+          // add previous sequence to the collection
           sequences.push({ properties: sequenceProperties, data: sequenceData});
           sequenceData = [];
-          sequenceProperties = setLinePointSequenceProperties(data[i]);
+          sequenceProperties = getPropertiesFunction(data[i]);
         }
-        sequenceProperties = setLinePointSequenceProperties(data[i]);
+
         sequenceData.push(data[i]);
         splitKeyValue = data[i][splitKey];
       }
-      // push the last found sequence into the sequence array
+
+      // add last remaining sequence to the collection
       sequences.push({ properties: sequenceProperties, data: sequenceData});
 
       return sequences;
     }
 
+    function createStopSequences (data, splitKey) {
+      return createSequences (data, splitKey, getStopSequenceProperties)
+    }
+
+    function createLinePointSequences (data, splitKey) {
+      return createSequences (data, splitKey, getLinePointSequenceProperties)
+    }
+
     return {
-      createSequences: createSequences,
+      createStopSequences: createStopSequences,
       createLinePointSequences: createLinePointSequences
     }
 
