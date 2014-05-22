@@ -27,11 +27,9 @@ angular.module('mdToolApp')
     }
 
     function setDate(timeString) {
-      var dateArray;
+      var isoDate = new Date(parseInt(timeString)).toISOString();
 
-      $scope.date = new Date(parseInt(timeString)).toLocaleDateString();
-      dateArray = $scope.date.split('.');
-      $scope.isoDate = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+      $scope.isoDate = isoDate.split('T')[0];
     }
 
     function findValidTripKey(data) {

@@ -185,8 +185,6 @@ angular.module('mdToolApp')
     gMapService.setMapZoomLevel(14);
     getLinePoints();
 
-
-
   }
 )
 ;

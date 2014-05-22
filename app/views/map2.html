@@ -197,7 +197,7 @@
 
 <!-- begin: left panel -->
 <div class="map-panel-wrapper">
-  <h4 class="map-panel-header">Stop sequences for vehicle {{vehicleId}} at {{date}}</h4>
+  <h4 class="map-panel-header">Stop sequences for vehicle {{vehicleId}} at {{isoDate}}</h4>
 
   <div class="accordion">
     <div class="accordion__item">
@@ -212,9 +212,10 @@
         <!--<p>Date: <strong>{{date}}</strong>, Vehicle: <strong>{{vehicleId}}</strong></p>-->
         <table class="panel-table"  data-ng-show="rawStopsSequences">
           <tr>
-            <th>Show</th>
+            <th></th>
             <th>Departure</th>
-            <th>Trip Label</th>
+            <th>Trip</th>
+            <th>Block</th>
             <th>Stops</th>
           </tr>
           <tr data-ng-repeat="seq in rawStopsSequences" data-ng-switch data-on="seq.properties.visible"
@@ -230,6 +231,7 @@
             </td>
             <td>{{ seq.properties.departureTime }}</td>
             <td>{{ seq.properties.tripLabel }}</td>
+            <td>{{ seq.properties.blockLabel }}</td>
             <td>{{seq.data.length}}</td>
           </tr>
         </table>
@@ -248,7 +250,7 @@
         </div>
         <table class="panel-table" data-ng-show="plannedStopsSequencesOfMatchedBlock">
           <tr>
-            <th>Show</th>
+            <th></th>
             <th>Departure</th>
             <th>Trip label</th>
             <th>Stops</th>
@@ -305,7 +307,7 @@
 
         <table class="panel-table" data-ng-show="plannedStopsSequencesOfSelectedBlock">
           <tr>
-            <th>Show</th>
+            <th></th>
             <th>Departure</th>
             <th>Trip label</th>
             <th>Stops</th>

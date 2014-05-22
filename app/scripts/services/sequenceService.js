@@ -10,8 +10,10 @@ angular.module('mdToolApp')
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
           departureTime: helperService.getTimeFromDateString(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
-          tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel
+          tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel,
+          blockLabel: firstEntry.sclBlockLabel || ''
         };
+      console.log("matchingStatus", properties.matchingStatus);
       return properties;
     }
 
@@ -31,7 +33,7 @@ angular.module('mdToolApp')
         sequences = [],
         sequenceData = [],
         sequenceProperties = {},
-        splitKeyValue;
+        splitKeyValue = -1;
 
       for (var i = 0; i < data.length; i++) {
 
@@ -42,13 +44,13 @@ angular.module('mdToolApp')
         }
 
         // if first round (with valid coordinates)
-        if (!splitKeyValue) {
+        if (splitKeyValue === -1) {
           sequenceProperties = getPropertiesFunction(data[i]);
         }
 
         // if first entry of a new sequence
-        if (splitKeyValue && data[i][splitKey] !== splitKeyValue) {
-          // add previous sequence to the collection
+        if (splitKeyValue !== -1 && data[i][splitKey] !== splitKeyValue) {
+          // add collected entries to the sequence collection
           sequences.push({ properties: sequenceProperties, data: sequenceData});
           sequenceData = [];
           sequenceProperties = getPropertiesFunction(data[i]);
@@ -58,7 +60,7 @@ angular.module('mdToolApp')
         splitKeyValue = data[i][splitKey];
       }
 
-      // add last remaining sequence to the collection
+      // add last collected sequence to the collection
       sequences.push({ properties: sequenceProperties, data: sequenceData});
 
       return sequences;
