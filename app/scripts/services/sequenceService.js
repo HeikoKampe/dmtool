@@ -11,9 +11,8 @@ angular.module('mdToolApp')
           departureTime: helperService.getTimeFromDateString(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
           tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel,
-          blockLabel: firstEntry.sclBlockLabel || ''
+          blockLabel: firstEntry.sclBlockLabel || undefined
         };
-      console.log("matchingStatus", properties.matchingStatus);
       return properties;
     }
 
@@ -21,6 +20,7 @@ angular.module('mdToolApp')
       var
         properties = {
           visible: false,
+          showStopsInTable: false,
           lineKey: firstEntry.lineKey,
           lineLabel: firstEntry.lineLabel,
           lineLabelShort: firstEntry.lineLabelShort

@@ -8,10 +8,6 @@ a:hover { text-decoration: underline; }
 
 h1, h2, h3, h4 { margin-top: 0; }
 
-/*input[type="text"] {*/
-  /*width: 80px;*/
-/*}*/
-
 .float--left { float: left; }
 .float--right { float: right; }
 
@@ -208,4 +204,17 @@ form.query-form {
   height:6px;
   width:30px;
   background: url(../images/matching_indicator.png) no-repeat;
+}
+
+.toggle-btn {
+  position:relative;
+  top:3px;
+  display:inline-block;
+  width:12px;
+  height:12px;
+  background: url(../images/arrow_black_right.png) no-repeat;
+}
+
+.toggle-btn.toggle-btn--open {
+  background: url(../images/arrow_black_down.png) no-repeat;
 }
