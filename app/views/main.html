@@ -64,7 +64,7 @@
           <td>{{row.matchedStops}}</td>
           <td>{{row.notMatchedStops}}</td>
           <td>{{row.matchingRate * 100 | number:2}}
-            <span class="matching-indicator" style="background-position:-{{row.matchingRate * 60 | number:0}}px 0"></span>
+            <span class="matching-indicator" data-ng-style="{'background-position': - (row.matchingRate * 60 | number:0)} "></span>
           </td>
           <td>
             <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
