@@ -1,11 +1,23 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map3Ctrl', function ($scope, $routeParams, $q, apiService, sequenceService, gMapService, messagesService, helperService) {
+  .controller('Map3Ctrl', function (
+    $scope,
+    $routeParams,
+    $filter,
+    $log,
+    apiService,
+    sequenceService,
+    gMapService,
+    messagesService,
+    helperService,
+    eventService) {
 
     var
       mapInstance,
-      updateTrigger = true;
+      selectedLinesKeys,
+      updateTrigger = true,
+      initialState = true;
 
     $scope.mapConfig = gMapService.getMapConfig();
     $scope.stopVariation = {
@@ -20,7 +32,7 @@ angular.module('mdToolApp')
     $scope.showMap = false;
     $scope.showMatchedStopVariation = true;
     $scope.showUnmatchedStopVariation = true;
-    $scope.spinner = [false];
+    $scope.spinner = [false, false];
 
     $scope.queryParams = {
       dateFrom: $routeParams.dateFrom,
@@ -36,6 +48,7 @@ angular.module('mdToolApp')
       loading: '',
       nStops: ''
     };
+
 
     $scope.mapEvents = {
       dragend: function (map) {
@@ -56,6 +69,78 @@ angular.module('mdToolApp')
         });
       }
     };
+
+    $scope.markersEvents = {
+      click: function (gMarker, eventName, model) {
+        if (model.id) {
+          $scope.$apply(function () {
+            $scope.selectedMarker = model;
+          });
+        }
+      },
+      dragend: function (gMarker, eventName, model) {
+        if (model.id) {
+
+          $scope.$apply(function () {
+            // save old coordinates if they were not saved before
+            if (!model.longitudeOld) {
+              model.longitudeOld = model.longitude;
+              model.latitudeOld = model.latitude;
+            }
+            model.longitudeNew = gMarker.position.A;
+            model.latitudeNew = gMarker.position.k;
+            model.longitude = gMarker.position.A;
+            model.latitude = gMarker.position.k;
+          });
+
+
+        }
+      }
+    };
+
+    $scope.submit = function () {
+      updateAfterZoom();
+    };
+
+    function getSelectedLines () {
+      selectedLinesKeys = $filter('sequenceFilter')($scope.linePointsSequences, 'properties.visible', true, 'properties.lineKey');
+    }
+
+    function reselectLines () {
+      var
+        i, lineSequence;
+
+      for (i = 0; i < selectedLinesKeys.length; i++) {
+        lineSequence = $filter('sequenceFilter')($scope.linePointsSequences, 'properties.lineKey', selectedLinesKeys[i])[0];
+        lineSequence.properties.visible = true;
+      }
+    }
+
+    function updateLinePointCoordinates() {
+      var pointData = {
+        pointLabel: $scope.selectedMarker.pointLabel,
+        latitude: $scope.selectedMarker.latitudeNew,
+        longitude: $scope.selectedMarker.longitudeNew
+      };
+
+      // remember the currently visible (checked) lines
+      getSelectedLines();
+
+      if (pointData.pointLabel && pointData.latitude && pointData.longitude) {
+        //      apiService.putScheduleData('netpoints/update', pointData).then(function () {
+        //        console.log("point successful updated");
+        //        getLinePoints();
+        //      });
+        getLinePoints();
+      } else {
+        $log.error("Error at updateLinePointCoordinates(): missing data");
+      }
+
+    };
+
+    function resetLinePoint() {
+
+    }
 
     function updateBounds(map) {
       var
@@ -81,20 +166,6 @@ angular.module('mdToolApp')
       var centerPoint = helperService.getHalfWayThroughPointOfLine(linePointsSequence);
 
       gMapService.setMapCenter(centerPoint.lat, centerPoint.lng);
-    }
-
-    function initialLineSelection(linePointsSequences) {
-      var selectedLine;
-
-      if ($routeParams.lineKey) {
-        selectedLine = helperService.getLineByKey(linePointsSequences, $routeParams.lineKey);
-        setMapCenter(selectedLine.data);
-        selectedLine.properties.visible = true;
-      } else {
-        // if there was no line selected take the first one
-        setMapCenter(linePointsSequences[0].data);
-        linePointsSequences[0].properties.visible = true;
-      }
     }
 
     function buildQueryString(queryParams) {
@@ -127,10 +198,6 @@ angular.module('mdToolApp')
       }
     }
 
-    $scope.submit = function () {
-      updateAfterZoom();
-    };
-
     function getStopsOfBoundingBox() {
       $scope.stopVariation = {
         matched: [],
@@ -152,35 +219,44 @@ angular.module('mdToolApp')
       });
     }
 
-    function updateLinePointPosition (pointData) {
-      console.log(test);
-      apiService.putScheduleData('netpoints/update', pointData).then(function () {
-        console.log("point successful updated");
-        getLinePoints();
-      });
-    };
+    function setInitialState(linePointsSequences) {
+      var
+        selectedLine;
+
+      if ($routeParams.lineKey) {
+        selectedLine = $filter('sequenceFilter')($scope.linePointsSequences, 'properties.lineKey', $routeParams.lineKey)[0];
+        selectedLine.properties.visible = true;
+        setMapCenter(selectedLine.data);
+      } else {
+        // if there was no line selected take the first one
+        setMapCenter(linePointsSequences[0].data);
+        linePointsSequences[0].properties.visible = true;
+      }
+    }
 
     function getLinePoints() {
+      toggleSpinner(1);
+      $scope.selectedMarker = {};
       apiService.getScheduleData('linepoints').then(function (res) {
+        toggleSpinner(1);
         $scope.linePointsSequences = sequenceService.createLinePointSequences(res.data, 'lineKey');
-        initialLineSelection($scope.linePointsSequences);
         console.log("$scope.linePointsSeq", $scope.linePointsSequences);
+        if (initialState) {
+          setInitialState($scope.linePointsSequences);
+          initialState = false;
+        }
+        if (selectedLinesKeys) {
+          reselectLines();
+        }
         showMap();
+
       });
     }
 
-    // hack for getting access to the window directive elements (update point button and fields)
-    $(document).on('click', '[data-selector="update-point-btn"]', function () {
-      var
-        pointContainer = $(this).parents('[data-selector="point-container"]'),
-        pointData = {
-          pointLabel: $('[data-selector="point-label"]', pointContainer).text(),
-          latitude: $('[data-selector="lat"]', pointContainer).val(),
-          longitude: $('[data-selector="lng"]', pointContainer).val()
-        };
-
-      updateLinePointPosition(pointData);
+    $scope.$on('UPDATE_LINEPOINT', function () {
+      updateLinePointCoordinates();
     });
+
 
     gMapService.setMapZoomLevel(14);
     getLinePoints();

@@ -1,4 +1,8 @@
+<!-- begin: gMap -->
 <div data-ng-switch data-on="showMap">
+  <div class="loading-spinner" data-ng-show="spinner[1]">
+    <div class="loading-spinner__spinner"></div>
+  </div>
   <div data-ng-switch-when="true">
     <google-map
         center='mapConfig.center'
@@ -7,6 +11,46 @@
         draggable="true"
         events="mapEvents"
         id="gmap">
+
+      <div data-ng-if="selectedMarker">
+        <window
+            coords="selectedMarker"
+            show="true"
+            closeClick="true"
+            options="mapConfig.pointMarkerWindow">
+          <div data-ng-controller="linePointMarkerWindow">
+            <table class="overlay-table">
+              <tr>
+                <td>Line:</td>
+                <td>{{ selectedMarker.lineLabel }}</td>
+              </tr>
+              <tr>
+                <td>Point:</td>
+                <td data-selector="point-label">{{ selectedMarker.pointLabel }}</td>
+              </tr>
+              <tr>
+                <td>Lat:</td>
+                <td>{{ selectedMarker.latitudeOld || selectedMarker.latitude}}</td>
+              </tr>
+              <tr>
+                <td>Lng:</td>
+                <td>{{selectedMarker.longitudeOld || selectedMarker.longitude }}</td>
+              </tr>
+              <tr>
+                <td>New Lat:</td>
+                <td>{{selectedMarker.latitudeNew}}</td>
+              </tr>
+              <tr>
+                <td>New Lng:</td>
+                <td>{{selectedMarker.longitudeNew}}</td>
+              </tr>
+            </table>
+            <button data-ng-show="true" data-ng-click="updateLinePointCoordinates()">update
+              coordinates
+            </button>
+          </div>
+        </window>
+      </div>
 
       <div data-ng-switch data-on="showUnmatchedStopVariation">
         <div data-ng-switch-when="true">
@@ -93,46 +137,24 @@
               models="seq.data"
               coords="'self'"
               options="mapConfig.pinMarkers.blue"
-              >
-
-            <windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
-              <div data-selector="point-container" data-ng-non-bindable>
-                <table class="overlay-table">
-                  <tr>
-                    <td>Line:</td>
-                    <td>{{ lineLabel }}</td>
-                  </tr>
-                  <tr>
-                    <td>Point:</td>
-                    <td data-selector="point-label">{{ pointLabel }}</td>
-                  </tr>
-                  <tr>
-                    <td>Lat:</td>
-                    <td><input data-selector="lat" type="text" value="{{ latitude}}" class="coordinate"/></td>
-                  </tr>
-                  <tr>
-                    <td>Lng:</td>
-                    <td><input data-selector="lng" type="text" value="{{longitude}}" class="coordinate"/></td>
-                  </tr>
-                </table>
-                <p>
-                  <button data-selector="update-point-btn">update&nbsp;coordinates</button>
-                </p>
-              </div>
-            </windows>
+              events="markersEvents">
           </markers>
         </div>
       </div>
 
+
     </google-map>
   </div>
 </div>
+<!-- end: gMap -->
 
-
+<!-- begin: left panel -->
 <div class="map-panel-wrapper">
   <h3>Stop Cluster View</h3>
 
   <div class="accordion">
+
+    <!-- begin: panel 1 -->
     <div class="accordion__item">
       <div class="accordion__header active" data-accordion-header>
         <h4 class="accordion__title">Show stops of selected area</h4>
@@ -204,7 +226,9 @@
 
       </div>
     </div>
+    <!-- end: panel 1 -->
 
+    <!-- begin: panel 2 -->
     <div class="accordion__item">
       <div class="accordion__header active" data-accordion-header>
         <h4 class="accordion__title">Lines</h4>
@@ -233,7 +257,9 @@
         </table>
       </div>
     </div>
+    <!-- begin: panel 2 -->
 
   </div>
 
 </div>
+<!-- end: left panel -->

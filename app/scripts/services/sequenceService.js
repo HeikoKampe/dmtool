@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .factory('sequenceService', function (helperService) {
+  .factory('sequenceService', function ($filter) {
 
     function getStopSequenceProperties(firstEntry) {
       var
@@ -9,7 +9,7 @@ angular.module('mdToolApp')
           visible: false,
           showStopsInTable: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
-          departureTime: helperService.getTimeFromDateString(firstEntry.departureAsString),
+          departureTime: $filter('timeOnlyFilter')(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
           tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel,
           blockLabel: firstEntry.sclBlockLabel || undefined,
