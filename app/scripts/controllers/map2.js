@@ -1,23 +1,50 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map2Ctrl', function ($scope, $routeParams, $filter, $log,  apiService, sequenceService, gMapService) {
+  .controller('Map2Ctrl', function ($scope, $routeParams, $filter, $log, apiService, sequenceService, gMapService) {
 
     $scope.mapConfig = gMapService.getMapConfig();
     $scope.rawStopsSequences = [];
-    $scope.plannedStopsSequencesOfMatchedBlock = [];
-    $scope.plannedStopsSequencesOfSelectedBlock = [];
+    $scope.scheduledStopSequencesOfMatchingBlock = [];
+    $scope.scheduledStopSequencesOfSelectedBlock = [];
+    $scope.selectedMatchingBlock = null;
     $scope.vehicleId = $routeParams.vehicleId;
     $scope.spinner = [false, false, false];
+    $scope.highlightMarker = {
+      visible: false,
+      latitude: 51.06093000,
+      longitude: 13.68995000
+    };
+
 
     $scope.submitBlockForm = function () {
-      if ($scope.selectedBlock && $scope.selectedBlock.blockKey) {
-        getScheduledStopsOfSelectedBlock($scope.selectedBlock.blockKey);
+      toggleSpinner(2);
+      getScheduledTripsOfBlock($scope.selectedBlock.blockKey).then(function (res) {
+        toggleSpinner(2);
+        $log.info("res.getScheduledTripsOfBlock", res.data);
+        $scope.scheduledStopSequencesOfSelectedBlock = sequenceService.createStopSequences(res.data, 'tripKey');
+      });
+    };
+
+    $scope.showSelectedMatchingBlock = function () {
+      if ($scope.selectedMatchingBlock && $scope.selectedMatchingBlock.properties.blockKey) {
+        toggleSpinner(1);
+        getScheduledTripsOfBlock($scope.selectedMatchingBlock.properties.blockKey).then(function (res) {
+          toggleSpinner(1);
+          $log.info("res.showSelectedMatchingBlock", res.data);
+          $scope.scheduledStopSequencesOfMatchingBlock = sequenceService.createStopSequences(res.data, 'tripKey');
+        });
       }
     };
 
-    $scope.toggleStopsOfSequence = function (sequenceProperties) {
-      sequenceProperties.showStopsInTable = !sequenceProperties.showStopsInTable;
+    $scope.setHighlightMarker = function (lat, lng) {
+      $scope.highlightMarker.latitude = lat;
+      $scope.highlightMarker.longitude = lng;
+      $scope.highlightMarker.visible = true;
+    };
+
+    $scope.unsetHighlightMarker = function () {
+      $scope.highlightMarker.visible = true;
     };
 
     function setMapCenter(data) {
@@ -32,44 +59,19 @@ angular.module('mdToolApp')
     function setDate(timeString) {
       var isoDate = new Date(parseInt(timeString)).toISOString();
 
-        $scope.isoDate = isoDate.split('T')[0];
+      $scope.isoDate = isoDate.split('T')[0];
     }
 
-    // fixme: soon obsolete
-    function findValidTripKey(data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].cntTripKey) {
-          return data[i].cntTripKey;
-        }
-      }
-    }
-
-    function toggleSpinner (spinnerId) {
+    function toggleSpinner(spinnerId) {
       $scope.spinner[spinnerId] = !$scope.spinner[spinnerId];
     }
 
-    function getScheduledStopsOfMatchedBlock(blockKey) {
-      apiService.getScheduleData('stops' + '?operationDay=' + $scope.isoDate + '&blockKey=' + blockKey).then(function (res) {
-        $log.info("res.scheduledStopsOfMatchedBlock", res.data);
-        toggleSpinner(1);
-        $scope.plannedStopsSequencesOfMatchedBlock = sequenceService.createStopSequences(res.data, 'tripKey');
-        $scope.matchedBlockLabel = res.data[0].blockLabel;
-      });
+
+    function getScheduledTripsOfBlock(blockKey) {
+      return apiService.getScheduleData('stops' + '?operationDay=' + $scope.isoDate + '&blockKey=' + blockKey);
     }
 
-    // fixme: soon obsolete
-    function getMatchedBlockKey(tripKey) {
-      toggleSpinner(1);
-      apiService.getScheduleData('blockkey' + '?cntTripKey=' + tripKey).then(function (res) {
-        $log.info("res.blockKey", res.data);
-        $scope.matchedBlockKey = res.data;
-        if ($scope.matchedBlockKey) {
-          getScheduledStopsOfMatchedBlock($scope.matchedBlockKey);
-        }
-      });
-    }
-
-    function getMatchingBlocksOfSequences (sequences) {
+    function getMatchingBlocksOfSequences(sequences) {
       return $filter('uniqueFilter')(sequences, 'properties.blockLabel');
     }
 
@@ -79,8 +81,6 @@ angular.module('mdToolApp')
         $log.info("getStopsOfSelectedVehicle", res.data);
         toggleSpinner(0);
         setMapCenter(res.data);
-        // fixme: soon obsolete
-        $scope.matchedBlockKey = getMatchedBlockKey(findValidTripKey(res.data));
         $scope.rawStopsSequences = sequenceService.createStopSequences(res.data, 'cntTripKey');
         $scope.matchingBlocks = getMatchingBlocksOfSequences($scope.rawStopsSequences);
         $scope.selectedMatchingBlock = $scope.matchingBlocks[0];
@@ -97,14 +97,10 @@ angular.module('mdToolApp')
       });
     }
 
-    function getScheduledStopsOfSelectedBlock(blockKey) {
-      toggleSpinner(2);
-      apiService.getScheduleData('stops' + '?operationDay=' + $scope.isoDate + '&blockKey=' + blockKey).then(function (res) {
-        $log.info("res.scheduleDataOfSelectedBlock", res.data);
-        toggleSpinner(2);
-        $scope.plannedStopsSequencesOfSelectedBlock = sequenceService.createStopSequences(res.data, 'tripKey');
-      });
-    }
+    $scope.$watch("selectedMatchingBlock", function(newValue, oldValue) {
+      $scope.showSelectedMatchingBlock();
+    });
+
 
     setDate($routeParams.startTime);
     getStopsOfSelectedVehicle();

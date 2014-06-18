@@ -7,8 +7,8 @@ angular.module('mdToolApp')
       mapConfig = {
 
         center: {
-          latitude: 51.00996573333334,
-          longitude: 13.783468888333335
+          latitude: 0,
+          longitude: 0
         },
 
         zoom: 12,
@@ -52,7 +52,8 @@ angular.module('mdToolApp')
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-orange.png'
-            }
+            },
+            zIndex: 10000
           },
           pink: {
             icon: {
@@ -99,6 +100,10 @@ angular.module('mdToolApp')
           pink: {
             color: '#c33a77'
           }
+        },
+
+        pointMarkerWindow: {
+          pixelOffset: new google.maps.Size(0, -32)
         }
 
       };

@@ -1,0 +1,60 @@
+<div class="flex-table">
+  <div class="flex-table__row">
+    <div class="flex-table__col flex-table__col--header"></div>
+    <div class="flex-table__col flex-table__col--header"></div>
+    <div class="flex-table__col flex-table__col--header">Departure</div>
+    <div class="flex-table__col flex-table__col--header">Trip</div>
+    <div class="flex-table__col flex-table__col--header">Block</div>
+    <div class="flex-table__col flex-table__col--header">Stops</div>
+  </div>
+  <div data-ng-repeat="seq in sequences">
+    <div class="flex-table__row" data-ng-class="seq.properties.matchingStatus === 'matched' ? 'green' : 'red' ">
+      <div class="flex-table__col">
+        <input
+            type="checkbox"
+            data-ng-model="seq.properties.visible"
+            data-ng-checked="false"
+            data-ng-true-value="true"
+            data-ng-false-value="false"
+            />
+      </div>
+      <div class="flex-table__col">
+        <span
+            class="toggle-btn"
+            data-ng-class="{'toggle-btn--open' : seq.properties.showStopsInTable}"
+            data-ng-click="toggleSequenceDetails(seq.properties)">
+        </span>
+      </div>
+      <div class="flex-table__col">{{ seq.properties.departureTime }}</div>
+      <div class="flex-table__col">{{ seq.properties.tripLabel || "unmatched" }}</div>
+      <div class="flex-table__col">{{ seq.properties.blockLabel || "unmatched" }}</div>
+      <div class="flex-table__col">{{seq.data.length}}</div>
+    </div>
+
+    <!--begin: inner table-->
+    <div data-ng-show="seq.properties.showStopsInTable">
+      <div class="flex-table flex-table--stops">
+        <div class="flex-table__row">
+          <div class="flex-table__col flex-table__col--header">Seq.</div>
+          <div class="flex-table__col flex-table__col--header">Arrival</div>
+          <div class="flex-table__col flex-table__col--header">Departure</div>
+          <div class="flex-table__col flex-table__col--header">Point label</div>
+          <div class="flex-table__col flex-table__col--header">Dist.</div>
+        </div>
+
+        <div class="flex-table__row"
+             data-ng-repeat="stop in seq.data"
+             data-ng-mouseover="setHighlightMarker(stop.latitude, stop.longitude)"
+             data-ng-mouseleave="unsetHighlightMarker()">
+          <div class="flex-table__col">{{ stop.cntSequence}}</div>
+          <div class="flex-table__col">{{ stop.arrivalAsString | timeOnlyFilter }}</div>
+          <div class="flex-table__col">{{ stop.departureAsString | timeOnlyFilter }}</div>
+          <div class="flex-table__col">{{ stop.pointLabel }}</div>
+          <div class="flex-table__col">{{ stop.distance }}</div>
+        </div>
+      </div>
+    </div>
+    <!--end: inner table-->
+
+  </div>
+</div>

@@ -67,7 +67,7 @@
 <!-- end: visualisation of data from panel 1 in map -->
 
 <!-- begin: visualisation of data from panel 2 in map -->
-<div data-ng-repeat="seq in plannedStopsSequencesOfMatchedBlock" ng-switch on="seq.properties.visible">
+<div data-ng-repeat="seq in scheduledStopSequencesOfMatchingBlock" ng-switch on="seq.properties.visible">
   <div ng-switch-when="true">
     <markers
         models="seq.data"
@@ -135,7 +135,7 @@
 <!-- end: visualisation of data from panel 2 in map -->
 
 <!-- begin: visualisation of data from panel 3 in map -->
-<div data-ng-repeat="seq in plannedStopsSequencesOfSelectedBlock" ng-switch on="seq.properties.visible">
+<div data-ng-repeat="seq in scheduledStopSequencesOfSelectedBlock" ng-switch on="seq.properties.visible">
   <div ng-switch-when="true">
     <markers
         models="seq.data"
@@ -202,6 +202,8 @@
 </div>
 <!-- end: visualisation of data from panel 3 in map -->
 
+<marker coords="highlightMarker" options="mapConfig.roundMarkers.orange"></marker>
+
 </google-map>
 <!-- end: gMap -->
 
@@ -222,45 +224,12 @@
           <div class="loading-spinner__spinner"></div>
         </div>
 
-        <div class="flex-table">
-          <div class="flex-table__row">
-            <div class="flex-table__col flex-table__col--header"></div>
-            <div class="flex-table__col flex-table__col--header"></div>
-            <div class="flex-table__col flex-table__col--header">Departure</div>
-            <div class="flex-table__col flex-table__col--header">Trip</div>
-            <div class="flex-table__col flex-table__col--header">Block</div>
-            <div class="flex-table__col flex-table__col--header">Stops</div>
-          </div>
-          <div data-ng-repeat="seq in rawStopsSequences">
-            <div class="flex-table__row" data-ng-class="seq.properties.matchingStatus === 'matched' ? 'green' : 'red' ">
-              <div class="flex-table__col">
-                <input
-                    type="checkbox"
-                    data-ng-model="seq.properties.visible"
-                    data-ng-checked="false"
-                    data-ng-true-value="true"
-                    data-ng-false-value="false"
-                    />
-              </div>
-              <div class="flex-table__col"><span class="toggle-btn"
-                                                 data-ng-class="{'toggle-btn--open' : seq.properties.showStopsInTable}"
-                                                 data-ng-click="toggleStopsOfSequence(seq.properties)"></span></div>
-              <div class="flex-table__col">{{ seq.properties.departureTime }}</div>
-              <div class="flex-table__col">{{ seq.properties.tripLabel || "unmatched" }}</div>
-              <div class="flex-table__col">{{ seq.properties.blockLabel || "unmatched" }}</div>
-              <div class="flex-table__col">{{seq.data.length}}</div>
-            </div>
-            <div data-ng-show="seq.properties.showStopsInTable">
-              <div data-ng-repeat="stop in seq.data" class="flex-table__row flex-table__row--stops">
-                <div class="flex-table__col"></div>
-                <div class="flex-table__col"></div>
-                <div class="flex-table__col">{{ stop.departureAsString | timeOnlyFilter }}</div>
-                <div class="flex-table__col">{{ stop.sclTripLabel || "unmatched" }}</div>
-                <div class="flex-table__col">{{ stop.sclBlockLabel || "unmatched" }}</div>
-                <div class="flex-table__col">{{ stop.cntSequence}}</div>
-              </div>
-            </div>
-          </div>
+        <!-- directive for displaying stop sequences in a drill-down table -->
+        <div
+            data-stop-sequences-table
+            data-sequences="rawStopsSequences"
+            data-toggle-sequence-details="toggleSequenceDetails()"
+            >
         </div>
 
         <p><span class="green">matched</span> / <span class="red">unmatched</span></p>
@@ -275,102 +244,66 @@
         <span class="accordion__header-icon"></span>
       </div>
       <div class="accordion__body active">
-        <div class="loading-spinner" data-ng-show="spinner[1]">
-          <div class="loading-spinner__spinner"></div>
-        </div>
 
-        <select class="full-width"
+
+        <select class="full-width push--bottom"
                 data-ng-model="selectedMatchingBlock"
                 data-ng-options="block as block.properties.blockLabel for block in matchingBlocks">
         </select>
 
-        <table class="panel-table" data-ng-show="plannedStopsSequencesOfMatchedBlock">
-          <tr>
-            <th>&nbsp;</th>
-            <th>Departure</th>
-            <th>Trip label</th>
-            <th>Stops</th>
-          </tr>
-          <tr data-ng-repeat="seq in plannedStopsSequencesOfMatchedBlock" data-ng-switch
-              data-on="seq.properties.visible"
-              class="blue">
-            <td>
-              <input
-                  type="checkbox"
-                  data-ng-model="seq.properties.visible"
-                  data-ng-checked="false"
-                  data-ng-true-value="true"
-                  data-ng-false-value="false"
-                  />
-            </td>
-            <td>{{ seq.properties.departureTime }}</td>
-            <td>{{ seq.properties.tripLabel }}</td>
-            <td>{{seq.data.length}}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <!-- end: panel 2 -->
-
-    <!-- begin: panel 3 -->
-    <div class="accordion__item">
-      <div class="accordion__header" data-accordion-header>
-        <h4 class="accordion__title">All Blocks for this day ({{isoDate}})</h4>
-        <span class="accordion__header-icon"></span>
-      </div>
-      <div class="accordion__body">
-        <div class="loading-spinner" data-ng-show="spinner[2]">
-          <div class="loading-spinner__spinner"></div>
-        </div>
-        <form data-ng-submit="submitBlockForm()">
-          <div class="box">
-            <div class="box__header">Filter available blocks</div>
-            <div class="box__body">
-              <input type="text" data-ng-model="blockFilter.label"/>
-            </div>
+        <div class="position-relative">
+          <div class="loading-spinner" data-ng-show="spinner[1]">
+            <div class="loading-spinner__spinner"></div>
           </div>
 
-          <p>
-            <select class="full-width"
-                    size="5"
-                    data-ng-model="selectedBlock"
-                    data-ng-options="block.blockLabel for block in blocksOfDay | filter:{ blockLabel: blockFilter.label }">
-            </select>
-          </p>
+          <!--flexTable directive for displaying sequences data-->
+          <div data-trips-table data-sequences="scheduledStopSequencesOfMatchingBlock"></div>
 
-          <p>
-            <button>Show stop sequences</button>
-          </p>
-        </form>
+        </div>
 
-        <table class="panel-table" data-ng-show="plannedStopsSequencesOfSelectedBlock">
-          <tr>
-            <th></th>
-            <th>Departure</th>
-            <th>Trip label</th>
-            <th>Stops</th>
-          </tr>
-          <tr data-ng-repeat="seq in plannedStopsSequencesOfSelectedBlock" data-ng-switch
-              data-on="seq.properties.visible"
-              class="blue">
-            <td>
-              <input
-                  type="checkbox"
-                  data-ng-model="seq.properties.visible"
-                  data-ng-checked="false"
-                  data-ng-true-value="true"
-                  data-ng-false-value="false"
-                  />
-            </td>
-            <td>{{ seq.properties.departureTime }}</td>
-            <td>{{ seq.properties.tripLabel }}</td>
-            <td>{{seq.data.length}}</td>
-          </tr>
-        </table>
       </div>
     </div>
-    <!-- end: panel 3 -->
-
   </div>
+  <!-- end: panel 2 -->
+
+  <!-- begin: panel 3 -->
+  <div class="accordion__item">
+    <div class="accordion__header" data-accordion-header>
+      <h4 class="accordion__title">Scheduled trips of a block from this day ({{isoDate}})</h4>
+      <span class="accordion__header-icon"></span>
+    </div>
+    <div class="accordion__body">
+      <div class="loading-spinner" data-ng-show="spinner[2]">
+        <div class="loading-spinner__spinner"></div>
+      </div>
+      <form data-ng-submit="submitBlockForm()">
+        <div class="box">
+          <div class="box__header">Filter available blocks</div>
+          <div class="box__body">
+            <input type="text" data-ng-model="blockFilter.label"/>
+          </div>
+        </div>
+
+        <p>
+          <select class="full-width"
+                  size="5"
+                  data-ng-model="selectedBlock"
+                  data-ng-options="block.blockLabel for block in blocksOfDay | filter:{ blockLabel: blockFilter.label }">
+          </select>
+        </p>
+
+        <p>
+          <button>Show stop sequences</button>
+        </p>
+      </form>
+
+      <!--flexTable directive for displaying sequences data-->
+      <div data-trips-table data-sequences="scheduledStopSequencesOfSelectedBlock"></div>
+
+    </div>
+  </div>
+  <!-- end: panel 3 -->
+
+</div>
 </div>
 <!-- end: left panel -->

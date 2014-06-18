@@ -31,7 +31,7 @@ h1, h2, h3, h4 { margin-top: 0; }
   bottom: 10px;
   width: 350px;
   overflow: auto;
-  padding:4px;
+  padding:4px 4px 20px 4px;
   background:#fff;
   opacity: 0.9;
 }
@@ -169,8 +169,10 @@ form.query-form {
   top:0;
   bottom:0;
   width:100%;
+  min-height:50px;
   background:#fff;
   opacity:0.8;
+  z-index:2;
 }
 
 .loading-spinner__spinner {
@@ -217,4 +219,12 @@ form.query-form {
 
 .toggle-btn.toggle-btn--open {
   background: url(../images/arrow_black_down.png) no-repeat;
+}
+
+.position-relative {
+  position:relative;
+}
+
+.push--bottom {
+  margin-bottom:12px;
 }

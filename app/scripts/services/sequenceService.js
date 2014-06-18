@@ -7,11 +7,13 @@ angular.module('mdToolApp')
       var
         properties = {
           visible: false,
+          showStopsInTable: false,
           matchingStatus: (firstEntry.hasCntStop === 'Y') ? 'matched' : 'unmatched',
           departureTime: helperService.getTimeFromDateString(firstEntry.departureAsString),
           tripKey: firstEntry.tripKey || firstEntry.cntTripKey,
           tripLabel: firstEntry.tripLabel || firstEntry.sclTripLabel,
-          blockLabel: firstEntry.sclBlockLabel || undefined
+          blockLabel: firstEntry.sclBlockLabel || undefined,
+          blockKey: firstEntry.sclBlockKey || undefined
         };
       return properties;
     }
