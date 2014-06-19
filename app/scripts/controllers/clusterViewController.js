@@ -81,19 +81,20 @@ angular.module('mdToolApp')
             model.latitude = gMarker.position.k;
           });
 
-
         }
       }
     };
 
-    $scope.submit = function () {
-      updateAfterZoom();
+    $scope.submitForm = function () {
+      checkZoomAndUpdateStops();
     };
 
+    // store currently selected lines
     function getSelectedLines() {
       selectedLinesKeys = $filter('sequenceFilter')($scope.linePointsSequences, 'properties.visible', true, 'properties.lineKey');
     }
 
+    // restore selection of lines
     function reselectLines() {
       var
         i, lineSequence;
@@ -104,6 +105,7 @@ angular.module('mdToolApp')
       }
     }
 
+    // send new line point coordinates to API and update all line points afterwards
     function updateLinePointCoordinates() {
       var pointData = {
         pointLabel: $scope.selectedMarker.pointLabel,
@@ -129,6 +131,7 @@ angular.module('mdToolApp')
 
     }
 
+    // update map bounding box
     function updateBounds(map) {
       var
         bounds = map.getBounds(),
@@ -155,6 +158,7 @@ angular.module('mdToolApp')
       gMapService.setMapCenter(centerPoint.lat, centerPoint.lng);
     }
 
+    // divide stops into matched and unmatched stops
     function matchingStatusFilter(data) {
       angular.forEach(data, function (value, key) {
         if (value && value.hasCntStop === 'Y') {
@@ -167,7 +171,7 @@ angular.module('mdToolApp')
 
     // This function helps to prevent too many results by zooming in before getting results
     // for the current map bounding box.
-    function updateAfterZoom() {
+    function checkZoomAndUpdateStops() {
       if (gMapService.getMapZoomLevel() < 14) {
         updateTrigger = true;
         gMapService.setMapZoomLevel(14);
@@ -176,7 +180,7 @@ angular.module('mdToolApp')
       }
     }
 
-    // get all stops for the current map
+    // get all stops for the current map (map bounding box)
     function getStopsOfBoundingBox() {
       $scope.stopVariation = {
         matched: [],
