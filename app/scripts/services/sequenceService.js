@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .factory('sequenceService', function ($filter) {
+  .factory('sequenceService', function ($filter, $log) {
 
     function getStopSequenceProperties(firstEntry) {
       var
@@ -41,7 +41,7 @@ angular.module('mdToolApp')
 
         // skip round if coordinates are invalid
         if (data[i].latitude < 1 && data[i].longitude < 1) {
-          console.log("error: invalid coordinates");
+          $log.info("sequenceService: found invalid coordinates");
           continue;
         }
 

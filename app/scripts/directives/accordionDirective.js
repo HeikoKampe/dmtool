@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .directive('accordionHeader', function () {
+  .directive('accordionDirective', function () {
     var activeClass = 'active';
     return {
       link: function postLink(scope, element, attrs) {

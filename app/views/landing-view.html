@@ -9,7 +9,7 @@
   </form>
 
 <span class="float--right" style="font-size:14px; text-decoration:underline;">
-  <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">Show stop cluster</a>
+  <a href="#/cluster-view?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}">Show stop cluster</a>
 </span>
 
   <h2>Matching results for
@@ -37,7 +37,7 @@
           <td>{{row.medianCostMax}}</td>
           <td>{{row.numberTrips}}</td>
           <td>
-            <a href="#/map3?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">show stop
+            <a href="#/cluster-view?dateFrom={{queryParams.dateFrom}}&dateTo={{queryParams.dateTo}}&lineKey={{row.lineKey}}">show stop
               cluster</a>
           </td>
         </tr>
@@ -67,7 +67,7 @@
             <span class="matching-indicator" data-ng-style="{'background-position': - (row.matchingRate * 60 | number:0)} "></span>
           </td>
           <td>
-            <a href="#/map2/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
+            <a href="#/sequence-view/{{row.vehicleCode}}/{{row.rawStartDate}}">show stop sequences</a>
           </td>
         </tr>
       </table>

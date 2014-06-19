@@ -52,11 +52,11 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 
-<script src="scripts/controllers/main.js"></script>
-<script src="scripts/controllers/map2.js"></script>
-<script src="scripts/controllers/map3.js"></script>
-<script src="scripts/controllers/linePointMarkerWindow.js"></script>
-<script src="scripts/controllers/sequenceTableController.js"></script>
+<script src="scripts/controllers/landingViewController.js"></script>
+<script src="scripts/controllers/sequenceViewController.js"></script>
+<script src="scripts/controllers/clusterViewController.js"></script>
+<script src="scripts/controllers/linePointMarkerWindowController.js"></script>
+<script src="scripts/controllers/tableController.js"></script>
 
 <script src="scripts/services/apiService.js"></script>
 <script src="scripts/services/gMapService.js"></script>
@@ -65,12 +65,14 @@
 <script src="scripts/services/messagesService.js"></script>
 <script src="scripts/services/helperService.js"></script>
 
-<script src="scripts/directives/accordion.js"></script>
+<script src="scripts/directives/accordionDirective.js"></script>
+<script src="scripts/directives/stopsTableDirective.js"></script>
+<script src="scripts/directives/tripsTableDirective.js"></script>
+
 <script src="scripts/filters/uniqueFilter.js"></script>
 <script src="scripts/filters/timeOnlyFilter.js"></script>
 <script src="scripts/filters/sequenceFilter.js"></script>
-<script src="scripts/directives/stop-sequences-table.js"></script>
-<script src="scripts/directives/trips-table.js"></script>
+
 <!-- endbuild -->
 </body>
 </html>

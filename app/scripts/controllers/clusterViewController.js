@@ -1,17 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map3Ctrl', function (
-    $scope,
-    $routeParams,
-    $filter,
-    $log,
-    apiService,
-    sequenceService,
-    gMapService,
-    messagesService,
-    helperService,
-    eventService) {
+  .controller('clusterViewController', function ($scope, $routeParams, $filter, $log, apiService, sequenceService, gMapService, messagesService, helperService) {
 
     var
       mapInstance,
@@ -49,7 +39,6 @@ angular.module('mdToolApp')
       nStops: ''
     };
 
-
     $scope.mapEvents = {
       dragend: function (map) {
         updateBounds(map);
@@ -60,7 +49,6 @@ angular.module('mdToolApp')
       tilesloaded: function (map) {
         $scope.$apply(function () {
           mapInstance = map;
-          console.log('MAP LOADED');
           updateBounds(map);
           if (updateTrigger) {
             getStopsOfBoundingBox();
@@ -102,11 +90,11 @@ angular.module('mdToolApp')
       updateAfterZoom();
     };
 
-    function getSelectedLines () {
+    function getSelectedLines() {
       selectedLinesKeys = $filter('sequenceFilter')($scope.linePointsSequences, 'properties.visible', true, 'properties.lineKey');
     }
 
-    function reselectLines () {
+    function reselectLines() {
       var
         i, lineSequence;
 
@@ -128,7 +116,6 @@ angular.module('mdToolApp')
 
       if (pointData.pointLabel && pointData.latitude && pointData.longitude) {
         apiService.putScheduleData('netpoints/update', pointData).then(function () {
-          console.log("point successful updated");
           getLinePoints();
         });
         getLinePoints();
@@ -168,16 +155,6 @@ angular.module('mdToolApp')
       gMapService.setMapCenter(centerPoint.lat, centerPoint.lng);
     }
 
-    function buildQueryString(queryParams) {
-      var queryString = '?';
-
-      angular.forEach(queryParams, function (value, key) {
-        queryString = queryString + key + '=' + value + '&';
-      });
-
-      return queryString;
-    }
-
     function matchingStatusFilter(data) {
       angular.forEach(data, function (value, key) {
         if (value && value.hasCntStop === 'Y') {
@@ -188,7 +165,8 @@ angular.module('mdToolApp')
       });
     }
 
-    // trigger api call after map has zoomed and new bounding box is evaluated
+    // This function helps to prevent too many results by zooming in before getting results
+    // for the current map bounding box.
     function updateAfterZoom() {
       if (gMapService.getMapZoomLevel() < 14) {
         updateTrigger = true;
@@ -198,15 +176,16 @@ angular.module('mdToolApp')
       }
     }
 
+    // get all stops for the current map
     function getStopsOfBoundingBox() {
       $scope.stopVariation = {
         matched: [],
         unmatched: []
       };
       toggleSpinner(0);
-      apiService.getRawData('stops/scattering' + buildQueryString($scope.queryParams)).then(function (res) {
+      apiService.getRawData('stops/scattering' + helperService.buildQueryString($scope.queryParams)).then(function (res) {
         toggleSpinner(0);
-        console.log(res.data);
+        $log.info('stops of bounding box: ', res.data);
         $scope.messages.numberOfStops = res.data.length;
         $scope.messages.loading = '';
         $scope.messages.lengthWarning = '';
@@ -219,48 +198,55 @@ angular.module('mdToolApp')
       });
     }
 
+
     function setInitialState(linePointsSequences) {
       var
         selectedLine;
 
+      gMapService.setMapZoomLevel(14);
+      // show selected line and adjust map center according to the selected line
       if ($routeParams.lineKey) {
         selectedLine = $filter('sequenceFilter')($scope.linePointsSequences, 'properties.lineKey', $routeParams.lineKey)[0];
         selectedLine.properties.visible = true;
         setMapCenter(selectedLine.data);
       } else {
-        // if there was no line selected take the first one
+        // if no line is selected show the first one
         setMapCenter(linePointsSequences[0].data);
         linePointsSequences[0].properties.visible = true;
       }
     }
 
+    function processLinePoints(data) {
+      // create line sequences objects out of the line points
+      $scope.linePointsSequences = sequenceService.createLinePointSequences(data, 'lineKey');
+      $log.info("linePointSequences", $scope.linePointsSequences);
+      // if line points are loaded for the first time provide initial settings
+      if (initialState) {
+        setInitialState($scope.linePointsSequences);
+        initialState = false;
+      }
+      // if line points are reloaded re-establish previous setting
+      if (selectedLinesKeys) {
+        reselectLines();
+      }
+    }
+
+    // get all line points from API
     function getLinePoints() {
       toggleSpinner(1);
       $scope.selectedMarker = {};
       apiService.getScheduleData('linepoints').then(function (res) {
+        processLinePoints(res.data)
         toggleSpinner(1);
-        $scope.linePointsSequences = sequenceService.createLinePointSequences(res.data, 'lineKey');
-        console.log("$scope.linePointsSeq", $scope.linePointsSequences);
-        if (initialState) {
-          setInitialState($scope.linePointsSequences);
-          initialState = false;
-        }
-        if (selectedLinesKeys) {
-          reselectLines();
-        }
         showMap();
-
       });
     }
 
+    // event is send by linePointMarkerWindowController
     $scope.$on('UPDATE_LINEPOINT', function () {
       updateLinePointCoordinates();
     });
 
-
-    gMapService.setMapZoomLevel(14);
     getLinePoints();
-
   }
-)
-;
+);

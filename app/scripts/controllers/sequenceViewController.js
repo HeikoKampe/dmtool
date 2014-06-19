@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map2Ctrl', function (
+  .controller('sequenceViewController', function (
     $scope,
     $routeParams,
     $filter,

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('MainCtrl', function ($scope, $http, apiService) {
+  .controller('landingViewController', function ($scope, $http, $log, apiService) {
 
     $scope.queryParams = {
       dateFrom: '2014-01-01',
@@ -12,21 +12,21 @@ angular.module('mdToolApp')
 
     $scope.getMatchedDataLines = function () {
       apiService.getMatchedData('lines', $scope.queryParams).then(function (res) {
-        console.log("res.data matched", res.data);
+        $log.info("Lines: ", res.data);
         $scope.matchingResultDataLines = res.data;
       });
     };
 
     $scope.getMatchedDataBlocks = function () {
       apiService.getMatchedData('blocks', $scope.queryParams).then(function (res) {
-        console.log("res.data matched", res.data);
+        $log.info("Blocks: ", res.data);
         $scope.matchingResultDataBlocks = res.data;
       });
     };
 
     $scope.getRawData = function () {
       apiService.getRawData('stops/', $scope.queryParams).then(function (res) {
-        console.log("res.data", res.data);
+        $log.info("Stops: ", res.data);
         $scope.stopstatisticResultData = res.data;
       });
     };

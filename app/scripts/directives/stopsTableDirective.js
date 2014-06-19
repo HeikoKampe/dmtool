@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .directive('tripsTable', function () {
+  .directive('stopsTableDirective', function () {
+
     return {
-      templateUrl: 'templates/trips-table.html',
+      templateUrl: 'templates/stops-table.html',
       restrict: 'A',
       scope: {
         sequences: '='
       },
-      controller: 'sequenceTableController'
+      controller: 'tableController'
     };
   });

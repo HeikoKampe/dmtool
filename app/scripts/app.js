@@ -7,16 +7,16 @@ angular.module('mdToolApp', [
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/landing-view.html',
+        controller: 'landingViewController'
       })
-      .when('/map2/:vehicleId/:startTime', {
-        templateUrl: 'views/map2.html',
-        controller: 'Map2Ctrl'
+      .when('/sequence-view/:vehicleId/:startTime', {
+        templateUrl: 'views/sequence-view.html',
+        controller: 'sequenceViewController'
       })
-      .when('/map3', {
-        templateUrl: 'views/map3.html',
-        controller: 'Map3Ctrl'
+      .when('/cluster-view', {
+        templateUrl: 'views/cluster-view.html',
+        controller: 'clusterViewController'
       })
       .otherwise({
         redirectTo: '/'

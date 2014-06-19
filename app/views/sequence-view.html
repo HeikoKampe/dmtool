@@ -219,7 +219,7 @@
 
     <!-- begin: panel 1 -->
     <div class="accordion__item">
-      <div class="accordion__header active" data-accordion-header>
+      <div class="accordion__header active" data-accordion-directive>
         <h4 class="accordion__title">Found stop sequences</h4>
         <span class="accordion__header-icon"></span>
       </div>
@@ -229,10 +229,7 @@
         </div>
 
         <!-- directive for displaying stop sequences in a drill-down table -->
-        <div
-            data-stop-sequences-table
-            data-sequences="rawStopsSequences">
-        </div>
+        <div data-stops-table-directive data-sequences="rawStopsSequences"></div>
 
         <p><span class="green">matched</span> / <span class="red">unmatched</span></p>
       </div>
@@ -241,7 +238,7 @@
 
     <!-- begin: panel 2 -->
     <div class="accordion__item">
-      <div class="accordion__header active" data-accordion-header>
+      <div class="accordion__header active" data-accordion-directive>
         <h4 class="accordion__title">Scheduled trips of matching block</h4>
         <span class="accordion__header-icon"></span>
       </div>
@@ -259,7 +256,7 @@
           </div>
 
           <!--flexTable directive for displaying sequences data-->
-          <div data-trips-table data-sequences="scheduledStopSequencesOfMatchingBlock"></div>
+          <div data-trips-table-directive data-sequences="scheduledStopSequencesOfMatchingBlock"></div>
 
         </div>
 
@@ -270,7 +267,7 @@
 
   <!-- begin: panel 3 -->
   <div class="accordion__item">
-    <div class="accordion__header" data-accordion-header>
+    <div class="accordion__header" data-accordion-directive>
       <h4 class="accordion__title">Scheduled trips of a block from this day ({{isoDate}})</h4>
       <span class="accordion__header-icon"></span>
     </div>
@@ -300,7 +297,7 @@
       </form>
 
       <!--flexTable directive for displaying sequences data-->
-      <div data-trips-table data-sequences="scheduledStopSequencesOfSelectedBlock"></div>
+      <div data-trips-table-directive data-sequences="scheduledStopSequencesOfSelectedBlock"></div>
 
     </div>
   </div>

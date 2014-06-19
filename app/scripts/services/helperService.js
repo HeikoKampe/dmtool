@@ -16,10 +16,21 @@ angular.module('mdToolApp')
       }
     }
 
+    function buildQueryString(queryParams) {
+      var queryString = '?';
+
+      angular.forEach(queryParams, function (value, key) {
+        queryString = queryString + key + '=' + value + '&';
+      });
+
+      return queryString;
+    }
+
 
     // Public API here
     return {
       getHalfWayThroughPointOfLine: getHalfWayThroughPointOfLine,
+      buildQueryString: buildQueryString
     };
 
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('sequenceTableController', function ($scope, eventService) {
+  .controller('tableController', function ($scope, eventService) {
 
     $scope.toggleSequenceDetails = function (sequenceProperties) {
       sequenceProperties.showStopsInTable = !sequenceProperties.showStopsInTable;
