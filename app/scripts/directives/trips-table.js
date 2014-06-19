@@ -8,10 +8,6 @@ angular.module('mdToolApp')
       scope: {
         sequences: '='
       },
-      controller: function ($scope, $compile, $http) {
-        $scope.toggleSequenceDetails = function (sequenceProperties) {
-          sequenceProperties.showStopsInTable = !sequenceProperties.showStopsInTable;
-        };
-      }
+      controller: 'sequenceTableController'
     };
   });

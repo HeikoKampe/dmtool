@@ -24,10 +24,20 @@
 .flex-table__col:nth-child(5) { width:29%; }
 .flex-table__col:nth-child(6) { width:10%; }
 
+.flex-table--stops {
+  width:88%;
+  margin-left:12%;
+}
+
 .flex-table--stops .flex-table__col:nth-child(1) { width:8%; }
 .flex-table--stops .flex-table__col:nth-child(2) { width:18%; }
 .flex-table--stops .flex-table__col:nth-child(3) { width:18%; }
 .flex-table--stops .flex-table__col:nth-child(4) { width:45%; }
 .flex-table--stops .flex-table__col:nth-child(5) { width:11%; }
 
-
+.flex-table--stops .flex-table__row:hover {
+  background:#bee1ff;
+}
+.flex-table--stops .flex-table__row--header:hover {
+  background:none;
+}

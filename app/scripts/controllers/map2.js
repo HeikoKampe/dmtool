@@ -1,7 +1,14 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('Map2Ctrl', function ($scope, $routeParams, $filter, $log, apiService, sequenceService, gMapService) {
+  .controller('Map2Ctrl', function (
+    $scope,
+    $routeParams,
+    $filter,
+    $log,
+    apiService,
+    sequenceService,
+    gMapService) {
 
     $scope.mapConfig = gMapService.getMapConfig();
     $scope.rawStopsSequences = [];
@@ -37,13 +44,13 @@ angular.module('mdToolApp')
       }
     };
 
-    $scope.setHighlightMarker = function (lat, lng) {
-      $scope.highlightMarker.latitude = lat;
-      $scope.highlightMarker.longitude = lng;
+    function highlightMarker (coordinates) {
+      $scope.highlightMarker.latitude = coordinates.latitude;
+      $scope.highlightMarker.longitude = coordinates.longitude;
       $scope.highlightMarker.visible = true;
     };
 
-    $scope.unsetHighlightMarker = function () {
+    function deHighlightMarker () {
       $scope.highlightMarker.visible = true;
     };
 
@@ -99,6 +106,14 @@ angular.module('mdToolApp')
 
     $scope.$watch("selectedMatchingBlock", function(newValue, oldValue) {
       $scope.showSelectedMatchingBlock();
+    });
+
+    $scope.$on('HIGHLIGHT_STOP_MARKER', function (event, data){
+      highlightMarker(data)
+    });
+
+    $scope.$on('DE_HIGHLIGHT_STOP_MARKER', function (event, data){
+      deHighlightMarker()
     });
 
 

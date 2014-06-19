@@ -9,8 +9,7 @@
   </div>
 
   <div data-ng-repeat="seq in sequences" data-ng-switch
-       data-on="seq.properties.visible"
-       class="blue">
+       data-on="seq.properties.visible">
     <div class="flex-table__row">
       <div class="flex-table__col">
         <input
@@ -37,7 +36,7 @@
     <!--begin: inner table-->
     <div data-ng-show="seq.properties.showStopsInTable">
       <div class="flex-table flex-table--stops">
-        <div class="flex-table__row">
+        <div class="flex-table__row flex-table__row--header">
           <div class="flex-table__col flex-table__col--header">Seq.</div>
           <div class="flex-table__col flex-table__col--header">Arrival</div>
           <div class="flex-table__col flex-table__col--header">Departure</div>
@@ -47,8 +46,8 @@
 
         <div class="flex-table__row"
              data-ng-repeat="stop in seq.data"
-             data-ng-mouseover="setHighlightMarker(stop.latitude, stop.longitude)"
-             data-ng-mouseleave="unsetHighlightMarker()">
+             data-ng-mouseover="onMouseOverStopRow(seq.properties.visible, stop.latitude, stop.longitude)"
+             data-ng-mouseleave="onMouseOutStopRow(seq.properties.visible)">
           <div class="flex-table__col">{{ stop.sequence}}</div>
           <div class="flex-table__col">{{ stop.pointArrival | timeOnlyFilter }}</div>
           <div class="flex-table__col">{{ stop.pointDeparture | timeOnlyFilter }}</div>

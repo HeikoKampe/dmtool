@@ -202,7 +202,11 @@
 </div>
 <!-- end: visualisation of data from panel 3 in map -->
 
-<marker coords="highlightMarker" options="mapConfig.roundMarkers.orange"></marker>
+<!-- begin: one single marker for highlighting a certain stop -->
+<div data-ng-if="highlightMarker.visible">
+  <marker coords="highlightMarker" options="mapConfig.roundMarkers.highlighted"></marker>
+</div>
+<!-- end: one single marker for highlighting a certain stop -->
 
 </google-map>
 <!-- end: gMap -->
@@ -227,9 +231,7 @@
         <!-- directive for displaying stop sequences in a drill-down table -->
         <div
             data-stop-sequences-table
-            data-sequences="rawStopsSequences"
-            data-toggle-sequence-details="toggleSequenceDetails()"
-            >
+            data-sequences="rawStopsSequences">
         </div>
 
         <p><span class="green">matched</span> / <span class="red">unmatched</span></p>

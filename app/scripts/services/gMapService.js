@@ -28,38 +28,57 @@ angular.module('mdToolApp')
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-black.png'
-            }
+            },
+            optimized: false, // needed for making zIndex work
+            zIndex:10
           },
           red: {
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-red.png'
-            }
+            },
+            optimized: false,
+            zIndex: 10
           },
           green: {
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-green.png'
-            }
+            },
+            optimized: false,
+            zIndex: 10
           },
           blue: {
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-blue.png'
-            }
+            },
+            optimized: false,
+            zIndex: 10
           },
           orange: {
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-orange.png'
             },
-            zIndex: 10000
+            optimized: false,
+            zIndex: 10
           },
           pink: {
             icon: {
               anchor: new google.maps.Point(6, 6),
               url: 'images/marker-round-pink.png'
-            }
+            },
+            optimized: false,
+            zIndex: 10
+          },
+          highlighted: {
+            icon: {
+              anchor: new google.maps.Point(12, 12),
+              url: 'images/marker-round-small-highlighted.png'
+            },
+            optimized: false,
+            zIndex: 100
           }
         },
 
