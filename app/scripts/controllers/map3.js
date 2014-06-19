@@ -127,10 +127,10 @@ angular.module('mdToolApp')
       getSelectedLines();
 
       if (pointData.pointLabel && pointData.latitude && pointData.longitude) {
-        //      apiService.putScheduleData('netpoints/update', pointData).then(function () {
-        //        console.log("point successful updated");
-        //        getLinePoints();
-        //      });
+        apiService.putScheduleData('netpoints/update', pointData).then(function () {
+          console.log("point successful updated");
+          getLinePoints();
+        });
         getLinePoints();
       } else {
         $log.error("Error at updateLinePointCoordinates(): missing data");
