@@ -5,7 +5,7 @@ angular.module('mdToolApp')
   .filter('timeOnlyFilter', function () {
     return function (dateString) {
       var
-        subStrings = dateString.split(" ");
+        subStrings = dateString.split(' ');
       // return the last part of the string devided by a space
       return subStrings[subStrings.length - 1];
     };

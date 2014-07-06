@@ -41,7 +41,7 @@ angular.module('mdToolApp')
 
         // skip round if coordinates are invalid
         if (data[i].latitude < 1 && data[i].longitude < 1) {
-          $log.info("sequenceService: found invalid coordinates");
+          $log.info('sequenceService: found invalid coordinates');
           continue;
         }
 
@@ -69,16 +69,16 @@ angular.module('mdToolApp')
     }
 
     function createStopSequences (data, splitKey) {
-      return createSequences (data, splitKey, getStopSequenceProperties)
+      return createSequences (data, splitKey, getStopSequenceProperties);
     }
 
     function createLinePointSequences (data, splitKey) {
-      return createSequences (data, splitKey, getLinePointSequenceProperties)
+      return createSequences (data, splitKey, getLinePointSequenceProperties);
     }
 
     return {
       createStopSequences: createStopSequences,
       createLinePointSequences: createLinePointSequences
-    }
+    };
 
   });

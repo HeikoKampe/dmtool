@@ -6,8 +6,7 @@ angular.module('mdToolApp')
     var
       mapInstance,
       selectedLinesKeys,
-      updateTrigger = true,
-      initialState = true;
+      updateTrigger = true;
 
     $scope.mapConfig = gMapService.getMapConfig();
     $scope.stopVariation = {
@@ -20,6 +19,7 @@ angular.module('mdToolApp')
     $scope.maxNumberOfStops = 5000;
 
     $scope.showMap = false;
+    $scope.initialState = true;
     $scope.showMatchedStopVariation = true;
     $scope.showUnmatchedStopVariation = true;
     $scope.spinner = [false, false];
@@ -120,12 +120,11 @@ angular.module('mdToolApp')
         apiService.putScheduleData('netpoints/update', pointData).then(function () {
           getLinePoints();
         });
-        getLinePoints();
       } else {
-        $log.error("Error at updateLinePointCoordinates(): missing data");
+        $log.error('Error at updateLinePointCoordinates(): missing data');
       }
 
-    };
+    }
 
     function resetLinePoint() {
 
@@ -160,7 +159,7 @@ angular.module('mdToolApp')
 
     // divide stops into matched and unmatched stops
     function matchingStatusFilter(data) {
-      angular.forEach(data, function (value, key) {
+      angular.forEach(data, function (value) {
         if (value && value.hasCntStop === 'Y') {
           $scope.stopVariation.matched.push(value);
         } else {
@@ -216,18 +215,20 @@ angular.module('mdToolApp')
       } else {
         // if no line is selected show the first one
         setMapCenter(linePointsSequences[0].data);
+        //show first line points sequence
         linePointsSequences[0].properties.visible = true;
+
       }
     }
 
     function processLinePoints(data) {
       // create line sequences objects out of the line points
       $scope.linePointsSequences = sequenceService.createLinePointSequences(data, 'lineKey');
-      $log.info("linePointSequences", $scope.linePointsSequences);
+      $log.info('linePointSequences', $scope.linePointsSequences);
       // if line points are loaded for the first time provide initial settings
-      if (initialState) {
+      if ($scope.initialState) {
         setInitialState($scope.linePointsSequences);
-        initialState = false;
+        $scope.initialState = false;
       }
       // if line points are reloaded re-establish previous setting
       if (selectedLinesKeys) {
@@ -240,7 +241,7 @@ angular.module('mdToolApp')
       toggleSpinner(1);
       $scope.selectedMarker = {};
       apiService.getScheduleData('linepoints').then(function (res) {
-        processLinePoints(res.data)
+        processLinePoints(res.data);
         toggleSpinner(1);
         showMap();
       });

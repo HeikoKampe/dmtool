@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: Map3Ctrl', function () {
+describe('Controller: sequenceViewController', function () {
 
   var
     controller,

@@ -13,12 +13,16 @@ module.exports = function(config) {
     files: [
       'app/bower_components/angular/angular.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/bower_components/angular-resource/angular-resource.js',
       'app/bower_components/angular-route/angular-route.js',
+      'app/bower_components/lodash/dist/lodash.js',
+//      'app/bower_components/angular-google-maps/dist/angular-google-maps.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
+//      'test/spec/services/sequenceServiceTest.js'
+//      'test/spec/controllers/sequenceViewControllerTest.js'
+//      'test/spec/controllers/clusterViewControllerTest.js'
     ],
 
     // list of files / patterns to exclude

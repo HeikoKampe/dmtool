@@ -20,7 +20,9 @@ angular.module('mdToolApp')
       for (i = 0; i < input.length; i++) {
         // if a property path is provided compare values of object property
         var value = propertyPath ? getDeepObjectValue(input[i], propertyPath) : input[i];
-        if (!value || typeof value === 'object') continue;
+        if (!value || typeof value === 'object') {
+          continue;
+        }
         if (!comparisonObj[value]) {
           out.push(input[i]);
           comparisonObj[value] = true;

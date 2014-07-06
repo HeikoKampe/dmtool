@@ -13,7 +13,7 @@ angular.module('mdToolApp')
       return {
         lat: halfWayThroughPoint.latitude,
         lng: halfWayThroughPoint.longitude
-      }
+      };
     }
 
     function buildQueryString(queryParams) {
@@ -33,4 +33,4 @@ angular.module('mdToolApp')
       buildQueryString: buildQueryString
     };
 
-});
+  });

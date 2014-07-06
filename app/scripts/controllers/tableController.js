@@ -17,6 +17,6 @@ angular.module('mdToolApp')
       if (isSequenceVisible) {
         eventService.broadcast('DE_HIGHLIGHT_STOP_MARKER');
       }
-    }
+    };
 
   });

@@ -5,14 +5,14 @@ angular.module('mdToolApp')
 
     var apiBaseUrl;
 
-    function setApiBaseUrl () {
+    function setApiBaseUrl() {
       var path = $window.location.pathname;
 
       // hack: if app runs on port 9000, use a fixed base path to reach remote api
-      if ($window.location.port === "9000") {
-        apiBaseUrl =  'https://demodwm3.dilax.com/davisweb/rest/md/';
+      if ($window.location.port === '9000') {
+        apiBaseUrl = 'https://demodwm3.dilax.com/davisweb/rest/md/';
       } else {
-        apiBaseUrl = '/' +  path.split('/')[1] + '/rest/md/';
+        apiBaseUrl = '/' + path.split('/')[1] + '/rest/md/';
       }
     }
 
@@ -47,4 +47,4 @@ angular.module('mdToolApp')
       getMatchedData: getMatchedData
     };
 
-});
+  });
