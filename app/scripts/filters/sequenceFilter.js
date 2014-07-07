@@ -23,7 +23,7 @@ angular.module('mdToolApp')
 
         // if a property path is provided compare values of object property
         searchPropertyValue = searchProperty ? getDeepObjectValue(input[i], searchProperty) : input[i];
-        if (searchPropertyValue !== searchValue || typeof searchPropertyValue === 'object') {
+        if (searchPropertyValue != searchValue || typeof searchPropertyValue === 'object') {
           continue;
         }
 
