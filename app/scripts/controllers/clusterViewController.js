@@ -62,7 +62,11 @@ angular.module('mdToolApp')
       click: function (gMarker, eventName, model) {
         if (model.id) {
           $scope.$apply(function () {
+            $scope.selectedMarker = {};
+          });
+          $scope.$apply(function () {
             $scope.selectedMarker = model;
+            $scope.selectedMarker.showWindow = true;
           });
         }
       },
@@ -75,9 +79,9 @@ angular.module('mdToolApp')
               model.longitudeOld = model.longitude;
               model.latitudeOld = model.latitude;
             }
-            model.longitudeNew = gMarker.position.A;
+            model.longitudeNew = gMarker.position.B;
             model.latitudeNew = gMarker.position.k;
-            model.longitude = gMarker.position.A;
+            model.longitude = gMarker.position.B;
             model.latitude = gMarker.position.k;
           });
 

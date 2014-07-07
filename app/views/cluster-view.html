@@ -15,8 +15,7 @@
       <div data-ng-if="selectedMarker">
         <window
             coords="selectedMarker"
-            show="true"
-            closeClick="true"
+            show="selectedMarker.showWindow"
             options="mapConfig.pointMarkerWindow">
           <div data-ng-controller="linePointMarkerWindow">
             <table class="overlay-table">
@@ -151,7 +150,6 @@
 <!-- begin: left panel -->
 <div class="map-panel-wrapper">
   <h3>Stop Cluster View</h3>
-
   <div class="accordion">
 
     <!-- begin: panel 1 -->

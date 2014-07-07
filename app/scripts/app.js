@@ -2,7 +2,7 @@
 
 angular.module('mdToolApp', [
   'ngRoute',
-//  'google-maps'
+  'google-maps'
 ])
   .config(function ($routeProvider) {
     $routeProvider
