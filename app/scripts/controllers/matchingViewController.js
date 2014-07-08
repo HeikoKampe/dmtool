@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('landingViewController', function ($scope, $http, $log, apiService) {
+  .controller('matchingViewController', function ($scope, $http, $log, apiService) {
 
     $scope.queryParams = {
       dateFrom: '2014-01-01',

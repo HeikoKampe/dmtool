@@ -7,8 +7,8 @@ angular.module('mdToolApp', [
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/landing-view.html',
-        controller: 'landingViewController'
+        templateUrl: 'views/matching-view.html',
+        controller: 'matchingViewController'
       })
       .when('/sequence-view/:vehicleId/:startTime', {
         templateUrl: 'views/sequence-view.html',
