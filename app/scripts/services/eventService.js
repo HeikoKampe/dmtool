@@ -1,3 +1,5 @@
+// Service for broadcasting messages/events and data to other components
+
 'use strict';
 
 angular.module('mdToolApp')

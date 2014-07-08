@@ -15,14 +15,11 @@ module.exports = function(config) {
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/bower_components/angular-route/angular-route.js',
       'app/bower_components/lodash/dist/lodash.js',
-//      'app/bower_components/angular-google-maps/dist/angular-google-maps.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
+      'app/bower_components/angular-google-maps/dist/angular-google-maps.js',
       'test/spec/**/*.js'
-//      'test/spec/services/sequenceServiceTest.js'
-//      'test/spec/controllers/sequenceViewControllerTest.js'
-//      'test/spec/controllers/clusterViewControllerTest.js'
     ],
 
     // list of files / patterns to exclude
@@ -48,7 +45,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode

@@ -15,8 +15,6 @@ describe('Controller: sequenceViewController', function () {
   // load the controller's module
   beforeEach(function () {
     module('mdToolApp');
-    // mocking global google api referenced by angular-google-maps directive
-    window.google = jasmine.createSpy('google');
   });
 
   // mocking and overwriting of injected dependencies
