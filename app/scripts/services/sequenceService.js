@@ -1,3 +1,14 @@
+// This sequence service converts the received data from the api into an array of sequence objects.
+// Each sequence object consist of a data property and a properties properties.
+//    sequences = [
+//      {
+//         properties: { ... }
+//         data: [ ... ]
+//      }
+//    ]
+//
+// In other words: A sequence is data collection with certain properties.
+
 'use strict';
 
 angular.module('mdToolApp')
