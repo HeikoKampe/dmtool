@@ -1,3 +1,5 @@
+// filter returns unique properties out of a sequences collection
+
 'use strict';
 
 angular.module('mdToolApp')

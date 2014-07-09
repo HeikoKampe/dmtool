@@ -1,3 +1,5 @@
+// main controller of the matching view
+
 'use strict';
 
 angular.module('mdToolApp')

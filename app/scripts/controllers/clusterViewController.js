@@ -1,3 +1,5 @@
+// main controller for the cluster view
+
 'use strict';
 
 angular.module('mdToolApp')

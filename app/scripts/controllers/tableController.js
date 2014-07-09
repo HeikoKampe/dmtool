@@ -1,3 +1,5 @@
+// controller used by the stopsTableDirective and the tripsTableDirective
+
 'use strict';
 
 angular.module('mdToolApp')

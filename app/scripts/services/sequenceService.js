@@ -7,7 +7,7 @@
 //      }
 //    ]
 //
-// In other words: A sequence is data collection with certain properties.
+// In other words: A sequence is data collection with certain collection properties.
 
 'use strict';
 

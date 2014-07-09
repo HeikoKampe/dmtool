@@ -1,3 +1,5 @@
+// main controller of the sequence view
+
 'use strict';
 
 angular.module('mdToolApp')

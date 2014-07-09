@@ -1,3 +1,5 @@
+// service for getting and setting map configuration
+
 'use strict';
 
 angular.module('mdToolApp')

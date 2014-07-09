@@ -1,3 +1,5 @@
+// directive for presenting sequence data in a tables
+
 'use strict';
 
 angular.module('mdToolApp')

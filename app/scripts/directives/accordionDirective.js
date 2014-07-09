@@ -1,3 +1,5 @@
+// accordion directive for toggling accordion elements
+
 'use strict';
 
 angular.module('mdToolApp')
