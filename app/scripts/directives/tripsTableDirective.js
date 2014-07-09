@@ -3,7 +3,7 @@
 angular.module('mdToolApp')
   .directive('tripsTableDirective', function () {
     return {
-      templateUrl: 'templates/trips-table.html',
+      templateUrl: 'partials/trips-table.html',
       restrict: 'A',
       scope: {
         sequences: '='

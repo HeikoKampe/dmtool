@@ -4,7 +4,7 @@ angular.module('mdToolApp')
   .directive('stopsTableDirective', function () {
 
     return {
-      templateUrl: 'templates/stops-table.html',
+      templateUrl: 'partials/stops-table.html',
       restrict: 'A',
       scope: {
         sequences: '='
