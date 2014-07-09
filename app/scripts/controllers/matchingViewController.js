@@ -3,14 +3,20 @@
 'use strict';
 
 angular.module('mdToolApp')
-  .controller('matchingViewController', function ($scope, $http, $log, apiService) {
+  .controller('matchingViewController', function ($scope, $http, $log, apiService, helperService) {
+    var twoWeeksAgo = new Date();
+
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 7);
 
     $scope.queryParams = {
-      dateFrom: '2014-01-01',
-      dateTo: '2014-01-02'
+      dateFrom: helperService.yymmddDate(twoWeeksAgo),
+      dateTo: helperService.yymmddDate(new Date)
     };
 
     $scope.selectedTable = 'vehicles';
+
+    $scope.spinner = [false];
+
 
     $scope.getMatchedDataLines = function () {
       apiService.getMatchedData('lines', $scope.queryParams).then(function (res) {
@@ -27,7 +33,9 @@ angular.module('mdToolApp')
     };
 
     $scope.getRawData = function () {
+      toggleSpinner(0);
       apiService.getRawData('stops/', $scope.queryParams).then(function (res) {
+        toggleSpinner(0);
         $log.info('Stops: ', res.data);
         $scope.stopstatisticResultData = res.data;
       });
@@ -39,9 +47,12 @@ angular.module('mdToolApp')
       $scope.getRawData();
     };
 
+    function toggleSpinner(spinnerId) {
+      $scope.spinner[spinnerId] = !$scope.spinner[spinnerId];
+    }
+
     $scope.getMatchedDataLines();
     $scope.getMatchedDataBlocks();
     $scope.getRawData();
-
 
   });

@@ -28,11 +28,20 @@ angular.module('mdToolApp')
       return queryString;
     }
 
+    function twoDigits(x) {
+      return String("0" + x).slice(-2)
+    }
+
+    function yymmddDate (dateIn) {
+      return dateIn.getFullYear() + '-' + twoDigits((dateIn.getMonth() + 1)) + '-' + twoDigits(dateIn.getDate());
+    }
+
 
     // Public API here
     return {
       getHalfWayThroughPointOfLine: getHalfWayThroughPointOfLine,
-      buildQueryString: buildQueryString
+      buildQueryString: buildQueryString,
+      yymmddDate: yymmddDate
     };
 
   });
