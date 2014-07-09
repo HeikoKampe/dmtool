@@ -191,6 +191,7 @@ module.exports = function (grunt) {
 
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
+      options: { cache: false },
       dist: {
         files: [{
           expand: true,
@@ -285,7 +286,10 @@ module.exports = function (grunt) {
         'copy:styles',
         'imagemin',
         'svgmin'
-      ]
+      ],
+      options: {
+        limit:4
+      }
     },
 
     // By default, your `index.html`'s <!-- Usemin block --> will take care of
