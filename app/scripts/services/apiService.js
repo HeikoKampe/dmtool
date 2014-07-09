@@ -1,3 +1,5 @@
+// service for doing api calls
+
 'use strict';
 
 angular.module('mdToolApp')
@@ -8,7 +10,7 @@ angular.module('mdToolApp')
     function setApiBaseUrl() {
       var path = $window.location.pathname;
 
-      // hack: if app runs on port 9000, use a fixed base path to reach remote api
+      // hack: if app runs on port 9000, use a fixed base path to reach api from remote
       if ($window.location.port === '9000') {
         apiBaseUrl = 'https://demodwm3.dilax.com/davisweb/rest/md/';
       } else {
